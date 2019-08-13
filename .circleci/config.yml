@@ -51,18 +51,10 @@ jobs:
           command: |
             echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
       - run:
-          name: Amend current message
-          command: |
-            OLD_MSG=$(git log --format=%B -n1)
-            git commit --amend -m "$OLD_MSG" -m "[skip ci]"
-      - run:
           name: Publish modules
           command: |
-            npx lerna publish --amend
-      - run:
-          name: Push
-          command: |
-            git push -f
+            npx lerna publish
+
 workflows:
   version: 2
   build_test_release:
