@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Run lint
           command: |
-            npm run eslint -s
+            npm run lint -s
       - run:
           name: Run tests
           command: |
