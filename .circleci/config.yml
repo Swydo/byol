@@ -23,7 +23,7 @@ jobs:
       - run:
           name: Install
           command: |
-            - npm install
+            npm ci
       - run:
           name: Bootstrap
           command: |
@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Run lint
           command: |
-            npm run eslint -s
+            npm run lint -s
       - run:
           name: Run tests
           command: |
@@ -45,7 +45,7 @@ jobs:
       - run:
           name: Install
           command: |
-            npm install
+            npm ci
       - run:
           name: Configure npm
           command: |

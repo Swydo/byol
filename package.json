@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint ./modules",
-    "test": "lerna run test --stream --parallel"
+    "test": "lerna run test --stream --parallel",
+    "version": "lerna clean --yes && lerna bootstrap --ignore-scripts -- --package-lock-only --no-audit && git add modules/*/package-lock.json"
   },
   "repository": {
     "type": "git"
