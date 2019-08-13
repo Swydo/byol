@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const yargs = require('yargs');
 const startCommand = require('./commands/start');
 const invokeCommand = require('./commands/invoke');
