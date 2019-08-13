@@ -1,0 +1,13 @@
+{
+  "packages": [
+    "modules/*"
+  ],
+  "command": {
+    "version": {
+      "conventionalCommits": true,
+      "tagVersionPrefix": "",
+      "yes": true
+    }
+  },
+  "version": "0.2.1"
+}

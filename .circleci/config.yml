@@ -1,0 +1,79 @@
+version: 2.1
+
+executors:
+  nodejs_v10:
+    resource_class: small
+    docker:
+      - image: circleci/node:10
+
+commands:
+  setup_git:
+    description: Setup swybot git username + email
+    steps:
+      - run:
+          name: Setup git
+          command: |
+            git config --global user.name SwyBot
+            git config --global user.email SwyBot@users.noreply.github.com
+jobs:
+  test:
+    executor: nodejs_v10
+    steps:
+      - checkout
+      - run:
+          name: Install
+          command: |
+            - npm install
+      - run:
+          name: Bootstrap
+          command: |
+            npx lerna bootstrap
+      - run:
+          name: Run lint
+          command: |
+            npm run eslint -s
+      - run:
+          name: Run tests
+          command: |
+            npm test -s
+
+  release:
+    executor: nodejs_v10
+    steps:
+      - checkout
+      - setup_git
+      - run:
+          name: Install
+          command: |
+            npm install
+      - run:
+          name: Configure npm
+          command: |
+            echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
+      - run:
+          name: Amend current message
+          command: |
+            OLD_MSG=$(git log --format=%B -n1)
+            git commit --amend -m "$OLD_MSG" -m "[skip ci]"
+      - run:
+          name: Publish modules
+          command: |
+            npx lerna publish --amend
+      - run:
+          name: Push
+          command: |
+            git push -f
+workflows:
+  version: 2
+  build_test_release:
+    jobs:
+      - test:
+          filters:
+            branches:
+              ignore:
+                - master
+      - release:
+          filters:
+            branches:
+              only:
+                - master

@@ -1,0 +1,16 @@
+{
+	"name": "@swydo/byol",
+	"version": "0.2.1",
+	"description": "Bring Your Own Lambda",
+	"license": "MIT",
+	"main": "src/index.js",
+	"repository": {
+		"type": "git"
+	},
+	"dependencies": {
+		"debug": "^4.1.1",
+		"supports-color": "^7.0.0",
+		"uuid": "^3.3.2",
+		"yaml-cfn": "^0.2.2"
+	}
+}
