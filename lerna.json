@@ -5,9 +5,10 @@
   "command": {
     "version": {
       "conventionalCommits": true,
+      "message": "chore(release): %v [skip ci]",
       "tagVersionPrefix": "",
       "yes": true
     }
   },
-  "version": "0.2.1"
+  "version": "0.2.2"
 }
