@@ -23,7 +23,7 @@ jobs:
       - run:
           name: Install
           command: |
-            - npm install
+            npm install
       - run:
           name: Bootstrap
           command: |
