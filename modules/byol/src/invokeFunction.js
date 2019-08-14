@@ -48,7 +48,13 @@ function getEnvironment(envPath, functionName) {
 
     const envString = fs.readFileSync(envPath, { encoding: 'utf8' });
 
-    return JSON.parse(envString)[functionName];
+    try {
+        const allEnv = JSON.parse(envString);
+
+        return allEnv && allEnv[functionName] ? allEnv[functionName] : {};
+    } catch (e) {
+        throw new Error('MALFORMED_ENV_FILE');
+    }
 }
 
 async function invokeFunction(functionName, event, {
