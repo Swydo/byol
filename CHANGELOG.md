@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/Swydo/byol/compare/1.2.1...1.3.0) (2019-08-14)
+
+
+### Features
+
+* **byol:** allow specifying templatePath and envPath as invokeFunction arg ([#9](https://github.com/Swydo/byol/issues/9)) ([3adf8e8](https://github.com/Swydo/byol/commit/3adf8e8))
+
+
+
+
+
 ## [1.2.1](https://github.com/Swydo/byol/compare/1.2.0...1.2.1) (2019-08-14)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
