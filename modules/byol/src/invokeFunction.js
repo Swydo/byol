@@ -50,7 +50,7 @@ async function invokeFunction(functionName, event, {
     const [relativePathWithoutExtension, handlerName] = handler.split('.');
 
     const relativeIndexPath = `${relativePathWithoutExtension}.js`;
-    const absoluteIndexPath = path.join(process.cwd(), codeUri, relativeIndexPath);
+    const absoluteIndexPath = path.join(templatePath, '..', codeUri, relativeIndexPath);
 
     try {
         debug('Start');
