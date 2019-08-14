@@ -1,4 +1,5 @@
 const { invokeFunction } = require('@swydo/byol');
+const { handleGlobalOptions } = require('../../handleGlobalOptions');
 
 const command = 'invoke';
 const desc = 'Invoke a lambda function';
@@ -10,7 +11,9 @@ const builder = yargs =>
         .option('event', {
             alias: 'e',
         });
-const handler = async ({ functionName, event }) => {
+const handler = async ({ functionName, event, ...globalOptions }) => {
+    handleGlobalOptions(globalOptions);
+
     try {
         const result = await invokeFunction(functionName, JSON.parse(event));
 
