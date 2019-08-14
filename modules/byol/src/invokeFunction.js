@@ -13,33 +13,33 @@ function getDebug(requestId) {
     return rawDebug(`byol:invoke:${requestId}`);
 }
 
-function getTemplate() {
-    const templatePath = path.join(process.cwd(), 'template.yml');
-
+function getTemplate(templatePath) {
     const templateString = fs.readFileSync(templatePath, { encoding: 'utf8' });
 
     return yamlParse(templateString);
 }
 
-function getFunctionResource(functionName) {
-    const template = getTemplate();
+function getFunctionResource(templatePath, functionName ) {
+    const template = getTemplate(templatePath);
 
     return template.Resources[functionName];
 }
 
-function getEnvironment(functionName) {
-    const envPath = path.join(process.cwd(), 'env.json');
+function getEnvironment(envPath, functionName) {
     const envString = fs.readFileSync(envPath, { encoding: 'utf8' });
 
     return JSON.parse(envString)[functionName];
 }
 
-async function invokeFunction(functionName, event) {
+async function invokeFunction(functionName, event, {
+    templatePath = path.join(process.cwd(), 'template.yml'),
+    envPath = path.join(process.cwd(), 'env.json'),
+} = {}) {
     const requestId = generateRequestId();
     const debug = getDebug(requestId);
 
-    const resource = getFunctionResource(functionName);
-    const environment = getEnvironment(functionName);
+    const resource = getFunctionResource(templatePath, functionName);
+    const environment = getEnvironment(envPath, functionName);
     const {
         Properties: {
             Handler: handler,
