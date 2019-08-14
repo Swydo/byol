@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/Swydo/byol/compare/1.1.0...1.2.0) (2019-08-14)
+
+
+### Features
+
+* **byol-cli:** add silent option ([#7](https://github.com/Swydo/byol/issues/7)) ([3fa06fc](https://github.com/Swydo/byol/commit/3fa06fc))
+
+
+
+
+
 # [1.1.0](https://github.com/Swydo/byol/compare/1.0.1...1.1.0) (2019-08-14)
 
 
