@@ -23,7 +23,7 @@ Start an AWS-compatible Lambda server capable of running the functions defined i
 replacement for `sam local start-lambda`.
 
 ```shell script
-byol start [-p PORT]
+byol start [-p PORT] [-s | --silent]
 ```
 
 With this server running you can call your Lambdas using the [aws-sdk](https://github.com/aws/aws-sdk-js).
@@ -33,5 +33,5 @@ With this server running you can call your Lambdas using the [aws-sdk](https://g
 Invoke a function as defined in your `template.yml`. This is a replacement for `sam local invoke`.
 
 ```shell script
-byol invoke -f FunctionName -e {}
+byol invoke -f FunctionName -e {} [-s | --silent]
 ```
