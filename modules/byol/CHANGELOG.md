@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/Swydo/byol/compare/1.3.0...1.3.1) (2019-08-14)
+
+
+### Bug Fixes
+
+* **byol:** fix not basing path to handler on template path ([#10](https://github.com/Swydo/byol/issues/10)) ([80e94c0](https://github.com/Swydo/byol/commit/80e94c0))
+
+
+
+
+
 # [1.3.0](https://github.com/Swydo/byol/compare/1.2.1...1.3.0) (2019-08-14)
 
 
