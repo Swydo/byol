@@ -43,7 +43,7 @@ async function invokeFunction(functionName, event, {
     const {
         Properties: {
             Handler: handler,
-            CodeUri: codeUri,
+            CodeUri: codeUri = '.',
         },
     } = resource;
 
