@@ -17,13 +17,14 @@ npm install -g byol-cli
 
 ## Commands
 
-### start
+### start | start-lambda
 
 Start an AWS-compatible Lambda server capable of running the functions defined in your `template.yml`. This is a
 replacement for `sam local start-lambda`.
 
 ```shell script
 byol start [-p PORT] [-s | --silent]
+byol start-lambda [-p PORT] [-s | --silent]
 ```
 
 With this server running you can call your Lambdas using the [aws-sdk](https://github.com/aws/aws-sdk-js).
