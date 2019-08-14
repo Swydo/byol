@@ -6,6 +6,11 @@ const invokeCommand = require('./commands/invoke');
 
 // eslint-disable-next-line no-unused-expressions
 yargs
+    .option('silent', {
+        alias: 's',
+        type: 'boolean',
+        default: false,
+    })
     .command(startLambdaCommand)
     .command(invokeCommand)
     .argv;
