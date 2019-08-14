@@ -26,6 +26,12 @@ function getFunctionResource(templatePath, functionName) {
 }
 
 function getEnvironment(envPath, functionName) {
+    const envFileExists = fs.existsSync(envPath);
+
+    if (!envFileExists) {
+        return {};
+    }
+
     const envString = fs.readFileSync(envPath, { encoding: 'utf8' });
 
     return JSON.parse(envString)[functionName];
