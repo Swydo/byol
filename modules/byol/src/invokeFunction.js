@@ -14,6 +14,12 @@ function getDebug(requestId) {
 }
 
 function getTemplate(templatePath) {
+    const templateFileExists = fs.existsSync(templatePath);
+
+    if (!templateFileExists) {
+        throw new Error('TEMPLATE_FILE_NOT_FOUND');
+    }
+
     const templateString = fs.readFileSync(templatePath, { encoding: 'utf8' });
 
     return yamlParse(templateString);
@@ -22,13 +28,33 @@ function getTemplate(templatePath) {
 function getFunctionResource(templatePath, functionName) {
     const template = getTemplate(templatePath);
 
+    if (!template.Resources) {
+        throw new Error('TEMPLATE_RESOURCES_MISSING');
+    }
+
+    if (!template.Resources[functionName]) {
+        throw new Error('FUNCTION_NOT_DEFINED');
+    }
+
     return template.Resources[functionName];
 }
 
 function getEnvironment(envPath, functionName) {
+    const envFileExists = fs.existsSync(envPath);
+
+    if (!envFileExists) {
+        return {};
+    }
+
     const envString = fs.readFileSync(envPath, { encoding: 'utf8' });
 
-    return JSON.parse(envString)[functionName];
+    try {
+        const allEnv = JSON.parse(envString);
+
+        return allEnv && allEnv[functionName] ? allEnv[functionName] : {};
+    } catch (e) {
+        throw new Error('MALFORMED_ENV_FILE');
+    }
 }
 
 async function invokeFunction(functionName, event, {
@@ -43,7 +69,7 @@ async function invokeFunction(functionName, event, {
     const {
         Properties: {
             Handler: handler,
-            CodeUri: codeUri,
+            CodeUri: codeUri = '.',
         },
     } = resource;
 
