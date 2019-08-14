@@ -1,6 +1,6 @@
 const { startLambdaServer } = require('./startLambdaServer');
 
-const command = 'start';
+const command = ['start', 'start-lambda'];
 const desc = 'Start a local lambda server';
 const builder = yargs =>
     yargs.option('port', {
