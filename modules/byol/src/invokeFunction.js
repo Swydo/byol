@@ -14,6 +14,12 @@ function getDebug(requestId) {
 }
 
 function getTemplate(templatePath) {
+    const templateFileExists = fs.existsSync(templatePath);
+
+    if (!templateFileExists) {
+        throw new Error('TEMPLATE_FILE_NOT_FOUND');
+    }
+
     const templateString = fs.readFileSync(templatePath, { encoding: 'utf8' });
 
     return yamlParse(templateString);
@@ -21,6 +27,14 @@ function getTemplate(templatePath) {
 
 function getFunctionResource(templatePath, functionName) {
     const template = getTemplate(templatePath);
+
+    if (!template.Resources) {
+        throw new Error('TEMPLATE_RESOURCES_MISSING');
+    }
+
+    if (!template.Resources[functionName]) {
+        throw new Error('FUNCTION_NOT_DEFINED');
+    }
 
     return template.Resources[functionName];
 }
