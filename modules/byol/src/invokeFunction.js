@@ -19,7 +19,7 @@ function getTemplate(templatePath) {
     return yamlParse(templateString);
 }
 
-function getFunctionResource(templatePath, functionName ) {
+function getFunctionResource(templatePath, functionName) {
     const template = getTemplate(templatePath);
 
     return template.Resources[functionName];
