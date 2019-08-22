@@ -14,20 +14,16 @@ function onHandlerResponse(error, result) {
                 code: error.code,
             },
         });
-        process.exit(1);
     } else {
         process.send({ result });
-        process.exit(0);
     }
 }
 
-function onMessage(message) {
-    const {
-        absoluteIndexPath,
-        handlerName,
-        event,
-    } = message;
-
+function callHandler({
+    absoluteIndexPath,
+    handlerName,
+    event,
+}) {
     // eslint-disable-next-line import/no-dynamic-require, global-require
     const { [handlerName]: handler } = require(absoluteIndexPath);
 
@@ -37,6 +33,24 @@ function onMessage(message) {
         maybePromise
             .then(res => onHandlerResponse(null, res))
             .catch(err => onHandlerResponse(err));
+    }
+}
+
+function onMessage(message) {
+    const {
+        type,
+        payload,
+    } = message;
+
+    switch (type) {
+    case 'CALL':
+        callHandler(payload);
+        break;
+    case 'EXIT':
+        process.exit(0);
+        break;
+    default:
+        throw new Error('UNSUPPORTED MESSAGE');
     }
 }
 

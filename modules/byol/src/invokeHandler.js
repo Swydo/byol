@@ -17,15 +17,22 @@ async function invokeHandler({
 
     return new Promise(((resolve, reject) => {
         forkProcess.send({
-            absoluteIndexPath,
-            handlerName,
-            event,
+            type: 'CALL',
+            payload: {
+                absoluteIndexPath,
+                handlerName,
+                event,
+            },
         });
 
         let hadResponse = false;
 
-        forkProcess.on('message', ({ error, result }) => {
+        forkProcess.on('message', (message) => {
             hadResponse = true;
+
+            forkProcess.send({ type: 'EXIT' });
+
+            const { error, result } = message;
 
             if (error) {
                 reject(error);
@@ -36,9 +43,7 @@ async function invokeHandler({
 
         forkProcess.on('exit', () => {
             if (!hadResponse) {
-                hadResponse = true;
-
-                reject(new Error('FORK_DIED'));
+                reject(new Error('FORK_EXITED_UNEXPECTEDLY'));
             }
         });
     }));
