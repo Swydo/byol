@@ -30,7 +30,7 @@ async function invokeHandler({
         forkProcess.on('message', (message) => {
             hadResponse = true;
 
-            forkProcess.send({ type: 'DIE' });
+            forkProcess.send({ type: 'EXIT' });
 
             const { error, result } = message;
 
@@ -43,7 +43,7 @@ async function invokeHandler({
 
         forkProcess.on('exit', () => {
             if (!hadResponse) {
-                reject(new Error('FORK_DIED'));
+                reject(new Error('FORK_EXITED_UNEXPECTEDLY'));
             }
         });
     }));

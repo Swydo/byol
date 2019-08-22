@@ -46,7 +46,7 @@ function onMessage(message) {
     case 'CALL':
         callHandler(payload);
         break;
-    case 'DIE':
+    case 'EXIT':
         process.exit(0);
         break;
     default:
