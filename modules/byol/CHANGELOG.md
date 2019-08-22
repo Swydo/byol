@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.3](https://github.com/Swydo/byol/compare/1.3.2...1.3.3) (2019-08-22)
+
+
+### Bug Fixes
+
+* **byol-cli:** fix lambda process dying before the message was received in full ([#12](https://github.com/Swydo/byol/issues/12)) ([7197e81](https://github.com/Swydo/byol/commit/7197e81))
+
+
+
+
+
 ## [1.3.2](https://github.com/Swydo/byol/compare/1.3.1...1.3.2) (2019-08-14)
 
 
