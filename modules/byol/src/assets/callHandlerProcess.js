@@ -15,7 +15,7 @@ function onHandlerResponse(error, result) {
                 code: error.code,
             },
         });
-    } else if (Buffer.byteLength(JSON.stringify(result)) >=  LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT) {
+    } else if (Buffer.byteLength(JSON.stringify(result)) >= LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT) {
         process.send({
             error: {
                 message: `Payload size is too large (limit ${LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT})`,
