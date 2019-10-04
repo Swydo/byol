@@ -1,3 +1,4 @@
+const LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT = 6000000;
 let handledResponse = false;
 
 function onHandlerResponse(error, result) {
@@ -12,6 +13,13 @@ function onHandlerResponse(error, result) {
             error: {
                 message: error.message,
                 code: error.code,
+            },
+        });
+    } else if (Buffer.byteLength(JSON.stringify(result)) >=  LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT) {
+        process.send({
+            error: {
+                message: `Payload size is too large (limit ${LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT})`,
+                code: '413',
             },
         });
     } else {
