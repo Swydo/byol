@@ -19,7 +19,7 @@ function onHandlerResponse(error, result) {
         process.send({
             error: {
                 message: `Payload size is too large (limit ${LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT})`,
-                code: '413',
+                code: 'PAYLOAD_TOO_LARGE',
             },
         });
     } else {
