@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.4](https://github.com/Swydo/byol/compare/1.3.3...1.3.4) (2019-10-07)
+
+
+### Bug Fixes
+
+* handle max payload size error ([#13](https://github.com/Swydo/byol/issues/13)) ([ebfad60](https://github.com/Swydo/byol/commit/ebfad60))
+
+
+
+
+
 ## [1.3.3](https://github.com/Swydo/byol/compare/1.3.2...1.3.3) (2019-08-22)
 
 
