@@ -19,6 +19,8 @@ app.all('*', (req, res) => {
             .then((result) => {
                 if (!result) {
                     res.status(502);
+                    res.end();
+                    return;
                 }
 
                 const multiValueHeadersMap = new Map();
