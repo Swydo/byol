@@ -29,7 +29,6 @@ app.all('*', (req, res) => {
                     Object.keys(result.headers).forEach((headerKey) => {
                         const headerValue = result.headers[headerKey];
 
-
                         multiValueHeadersMap.set(headerKey, new Set([headerValue]));
                     });
                 }
