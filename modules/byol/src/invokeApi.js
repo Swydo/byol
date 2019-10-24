@@ -1,9 +1,15 @@
-const path = require('path');
+const pathMatch = require('path-match');
 const { getTemplate } = require('./getTemplate');
 const { invokeFunction } = require('./invokeFunction');
 
 const FUNCTION_RESOURCE_TYPE = 'AWS::Serverless::Function';
 const API_EVENT_TYPE = 'Api';
+
+const route = pathMatch({
+    sensitive: false,
+    strict: false,
+    end: false,
+});
 
 function getApiEvents(resource) {
     if (!resource.Properties || !resource.Properties.Events) {
@@ -17,28 +23,45 @@ function getApiEvents(resource) {
     return apiEventKeys.map(key => events[key]);
 }
 
-function getApiMapping(resources) {
-    const resourceKeys = Object.keys(resources);
-    const functionResourceKeys = resourceKeys.filter(key => resources[key].Type === FUNCTION_RESOURCE_TYPE);
+function createRoute(awsPath) {
+    const expressPath = awsPath.replace(/({.*})/g, (match) => {
+        const parameterName = match.substring(1, match.length - 1);
 
-    return functionResourceKeys.map((functionResourceKey) => {
-        const functionResource = resources[functionResourceKey];
-        const apiEvents = getApiEvents(functionResource);
-
-        const listeners = apiEvents.map(event => ({
-            httpMethod: event.Properties.Method.toUpperCase(),
-            path: event.Properties.Path,
-        }));
-
-        return {
-            functionName: functionResourceKey,
-            functionResource,
-            listeners,
-        };
+        return `:${parameterName}`;
     });
+
+    return route(expressPath);
 }
 
-function invokeApi(httpMethod, httpPath, body, {
+function getApiMapping(resources) {
+    const resourceKeys = Object.keys(resources);
+    const functionNames = resourceKeys.filter(key => resources[key].Type === FUNCTION_RESOURCE_TYPE);
+
+    const mapping = [];
+
+    functionNames.forEach((functionName) => {
+        const functionResource = resources[functionName];
+        const apiEvents = getApiEvents(functionResource);
+
+        apiEvents
+            .map(event => ({
+                httpMethod: event.Properties.Method.toUpperCase(),
+                resource: event.Properties.Path,
+                match: createRoute(event.Properties.Path),
+            }))
+            .forEach(listener => (
+                mapping.push({
+                    functionName,
+                    functionResource,
+                    listener,
+                })
+            ));
+    });
+
+    return mapping;
+}
+
+async function invokeApi(httpMethod, httpPath, body, {
     templatePath,
     envPath,
 } = {}) {
@@ -51,7 +74,7 @@ function invokeApi(httpMethod, httpPath, body, {
     const apiMapping = getApiMapping(template.Resources);
 
     const match = apiMapping.find(mapping => (
-        mapping.listeners.some(listener => listener.httpMethod === httpMethod && listener.path === httpPath)
+        mapping.listener.httpMethod === httpMethod && mapping.listener.match(httpPath)
     ));
 
     if (!match) {
