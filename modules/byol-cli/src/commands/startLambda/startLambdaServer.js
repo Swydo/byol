@@ -20,8 +20,9 @@ app.post('/2015-03-31/functions/:functionName/invocations', (req, res) => {
             .then((result) => {
                 res.send(result);
             })
-            .catch(() => {
+            .catch((err) => {
                 res.status(500);
+                res.send(err);
                 res.end();
             });
     });
