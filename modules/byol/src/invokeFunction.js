@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const { yamlParse } = require('yaml-cfn');
-const { invokeHandler } = require('./invokeHandler');
 const uuidv4 = require('uuid/v4');
 const rawDebug = require('debug');
+const { invokeHandler } = require('./invokeHandler');
+const { getTemplate } = require('./getTemplate');
 
 function generateRequestId() {
     return uuidv4();
@@ -11,18 +11,6 @@ function generateRequestId() {
 
 function getDebug(requestId) {
     return rawDebug(`byol:invoke:${requestId}`);
-}
-
-function getTemplate(templatePath) {
-    const templateFileExists = fs.existsSync(templatePath);
-
-    if (!templateFileExists) {
-        throw new Error('TEMPLATE_FILE_NOT_FOUND');
-    }
-
-    const templateString = fs.readFileSync(templatePath, { encoding: 'utf8' });
-
-    return yamlParse(templateString);
 }
 
 function getFunctionResource(templatePath, functionName) {
