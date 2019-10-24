@@ -16,8 +16,39 @@ app.all('*', (req, res) => {
         const path = req.url;
 
         invokeApi(httpMethod, path, body)
+            .catch(() => {
+                // Intentionally left blank, ignore error and have then return a 502.
+            })
             .then((result) => {
-                res.send(result);
+                if (!result) {
+                    res.status(502);
+                }
+
+                const multiValueHeadersMap = new Map();
+
+                if (result.headers) {
+                    Object.keys(result.headers).forEach((headerKey) => {
+                        const headerValue = result.headers[headerKey];
+
+
+                        multiValueHeadersMap.set(headerKey, new Set([headerValue]));
+                    });
+                }
+
+                if (result.multiValueHeaders) {
+                    Object.keys(result.multiValueHeaders).forEach((headerKey) => {
+                        const headerValues = result.multiValueHeaders[headerKey];
+
+                        const valuesSet = multiValueHeadersMap.get(headerKey) || new Set();
+                        headerValues.forEach(value => valuesSet.add(value));
+
+                        multiValueHeadersMap.set(headerKey, valuesSet);
+                    });
+                }
+
+                res.status(result.statusCode);
+                multiValueHeadersMap.forEach((valuesSet, key) => res.set(key, Array.from(valuesSet)));
+                res.send(result.body);
             })
             .catch(() => {
                 res.status(500);
