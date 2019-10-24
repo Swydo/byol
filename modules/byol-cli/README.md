@@ -29,6 +29,17 @@ byol start-lambda [-p PORT] [-s | --silent]
 
 With this server running you can call your Lambdas using the [aws-sdk](https://github.com/aws/aws-sdk-js).
 
+### start-api
+
+Starts a server mimicing API Gateway in proxy mode. Similar to `sam local start-api` you can call endpoints defined
+in your template file. Currently, only event sources on the function resource `AWS::Serverless::Function` are supported.
+
+```shell script
+byol start-api [-p PORT] [-s | --silent]
+```
+
+With the server running, call your API over HTTP as usual.
+
 ### invoke
 
 Invoke a function as defined in your `template.yml`. This is a replacement for `sam local invoke`.
