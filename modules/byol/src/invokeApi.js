@@ -55,7 +55,7 @@ function invokeApi(httpMethod, httpPath, body, {
     ));
 
     if (!match) {
-        throw new Error('API_NOT_FOUND');
+        return { statusCode: 404 };
     }
 
     const event = {
