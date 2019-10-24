@@ -24,7 +24,7 @@ function getApiEvents(resource) {
 }
 
 function createRoute(awsPath) {
-    const expressPath = awsPath.replace(/({.*})/g, (match) => {
+    const expressPath = awsPath.replace(/({[a-zA-Z0-9]*})/g, (match) => {
         const parameterName = match.substring(1, match.length - 1);
 
         return `:${parameterName}`;
