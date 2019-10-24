@@ -12,10 +12,7 @@ app.all('*', (req, res) => {
     });
 
     req.on('end', () => {
-        const httpMethod = req.method;
-        const path = req.url;
-
-        invokeApi(httpMethod, path, body)
+        invokeApi(req.method, req.url, req.rawHeaders, body)
             .catch(() => {
                 // Intentionally left blank, ignore error and have then return a 502.
             })

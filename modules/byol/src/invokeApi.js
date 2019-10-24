@@ -1,3 +1,4 @@
+const { URL } = require('url');
 const pathMatch = require('path-match');
 const { getTemplate } = require('./getTemplate');
 const { invokeFunction } = require('./invokeFunction');
@@ -61,10 +62,53 @@ function getApiMapping(resources) {
     return mapping;
 }
 
-async function invokeApi(httpMethod, httpPath, body, {
+function parseQueryParams(parsedUrl) {
+    const queryStringParameters = {};
+    const multiValueQueryStringParameters = {};
+
+    parsedUrl.searchParams.forEach((value, key) => {
+        queryStringParameters[key] = value;
+        multiValueQueryStringParameters[key] = [
+            ...multiValueQueryStringParameters[key] || [],
+            value,
+        ];
+    });
+
+    return { queryStringParameters, multiValueQueryStringParameters };
+}
+
+function parseHeaders(rawHeaders) {
+    const headers = {};
+    const multiValueHeaders = {};
+
+    rawHeaders
+        .reduce((sets, currentValue, index) => {
+            if (index % 2) {
+                const setIndex = Math.floor(index / 2);
+                sets[setIndex].push(currentValue);
+            } else {
+                sets.push([currentValue]);
+            }
+
+            return sets;
+        }, [])
+        .forEach(([key, value]) => {
+            headers[key] = value;
+            multiValueHeaders[key] = [
+                ...multiValueHeaders[key] || [],
+                value,
+            ];
+        });
+
+    return { headers, multiValueHeaders };
+}
+
+async function invokeApi(httpMethod, httpUrl, httpHeaders = [], body, {
     templatePath,
     envPath,
 } = {}) {
+    const parsedUrl = new URL(httpUrl, 'http://localhost');
+
     const template = getTemplate(templatePath);
 
     if (!template.Resources) {
@@ -73,20 +117,30 @@ async function invokeApi(httpMethod, httpPath, body, {
 
     const apiMapping = getApiMapping(template.Resources);
 
-    const match = apiMapping.find(mapping => (
-        mapping.listener.httpMethod === httpMethod && mapping.listener.match(httpPath)
+    const matchingMapping = apiMapping.find(mapping => (
+        mapping.listener.httpMethod === httpMethod && mapping.listener.match(parsedUrl.pathname)
     ));
 
-    if (!match) {
+    if (!matchingMapping) {
         return { statusCode: 404 };
     }
 
+    const pathParameters = matchingMapping.listener.match(parsedUrl.pathname);
+    const { headers, multiValueHeaders } = parseHeaders(httpHeaders);
+    const { queryStringParameters, multiValueQueryStringParameters } = parseQueryParams(parsedUrl);
+
     const event = {
+        resource: matchingMapping.listener.resource,
+        httpPath: parsedUrl.pathname,
         httpMethod,
-        httpPath,
+        headers,
+        multiValueHeaders,
+        pathParameters,
+        queryStringParameters,
+        multiValueQueryStringParameters,
         body,
     };
-    return invokeFunction(match.functionName, event, { templatePath, envPath });
+    return invokeFunction(matchingMapping.functionName, event, { templatePath, envPath });
 }
 
 module.exports = {
