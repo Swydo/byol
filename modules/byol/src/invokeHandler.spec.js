@@ -8,8 +8,21 @@ chai.use(chaiAsPromised);
 const { expect } = chai;
 
 describe('invokeHandler', function () {
-    it('invokes the handler', async function () {
+    it('invokes an async handler', async function () {
         const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/goodHandler.js');
+
+        const result = await invokeHandler({
+            absoluteIndexPath,
+            handlerName: 'handler',
+        });
+
+        expect(result).to.be.an('object');
+        expect(result).to.have.property('env');
+        expect(result).to.have.property('args');
+    });
+
+    it('invokes a non-async handler', async function () {
+        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/goodCallbackHandler.js');
 
         const result = await invokeHandler({
             absoluteIndexPath,
@@ -62,8 +75,21 @@ describe('invokeHandler', function () {
         expect(env).to.have.property('FOO', environment.FOO);
     });
 
-    it('rejects when an error is thrown by the handler', async function () {
+    it('rejects when an error is thrown by an async handler', async function () {
         const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/badHandler.js');
+        const errorMessage = 'FOO';
+
+        const invokePromise = invokeHandler({
+            absoluteIndexPath,
+            handlerName: 'handler',
+            event: { message: errorMessage },
+        });
+
+        await expect(invokePromise).to.eventually.be.rejectedWith(errorMessage);
+    });
+
+    it('rejects when an error is returned by an non-async handler', async function () {
+        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/badCallbackHandler.js');
         const errorMessage = 'FOO';
 
         const invokePromise = invokeHandler({
