@@ -113,4 +113,17 @@ describe('invokeHandler', function () {
 
         await expect(invokePromise).to.eventually.be.rejectedWith('FORK_EXITED_UNEXPECTEDLY');
     });
+
+    it('rejects when the handler function can\'t be found', async function () {
+        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/goodHandler.js');
+        const errorMessage = 'FOO';
+
+        const invokePromise = invokeHandler({
+            absoluteIndexPath,
+            handlerName: 'foo',
+            event: { message: errorMessage },
+        });
+
+        await expect(invokePromise).to.eventually.be.rejectedWith('HANDLER_NOT_FOUND');
+    });
 });

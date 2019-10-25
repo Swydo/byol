@@ -35,6 +35,11 @@ function callHandler({
     // eslint-disable-next-line import/no-dynamic-require, global-require
     const { [handlerName]: handler } = require(absoluteIndexPath);
 
+    if (!handler) {
+        onHandlerResponse(new Error('HANDLER_NOT_FOUND'));
+        return;
+    }
+
     const maybePromise = handler(event, {}, onHandlerResponse);
 
     if (maybePromise && typeof maybePromise.then === 'function' && typeof maybePromise.catch === 'function') {
