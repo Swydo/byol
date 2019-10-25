@@ -9,7 +9,7 @@ const { expect } = chai;
 
 describe('invokeHandler', function () {
     it('invokes the handler', async function () {
-        const absoluteIndexPath = path.resolve('tests/assets/goodHandler.js');
+        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/goodHandler.js');
 
         const result = await invokeHandler({
             absoluteIndexPath,
@@ -22,7 +22,7 @@ describe('invokeHandler', function () {
     });
 
     it('invokes the handler with the given event', async function () {
-        const absoluteIndexPath = path.resolve('tests/assets/goodHandler.js');
+        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/goodHandler.js');
         const event = {
             foo: 'foo',
         };
@@ -43,7 +43,7 @@ describe('invokeHandler', function () {
     });
 
     it('invokes the handler with the given environment variables', async function () {
-        const absoluteIndexPath = path.resolve('tests/assets/goodHandler.js');
+        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/goodHandler.js');
         const environment = {
             FOO: 'FOO',
         };
@@ -63,7 +63,7 @@ describe('invokeHandler', function () {
     });
 
     it('rejects when an error is thrown by the handler', async function () {
-        const absoluteIndexPath = path.resolve('tests/assets/badHandler.js');
+        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/badHandler.js');
         const errorMessage = 'FOO';
 
         const invokePromise = invokeHandler({
@@ -76,7 +76,7 @@ describe('invokeHandler', function () {
     });
 
     it('rejects when the process dies unexpectedly', async function () {
-        const absoluteIndexPath = path.resolve('tests/assets/brokenHandler.js');
+        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/brokenHandler.js');
         const errorMessage = 'FOO';
 
         const invokePromise = invokeHandler({
