@@ -33,9 +33,9 @@ jobs:
           command: |
             npm run lint -s
       - run:
-          name: Run tests
+          name: Run unit tests
           command: |
-            npm test -s
+            npm run unit -s
 
   release:
     executor: nodejs_v10

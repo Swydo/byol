@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "npm run eslint",
+    "unit": "npm run mocha",
     "test": "npm run eslint && npm run mocha",
     "eslint": "eslint ./modules",
     "mocha": "mocha modules/**/src/**/*.spec.js",
