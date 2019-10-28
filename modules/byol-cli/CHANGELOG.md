@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/Swydo/byol/compare/1.3.4...1.4.0) (2019-10-28)
+
+
+### Features
+
+* add start-api to mimic API Gateway integration ([#14](https://github.com/Swydo/byol/issues/14)) ([5af9877](https://github.com/Swydo/byol/commit/5af9877))
+
+
+
+
+
 ## [1.3.4](https://github.com/Swydo/byol/compare/1.3.3...1.3.4) (2019-10-07)
 
 **Note:** Version bump only for package @swydo/byol-cli
