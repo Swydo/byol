@@ -4,8 +4,11 @@
   "description": "Bring Your Own Lambda",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint ./modules",
-    "test": "lerna run test --stream --parallel",
+    "lint": "npm run eslint",
+    "unit": "npm run mocha",
+    "test": "npm run eslint && npm run mocha",
+    "eslint": "eslint ./modules",
+    "mocha": "mocha modules/**/src/**/*.spec.js",
     "version": "lerna clean --yes && lerna bootstrap --ignore-scripts -- --package-lock-only --no-audit --no-ci && git add modules/*/package-lock.json"
   },
   "repository": {
@@ -14,11 +17,14 @@
   "dependencies": {},
   "devDependencies": {
     "can-npm-publish": "1.3.1",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "eslint": "4.19.1",
     "eslint-config-airbnb": "16.1.0",
     "eslint-plugin-import": "2.12.0",
     "eslint-plugin-jsx-a11y": "6.0.3",
     "eslint-plugin-react": "7.9.1",
-    "lerna": "^3.16.4"
+    "lerna": "^3.16.4",
+    "mocha": "^6.2.2"
   }
 }

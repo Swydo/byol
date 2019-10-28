@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: Adapters
+
+Resources:
+  GoodFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: goodHandler.handler
+      Runtime: nodejs10.x
+      FunctionName: good-function
+      MemorySize: 1536
+      Timeout: 900
+  GoodCallbackFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: goodCallbackHandler.handler
+      Runtime: nodejs10.x
+      FunctionName: good-callback-function
+      MemorySize: 1536
+      Timeout: 900
+  BadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: badHandler.handler
+      Runtime: nodejs10.x
+      FunctionName: bad-function
+      MemorySize: 1536
+      Timeout: 900
+  BadCallbackFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: badCallbackHandler.handler
+      Runtime: nodejs10.x
+      FunctionName: bad-callback-function
+      MemorySize: 1536
+      Timeout: 900
+  BrokenFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: brokenHandler.handler
+      Runtime: nodejs10.x
+      FunctionName: broken-function
+      MemorySize: 1536
+      Timeout: 900

@@ -3,5 +3,16 @@
     "rules": {
         "indent": ["error", 4],
         "max-len": ["error", 120]
-    }
+    },
+    "overrides": [
+        {
+            "files": ["*.spec.js"],
+            "rules": {
+                "prefer-arrow-callback": "off",
+                "func-names": "off",
+                "no-unused-expressions": "off",
+                "import/no-extraneous-dependencies": "off"
+            }
+        }
+    ]
 }
