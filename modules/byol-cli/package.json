@@ -1,6 +1,6 @@
 {
   "name": "@swydo/byol-cli",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Bring Your Own Lambda CLI",
   "license": "MIT",
   "main": "src/index.js",
