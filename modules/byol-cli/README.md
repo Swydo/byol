@@ -12,7 +12,7 @@ your code by starting your own lambda server.
 ## Install
 
 ```shell script
-npm install -g byol-cli
+npm install -g @swydo/byol-cli
 ```
 
 ## Commands
