@@ -1,13 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const uuidv4 = require('uuid/v4');
 const rawDebug = require('debug');
 const { invokeHandler } = require('./invokeHandler');
 const { getTemplate } = require('./getTemplate');
-
-function generateRequestId() {
-    return uuidv4();
-}
+const { generateRequestId } = require('./generateRequestId');
 
 function getDebug(requestId) {
     return rawDebug(`byol:invoke:${requestId}`);
