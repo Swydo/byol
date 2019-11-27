@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/Swydo/byol/compare/1.4.3...1.5.0) (2019-11-27)
+
+
+### Features
+
+* **byol:** pass incomplete requestContext when invoking handlers from API ([#19](https://github.com/Swydo/byol/issues/19)) ([7f88057](https://github.com/Swydo/byol/commit/7f88057))
+
+
+
+
+
 ## [1.4.3](https://github.com/Swydo/byol/compare/1.4.2...1.4.3) (2019-11-07)
 
 
