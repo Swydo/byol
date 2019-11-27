@@ -44,9 +44,9 @@ function getEnvironment(envPath, functionName) {
 async function invokeFunction(functionName, event, {
     templatePath = path.join(process.cwd(), 'template.yml'),
     envPath = path.join(process.cwd(), 'env.json'),
+    requestId,
 } = {}) {
-    const requestId = generateRequestId();
-    const debug = getDebug(requestId);
+    const debug = getDebug(requestId || generateRequestId());
 
     const resource = getFunctionResource(templatePath, functionName);
     const environment = getEnvironment(envPath, functionName);
