@@ -2,6 +2,7 @@ const { URL } = require('url');
 const pathMatch = require('path-match');
 const { getTemplate } = require('./getTemplate');
 const { invokeFunction } = require('./invokeFunction');
+const { generateRequestId } = require('./generateRequestId');
 
 const FUNCTION_RESOURCE_TYPE = 'AWS::Serverless::Function';
 const API_EVENT_TYPE = 'Api';
@@ -125,9 +126,15 @@ async function invokeApi(httpMethod, httpUrl, httpHeaders = [], body, {
         return { statusCode: 404 };
     }
 
+    const requestId = generateRequestId();
     const pathParameters = matchingMapping.listener.match(parsedUrl.pathname);
     const { headers, multiValueHeaders } = parseHeaders(httpHeaders);
     const { queryStringParameters, multiValueQueryStringParameters } = parseQueryParams(parsedUrl);
+    const requestContext = {
+        resourcePath: matchingMapping.listener.resource,
+        httpMethod,
+        requestId,
+    };
 
     const event = {
         resource: matchingMapping.listener.resource,
@@ -138,9 +145,10 @@ async function invokeApi(httpMethod, httpUrl, httpHeaders = [], body, {
         pathParameters,
         queryStringParameters,
         multiValueQueryStringParameters,
+        requestContext,
         body,
     };
-    return invokeFunction(matchingMapping.functionName, event, { templatePath, envPath });
+    return invokeFunction(matchingMapping.functionName, event, { templatePath, envPath, requestId });
 }
 
 module.exports = {
