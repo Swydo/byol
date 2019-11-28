@@ -24,7 +24,7 @@ commands:
             rm ~/.npmrc
             touch ~/.npmrc
             echo "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN" >> ~/.npmrc
-            echo "//npm.pkg.github.com/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
 jobs:
   test:
     executor: nodejs_v10
