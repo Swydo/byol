@@ -8,9 +8,6 @@
       "message": "chore(release): %v [skip ci]",
       "tagVersionPrefix": "",
       "yes": true
-    },
-    "publish": {
-      "registry": "https://npm.pkg.github.com"
     }
   },
   "version": "1.5.0"

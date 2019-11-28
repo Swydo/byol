@@ -21,8 +21,10 @@ commands:
       - run:
           name: Setup npm
           command: |
+            rm ~/.npmrc
             touch ~/.npmrc
-            echo "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN" > ~/.npmrc
+            echo "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN" >> ~/.npmrc
+            echo "//npm.pkg.github.com/:_authToken=$NPM_TOKEN" >> ~/.npmrc
 jobs:
   test:
     executor: nodejs_v10
@@ -56,9 +58,21 @@ jobs:
           command: |
             npm ci
       - run:
-          name: Publish modules
+          name: Create version
           command: |
-            npx lerna publish
+            npx lerna version
+      - run:
+          name: Publish modules on GitHub
+          command: |
+            touch ~/.npmrc
+            echo "//npm.pkg.github.com/:_authToken=$NPM_TOKEN" > ~/.npmrc
+            npx lerna publish from-package --registry https://npm.pkg.github.com
+      - run:
+          name: Publish modules on npm
+          command: |
+            touch ~/.npmrc
+            echo "//registry.npmjs.org/:_authToken=$GITHUB_TOKEN" > ~/.npmrc
+            npx lerna publish from-package --registry https://registry.npmjs.org
 
 workflows:
   version: 2
