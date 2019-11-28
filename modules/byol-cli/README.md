@@ -11,14 +11,6 @@ your code by starting your own lambda server.
 
 ## Install
 
-Configure your project to pull @swydo packages from GitHub, also see [GitHub's documentation](https://help.github.com/en/github/managing-packages-with-github-packages/configuring-npm-for-use-with-github-packages#installing-packages-from-other-organizations).
-
-```shell script
- echo "@swydo:registry=https://npm.pkg.github.com" >> .npmrc
-```
-
-Then install the module.
-
 ```shell script
 npm install -g @swydo/byol-cli
 ```
