@@ -64,14 +64,10 @@ jobs:
       - run:
           name: Publish modules on GitHub
           command: |
-            touch ~/.npmrc
-            echo "//npm.pkg.github.com/:_authToken=$NPM_TOKEN" > ~/.npmrc
             npx lerna publish from-package --registry https://npm.pkg.github.com
       - run:
           name: Publish modules on npm
           command: |
-            touch ~/.npmrc
-            echo "//registry.npmjs.org/:_authToken=$GITHUB_TOKEN" > ~/.npmrc
             npx lerna publish from-package --registry https://registry.npmjs.org
 
 workflows:
