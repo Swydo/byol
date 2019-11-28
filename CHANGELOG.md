@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/Swydo/byol/compare/1.4.3...1.5.0) (2019-11-27)
+
+
+### Features
+
+* **byol:** pass incomplete requestContext when invoking handlers from API ([#19](https://github.com/Swydo/byol/issues/19)) ([7f88057](https://github.com/Swydo/byol/commit/7f88057))
+
+
+
+
+
+## [1.4.3](https://github.com/Swydo/byol/compare/1.4.2...1.4.3) (2019-11-07)
+
+
+### Bug Fixes
+
+* **byol-cli:** fix error when returning a content-type header when running start-api ([#17](https://github.com/Swydo/byol/issues/17)) ([8b439f5](https://github.com/Swydo/byol/commit/8b439f5))
+
+
+
+
+
 ## [1.4.2](https://github.com/Swydo/byol/compare/1.4.1...1.4.2) (2019-11-06)
 
 **Note:** Version bump only for package @swydo/byol-monorepo

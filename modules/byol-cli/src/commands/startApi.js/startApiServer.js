@@ -45,7 +45,15 @@ app.all('*', (req, res) => {
                 }
 
                 res.status(result.statusCode);
-                multiValueHeadersMap.forEach((valuesSet, key) => res.set(key, Array.from(valuesSet)));
+                multiValueHeadersMap.forEach((valuesSet, key) => {
+                    const values = Array.from(valuesSet);
+
+                    if (key.toLowerCase() === 'content-type') {
+                        res.set(key, values[0]);
+                    } else {
+                        res.set(key, values);
+                    }
+                });
                 res.send(result.body);
             })
             .catch(() => {

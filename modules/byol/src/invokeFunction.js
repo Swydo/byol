@@ -1,13 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const uuidv4 = require('uuid/v4');
 const rawDebug = require('debug');
 const { invokeHandler } = require('./invokeHandler');
 const { getTemplate } = require('./getTemplate');
-
-function generateRequestId() {
-    return uuidv4();
-}
+const { generateRequestId } = require('./generateRequestId');
 
 function getDebug(requestId) {
     return rawDebug(`byol:invoke:${requestId}`);
@@ -48,9 +44,9 @@ function getEnvironment(envPath, functionName) {
 async function invokeFunction(functionName, event, {
     templatePath = path.join(process.cwd(), 'template.yml'),
     envPath = path.join(process.cwd(), 'env.json'),
+    requestId,
 } = {}) {
-    const requestId = generateRequestId();
-    const debug = getDebug(requestId);
+    const debug = getDebug(requestId || generateRequestId());
 
     const resource = getFunctionResource(templatePath, functionName);
     const environment = getEnvironment(envPath, functionName);
