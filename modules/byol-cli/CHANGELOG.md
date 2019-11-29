@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/Swydo/byol/compare/1.5.0...1.5.1) (2019-11-29)
+
+**Note:** Version bump only for package @swydo/byol-cli
+
+
+
+
+
 # [1.5.0](https://github.com/Swydo/byol/compare/1.4.3...1.5.0) (2019-11-27)
 
 **Note:** Version bump only for package @swydo/byol-cli
