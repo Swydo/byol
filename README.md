@@ -22,4 +22,4 @@ your side as long as the code isn't too picky about where or how it runs.
 ## Modules
 
 - [byol](modules/byol)
-- [byol-cli](modules/byol)
+- [byol-cli](modules/byol-cli)

@@ -15,6 +15,18 @@ commands:
           command: |
             git config --global user.name SwyBot
             git config --global user.email SwyBot@users.noreply.github.com
+  setup_npm:
+    description: Setup npm for publishing
+    steps:
+      - run:
+          name: Setup npm
+          command: |
+            if [ -f ~/.npmrc ]; then
+              rm ~/.npmrc
+            fi
+            touch ~/.npmrc
+            echo "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN" >> ~/.npmrc
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
 jobs:
   test:
     executor: nodejs_v10
@@ -42,18 +54,23 @@ jobs:
     steps:
       - checkout
       - setup_git
+      - setup_npm
       - run:
           name: Install
           command: |
             npm ci
       - run:
-          name: Configure npm
+          name: Create version
           command: |
-            echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
+            npx lerna version
       - run:
-          name: Publish modules
+          name: Publish modules on GitHub
           command: |
-            npx lerna publish
+            npx lerna publish from-package --registry https://npm.pkg.github.com
+      - run:
+          name: Publish modules on npm
+          command: |
+            npx lerna publish from-package --registry https://registry.npmjs.org
 
 workflows:
   version: 2
