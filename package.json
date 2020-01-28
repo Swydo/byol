@@ -25,6 +25,6 @@
     "eslint-plugin-jsx-a11y": "6.0.3",
     "eslint-plugin-react": "7.9.1",
     "lerna": "^3.16.4",
-    "mocha": "^6.2.2"
+    "mocha": "^7.0.1"
   }
 }
