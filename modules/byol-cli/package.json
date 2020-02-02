@@ -20,6 +20,6 @@
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "supports-color": "^7.0.0",
-    "yargs": "^13.3.0"
+    "yargs": "^15.1.0"
   }
 }
