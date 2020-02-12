@@ -20,9 +20,9 @@ function getApiEvents(resource) {
 
     const events = resource.Properties.Events;
     const eventKeys = Object.keys(events);
-    const apiEventKeys = eventKeys.filter(key => events[key].Type === API_EVENT_TYPE);
+    const apiEventKeys = eventKeys.filter((key) => events[key].Type === API_EVENT_TYPE);
 
-    return apiEventKeys.map(key => events[key]);
+    return apiEventKeys.map((key) => events[key]);
 }
 
 function createRoute(awsPath) {
@@ -37,7 +37,7 @@ function createRoute(awsPath) {
 
 function getApiMapping(resources) {
     const resourceKeys = Object.keys(resources);
-    const functionNames = resourceKeys.filter(key => resources[key].Type === FUNCTION_RESOURCE_TYPE);
+    const functionNames = resourceKeys.filter((key) => resources[key].Type === FUNCTION_RESOURCE_TYPE);
 
     const mapping = [];
 
@@ -46,12 +46,12 @@ function getApiMapping(resources) {
         const apiEvents = getApiEvents(functionResource);
 
         apiEvents
-            .map(event => ({
+            .map((event) => ({
                 httpMethod: event.Properties.Method.toUpperCase(),
                 resource: event.Properties.Path,
                 match: createRoute(event.Properties.Path),
             }))
-            .forEach(listener => (
+            .forEach((listener) => (
                 mapping.push({
                     functionName,
                     functionResource,
@@ -118,7 +118,7 @@ async function invokeApi(httpMethod, httpUrl, httpHeaders = [], body, {
 
     const apiMapping = getApiMapping(template.Resources);
 
-    const matchingMapping = apiMapping.find(mapping => (
+    const matchingMapping = apiMapping.find((mapping) => (
         mapping.listener.httpMethod === httpMethod && mapping.listener.match(parsedUrl.pathname)
     ));
 

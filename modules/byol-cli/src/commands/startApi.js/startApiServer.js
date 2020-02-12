@@ -38,7 +38,7 @@ app.all('*', (req, res) => {
                         const headerValues = result.multiValueHeaders[headerKey];
 
                         const valuesSet = multiValueHeadersMap.get(headerKey) || new Set();
-                        headerValues.forEach(value => valuesSet.add(value));
+                        headerValues.forEach((value) => valuesSet.add(value));
 
                         multiValueHeadersMap.set(headerKey, valuesSet);
                     });
