@@ -1,6 +1,6 @@
 # BYOL CLI
 
-[![CircleCI](https://img.shields.io/circleci/build/github/Swydo/byol/master.svg?label=circleci&style=flat-square)](https://circleci.com/gh/Swydo/custom-integrations) [![conventionalCommits](https://img.shields.io/badge/conventional%20commits-1.0.0-yellow.svg?style=flat-square)](https://conventionalcommits.org) [![GitHub](https://img.shields.io/github/license/Swydo/custom-integrations.svg?style=flat-square)](https://github.com/Swydo/custom-integrations/blob/master/LICENSE)
+[![GitHubActions](https://img.shields.io/github/workflow/status/Swydo/byol/release.svg?label=github%20actions&style=flat-square)](https://github.com/Swydo/byol/actions) [![conventionalCommits](https://img.shields.io/badge/conventional%20commits-1.0.0-yellow.svg?style=flat-square)](https://conventionalcommits.org) [![GitHub](https://img.shields.io/github/license/Swydo/byol.svg?style=flat-square)](https://github.com/Swydo/byol/blob/master/LICENSE)
 
 <img src="https://user-images.githubusercontent.com/2283434/52522860-25eee400-2c8b-11e9-8602-f8de0d158600.png">
 
