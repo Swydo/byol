@@ -1,0 +1,61 @@
+name: release
+
+on:
+  push:
+    branches:
+      - master*
+    tags-ignore:
+      - '*'
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - name: Configure git
+        run: |
+          git config --global user.name SwyBot
+          git config --global user.email SwyBot@users.noreply.github.com
+      - name: Build
+        run: |
+          npm ci
+      - name: Create release
+        run: |
+          npx lerna version
+  publish_github:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - name: Build
+        run: |
+          npm ci
+          npx lerna bootstrap
+      - name: Publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx lerna publish --no-push --no-git-tag-version --registry https://npm.pkg.github.com
+  publish_npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - name: Build
+        run: |
+          npm ci
+          npx lerna bootstrap
+      - name: Publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npx lerna publish --no-push --no-git-tag-version --registry https://registry.npmjs.org
