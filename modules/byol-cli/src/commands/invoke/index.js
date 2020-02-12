@@ -3,14 +3,13 @@ const { handleGlobalOptions } = require('../../handleGlobalOptions');
 
 const command = 'invoke';
 const desc = 'Invoke a lambda function';
-const builder = yargs =>
-    yargs
-        .option('functionName', {
-            alias: 'f',
-        })
-        .option('event', {
-            alias: 'e',
-        });
+const builder = (yargs) => yargs
+    .option('functionName', {
+        alias: 'f',
+    })
+    .option('event', {
+        alias: 'e',
+    });
 const handler = async ({ functionName, event, ...globalOptions }) => {
     handleGlobalOptions(globalOptions);
 

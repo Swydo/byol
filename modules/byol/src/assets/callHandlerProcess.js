@@ -44,8 +44,8 @@ function callHandler({
 
     if (maybePromise && typeof maybePromise.then === 'function' && typeof maybePromise.catch === 'function') {
         maybePromise
-            .then(res => onHandlerResponse(null, res))
-            .catch(err => onHandlerResponse(err));
+            .then((res) => onHandlerResponse(null, res))
+            .catch((err) => onHandlerResponse(err));
     }
 }
 
