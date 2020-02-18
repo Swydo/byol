@@ -5,7 +5,7 @@ const { invokeFunction } = require('./invokeFunction');
 const { generateRequestId } = require('./generateRequestId');
 
 const FUNCTION_RESOURCE_TYPE = 'AWS::Serverless::Function';
-const API_EVENT_TYPE = 'Api';
+const API_EVENT_TYPES = ['Api', 'HttpApi'];
 
 const route = pathMatch({
     sensitive: false,
@@ -20,7 +20,7 @@ function getApiEvents(resource) {
 
     const events = resource.Properties.Events;
     const eventKeys = Object.keys(events);
-    const apiEventKeys = eventKeys.filter((key) => events[key].Type === API_EVENT_TYPE);
+    const apiEventKeys = eventKeys.filter((key) => API_EVENT_TYPES.includes(events[key].Type));
 
     return apiEventKeys.map((key) => events[key]);
 }
