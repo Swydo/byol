@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.6.0 (2020-02-20)
+
+
+### Features
+
+* **byol:** support HttpApi events ([#40](https://github.com/Swydo/byol/issues/40)) ([eaedc91](https://github.com/Swydo/byol/commit/eaedc91f75a1d95ea02da9b8449b7a959f6d3591))
+
+
+
+
+
 ## 1.5.8 (2020-02-12)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
