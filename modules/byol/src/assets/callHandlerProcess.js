@@ -8,10 +8,7 @@ async function callHandler({
     event,
     environment,
 }) {
-    Object.keys(process.env).forEach((envKey) => delete process.env[envKey]);
-    Object.keys(environment).forEach((envKey) => {
-        process.env[envKey] = environment[envKey];
-    });
+    process.env = environment;
 
     // eslint-disable-next-line import/no-dynamic-require, global-require
     const { [handlerName]: handler } = require(absoluteIndexPath);
