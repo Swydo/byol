@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.7.1 (2020-02-26)
+
+
+### Bug Fixes
+
+* **byol:** fix worker pool not taking into account path to handler ([#42](https://github.com/Swydo/byol/issues/42)) ([09448dc](https://github.com/Swydo/byol/commit/09448dca8ea00610c7b8119e17fc8a0438a1da7d))
+
+
+
+
+
 # 1.7.0 (2020-02-26)
 
 
