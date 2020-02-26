@@ -17,13 +17,25 @@ npm install -g @swydo/byol-cli
 
 ## Commands
 
-### start | start-lambda
+### start (default)
+
+Combine both `start-lambda` and `start-api`. Start an AWS-compatible Lambda server as well as a server mimicing 
+API Gateway on the same port.
+
+```shell script
+byol [-p PORT] [-s | --silent] [--keep-alive]
+byol start [-p PORT] [-s | --silent] [--keep-alive]
+```
+
+With this server running you can call your Lambdas using the [aws-sdk](https://github.com/aws/aws-sdk-js) and your
+API over HTTP as usual.
+
+### start-lambda
 
 Start an AWS-compatible Lambda server capable of running the functions defined in your `template.yml`. This is a
 replacement for `sam local start-lambda`.
 
 ```shell script
-byol start [-p PORT] [-s | --silent] [--keep-alive]
 byol start-lambda [-p PORT] [-s | --silent] [--keep-alive]
 ```
 
