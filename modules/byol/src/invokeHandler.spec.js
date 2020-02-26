@@ -1,13 +1,27 @@
 const path = require('path');
-const { describe, it } = require('mocha');
+const {
+    describe,
+    it,
+    before,
+    after,
+} = require('mocha');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const { invokeHandler } = require('./invokeHandler');
+const { terminateWorkerPools } = require('./handlerWorkerPool');
 
 chai.use(chaiAsPromised);
 const { expect } = chai;
 
 describe('invokeHandler', function () {
+    before(async function () {
+        await terminateWorkerPools();
+    });
+
+    after(async function () {
+        await terminateWorkerPools();
+    });
+
     it('invokes an async handler', async function () {
         const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/goodHandler.js');
 
@@ -51,7 +65,7 @@ describe('invokeHandler', function () {
         expect(result).to.have.property('args');
 
         const { args } = result;
-        expect(args).to.be.an('array').with.length(3);
+        expect(args).to.be.an('array').with.length(2);
         expect(args[0]).to.deep.equal(event);
     });
 
@@ -111,7 +125,7 @@ describe('invokeHandler', function () {
             event: { message: errorMessage },
         });
 
-        await expect(invokePromise).to.eventually.be.rejectedWith('FORK_EXITED_UNEXPECTEDLY');
+        await expect(invokePromise).to.eventually.be.rejectedWith('ERROR');
     });
 
     it('rejects when the handler function can\'t be found', async function () {

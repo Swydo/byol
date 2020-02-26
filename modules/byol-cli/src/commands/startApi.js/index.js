@@ -3,14 +3,16 @@ const { startApiServer } = require('./startApiServer');
 
 const command = ['start-api'];
 const desc = 'Start a local api server';
-const builder = (yargs) => yargs.option('port', {
-    alias: 'p',
-    default: 3000,
-});
-const handler = async ({ port, ...globalOptions }) => {
+const builder = (yargs) => yargs
+    .option('port', {
+        alias: 'p',
+        default: 3000,
+    })
+    .option('keep-alive');
+const handler = async ({ port, keepAlive, ...globalOptions }) => {
     handleGlobalOptions(globalOptions);
 
-    startApiServer(port);
+    startApiServer(port, { keepAlive });
 };
 
 module.exports = {

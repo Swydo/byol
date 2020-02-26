@@ -45,6 +45,7 @@ async function invokeFunction(functionName, event, {
     templatePath = path.join(process.cwd(), 'template.yml'),
     envPath = path.join(process.cwd(), 'env.json'),
     requestId,
+    keepAlive = false,
 } = {}) {
     const debug = getDebug(requestId || generateRequestId());
 
@@ -70,6 +71,7 @@ async function invokeFunction(functionName, event, {
             handlerName,
             environment,
             event,
+            keepAlive,
         });
 
         debug('End');

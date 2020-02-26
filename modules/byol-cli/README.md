@@ -23,8 +23,8 @@ Start an AWS-compatible Lambda server capable of running the functions defined i
 replacement for `sam local start-lambda`.
 
 ```shell script
-byol start [-p PORT] [-s | --silent]
-byol start-lambda [-p PORT] [-s | --silent]
+byol start [-p PORT] [-s | --silent] [--keep-alive]
+byol start-lambda [-p PORT] [-s | --silent] [--keep-alive]
 ```
 
 With this server running you can call your Lambdas using the [aws-sdk](https://github.com/aws/aws-sdk-js).
@@ -35,7 +35,7 @@ Starts a server mimicing API Gateway in proxy mode. Similar to `sam local start-
 in your template file. Currently, only event sources on the function resource `AWS::Serverless::Function` are supported.
 
 ```shell script
-byol start-api [-p PORT] [-s | --silent]
+byol start-api [-p PORT] [-s | --silent] [--keep-alive]
 ```
 
 With the server running, call your API over HTTP as usual.

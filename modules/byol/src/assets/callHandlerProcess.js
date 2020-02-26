@@ -1,70 +1,45 @@
+const workerpool = require('workerpool');
+
 const LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT = 6000000;
-let handledResponse = false;
 
-function onHandlerResponse(error, result) {
-    if (handledResponse) {
-        return;
-    }
-
-    handledResponse = true;
-
-    if (error) {
-        process.send({
-            error: {
-                message: error.message,
-                code: error.code,
-            },
-        });
-    } else if (Buffer.byteLength(JSON.stringify(result)) >= LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT) {
-        process.send({
-            error: {
-                message: `Payload size is too large (limit ${LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT})`,
-                code: 'PAYLOAD_TOO_LARGE',
-            },
-        });
-    } else {
-        process.send({ result });
-    }
-}
-
-function callHandler({
+async function callHandler({
     absoluteIndexPath,
     handlerName,
     event,
+    environment,
 }) {
+    process.env = environment;
+
     // eslint-disable-next-line import/no-dynamic-require, global-require
     const { [handlerName]: handler } = require(absoluteIndexPath);
 
     if (!handler) {
-        onHandlerResponse(new Error('HANDLER_NOT_FOUND'));
-        return;
+        throw new Error('HANDLER_NOT_FOUND');
     }
 
-    const maybePromise = handler(event, {}, onHandlerResponse);
+    const result = await new Promise(((resolve, reject) => {
+        const maybePromise = handler(event, {}, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(res);
+            }
+        });
 
-    if (maybePromise && typeof maybePromise.then === 'function' && typeof maybePromise.catch === 'function') {
-        maybePromise
-            .then((res) => onHandlerResponse(null, res))
-            .catch((err) => onHandlerResponse(err));
+        if (maybePromise && typeof maybePromise.then === 'function' && typeof maybePromise.catch === 'function') {
+            maybePromise
+                .then((res) => resolve(res))
+                .catch((err) => reject(err));
+        }
+    }));
+
+    if (Buffer.byteLength(JSON.stringify(result)) >= LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT) {
+        throw new Error('PAYLOAD_TOO_LARGE');
     }
+
+    return result;
 }
 
-function onMessage(message) {
-    const {
-        type,
-        payload,
-    } = message;
-
-    switch (type) {
-    case 'CALL':
-        callHandler(payload);
-        break;
-    case 'EXIT':
-        process.exit(0);
-        break;
-    default:
-        throw new Error('UNSUPPORTED MESSAGE');
-    }
-}
-
-process.on('message', onMessage);
+workerpool.worker({
+    callHandler,
+});

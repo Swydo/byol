@@ -1,9 +1,9 @@
 const { env } = process;
 
-async function handler(...args) {
+async function handler(event, context) {
     return {
-        args,
-        env,
+        args: [event, context],
+        env: { ...env },
     };
 }
 
