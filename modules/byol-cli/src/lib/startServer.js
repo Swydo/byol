@@ -1,10 +1,33 @@
 const express = require('express');
-const { invokeApi } = require('@swydo/byol');
+const { invokeApi, invokeFunction } = require('@swydo/byol');
 const debug = require('debug')('byol:server');
 
-function startApiServer(port, { keepAlive }) {
-    const app = express();
+function attachLambdaServer(app, { keepAlive }) {
+    app.post('/2015-03-31/functions/:functionName/invocations', (req, res) => {
+        const { functionName } = req.params;
 
+        let eventString = '';
+
+        req.on('data', (chunk) => {
+            eventString += chunk;
+        });
+
+        req.on('end', () => {
+            const event = eventString ? JSON.parse(eventString) : {};
+
+            invokeFunction(functionName, event, { keepAlive })
+                .then((result) => {
+                    res.send(result);
+                })
+                .catch(() => {
+                    res.status(500);
+                    res.end();
+                });
+        });
+    });
+}
+
+function attachApiServer(app, { keepAlive }) {
     app.all('*', (req, res) => {
         let body = '';
 
@@ -63,6 +86,23 @@ function startApiServer(port, { keepAlive }) {
                 });
         });
     });
+}
+
+function startServer({
+    lambda,
+    api,
+    port,
+    keepAlive,
+}) {
+    const app = express();
+
+    if (lambda) {
+        attachLambdaServer(app, { keepAlive });
+    }
+
+    if (api) {
+        attachApiServer(app, { keepAlive });
+    }
 
     app.listen(port);
 
@@ -70,5 +110,5 @@ function startApiServer(port, { keepAlive }) {
 }
 
 module.exports = {
-    startApiServer,
+    startServer,
 };
