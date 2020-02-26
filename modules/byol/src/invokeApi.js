@@ -107,6 +107,7 @@ function parseHeaders(rawHeaders) {
 async function invokeApi(httpMethod, httpUrl, httpHeaders = [], body, {
     templatePath,
     envPath,
+    keepAlive = false,
 } = {}) {
     const parsedUrl = new URL(httpUrl, 'http://localhost');
 
@@ -148,7 +149,12 @@ async function invokeApi(httpMethod, httpUrl, httpHeaders = [], body, {
         requestContext,
         body,
     };
-    return invokeFunction(matchingMapping.functionName, event, { templatePath, envPath, requestId });
+    return invokeFunction(matchingMapping.functionName, event, {
+        templatePath,
+        envPath,
+        requestId,
+        keepAlive
+    });
 }
 
 module.exports = {
