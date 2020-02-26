@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.8.0 (2020-02-26)
+
+
+### Features
+
+* **byol-cli:** make "start" start both an API Gateway and Lambda server ([#43](https://github.com/Swydo/byol/issues/43)) ([13c6964](https://github.com/Swydo/byol/commit/13c69648c84d45efb44d97754d065ea9c0382763))
+
+
+
+
+
 ## 1.7.1 (2020-02-26)
 
 
