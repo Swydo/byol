@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.7.0 (2020-02-26)
+
+
+### Features
+
+* use workerpool to invoke handlers in long-lived workers ([#41](https://github.com/Swydo/byol/issues/41)) ([f3a5508](https://github.com/Swydo/byol/commit/f3a55080d2ea0576b13498f8480d23d7195c2a93))
+
+
+
+
+
 # 1.6.0 (2020-02-20)
 
 
