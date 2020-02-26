@@ -8,18 +8,18 @@ const {
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const { invokeFunction } = require('./invokeFunction');
-const { handlerWorkerPool } = require('./handlerWorkerPool');
+const { terminateWorkerPools } = require('./handlerWorkerPool');
 
 chai.use(chaiAsPromised);
 const { expect } = chai;
 
 describe('invokeFunction', function () {
     before(async function () {
-        await handlerWorkerPool.terminate();
+        await terminateWorkerPools();
     });
 
     after(async function () {
-        await handlerWorkerPool.terminate();
+        await terminateWorkerPools()
     });
 
     it('invokes the async function\'s handler', async function () {

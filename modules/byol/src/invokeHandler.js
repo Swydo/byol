@@ -1,4 +1,4 @@
-const { handlerWorkerPool } = require('./handlerWorkerPool');
+const { getWorkerPool } = require('./handlerWorkerPool');
 
 async function invokeHandler({
     absoluteIndexPath,
@@ -6,7 +6,9 @@ async function invokeHandler({
     environment,
     event,
 }) {
-    return handlerWorkerPool.exec('callHandler', [{
+    const workerPool = await getWorkerPool(handlerName, environment);
+
+    return await workerPool.exec('callHandler', [{
         absoluteIndexPath,
         handlerName,
         event,
