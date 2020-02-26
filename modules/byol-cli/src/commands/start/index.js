@@ -1,8 +1,8 @@
 const { startServer } = require('../../lib/startServer');
 const { handleGlobalOptions } = require('../../handleGlobalOptions');
 
-const command = ['start-lambda'];
-const desc = 'Start a local lambda server';
+const command = ['start'];
+const desc = 'Start a local lambda and API server';
 const builder = (yargs) => yargs
     .option('port', {
         alias: 'p',
@@ -15,6 +15,7 @@ const handler = async ({ port, keepAlive, ...globalOptions }) => {
     startServer({
         port,
         keepAlive,
+        api: true,
         lambda: true,
     });
 };
