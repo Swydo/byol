@@ -7,7 +7,7 @@ async function invokeHandler({
     event,
     keepAlive = false,
 }) {
-    const workerPool = await getWorkerPool(handlerName, environment);
+    const workerPool = await getWorkerPool(absoluteIndexPath, handlerName, environment);
 
     try {
         return await workerPool.exec('callHandler', [{
@@ -21,7 +21,7 @@ async function invokeHandler({
         }]);
     } finally {
         if (!keepAlive) {
-            terminateWorkerPool(handlerName);
+            terminateWorkerPool(absoluteIndexPath, handlerName);
         }
     }
 }

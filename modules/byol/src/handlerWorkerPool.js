@@ -3,11 +3,17 @@ const workerpool = require('workerpool');
 
 const workerPoolMap = new Map();
 
-function terminateWorkerPool(handler) {
-    const { pool } = workerPoolMap.get(handler);
+function getWorkerPoolKey(absoluteIndexPath, handlerName) {
+    return `${absoluteIndexPath}:${handlerName}`;
+}
+
+function terminateWorkerPool(absoluteIndexPath, handlerName) {
+    const poolKey = getWorkerPoolKey(absoluteIndexPath, handlerName);
+
+    const { pool } = workerPoolMap.get(poolKey);
     const terminationPromise = pool.terminate();
 
-    workerPoolMap.delete(handler);
+    workerPoolMap.delete(poolKey);
 
     return terminationPromise;
 }
@@ -15,34 +21,38 @@ function terminateWorkerPool(handler) {
 function terminateWorkerPools() {
     const terminationPromises = [];
 
-    workerPoolMap.forEach((pool, key) => {
-        terminationPromises.push(terminateWorkerPool(key));
+    workerPoolMap.forEach((pool) => {
+        const { absoluteIndexPath, handlerName } = pool;
+        terminationPromises.push(terminateWorkerPool(absoluteIndexPath, handlerName));
     });
 
     return Promise.all(terminationPromises);
 }
 
-async function getWorkerPool(handler, environment = {}) {
-    if (!workerPoolMap.has(handler)) {
+async function getWorkerPool(absoluteIndexPath, handlerName, environment = {}) {
+    const poolKey = getWorkerPoolKey(absoluteIndexPath, handlerName);
+
+    if (!workerPoolMap.has(poolKey)) {
         const pool = workerpool.pool(path.join(__dirname, 'assets', 'callHandlerProcess.js'));
 
-        workerPoolMap.set(handler, {
+        workerPoolMap.set(poolKey, {
             pool,
+            absoluteIndexPath,
+            handlerName,
             environment,
         });
     }
 
-    const { pool, environment: poolEnvironment } = workerPoolMap.get(handler);
+    const { pool, environment: poolEnvironment } = workerPoolMap.get(poolKey);
 
     if (JSON.stringify(poolEnvironment) !== JSON.stringify(environment)) {
-        terminateWorkerPool(handler);
+        terminateWorkerPool(poolKey);
 
-        return getWorkerPool(handler, environment);
+        return getWorkerPool(absoluteIndexPath, handlerName, environment);
     }
 
     return pool;
 }
-
 
 module.exports = {
     getWorkerPool,
