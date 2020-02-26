@@ -1,11 +1,9 @@
 const { env } = process;
 
-async function handler(...args) {
-    const callback = args[args.length - 1];
-
+async function handler(event, context, callback) {
     callback(null, {
-        args,
-        env,
+        args: [event, context],
+        env: { ...env },
     });
 }
 

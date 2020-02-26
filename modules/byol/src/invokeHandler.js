@@ -1,5 +1,4 @@
-const path = require('path');
-const { fork } = require('child_process');
+const { handlerWorkerPool } = require('./handlerWorkerPool');
 
 async function invokeHandler({
     absoluteIndexPath,
@@ -7,46 +6,15 @@ async function invokeHandler({
     environment,
     event,
 }) {
-    const forkOptions = {
-        env: {
+    return handlerWorkerPool.exec('callHandler', [{
+        absoluteIndexPath,
+        handlerName,
+        event,
+        environment: {
             ...process.env,
             ...environment,
         },
-    };
-    const forkProcess = fork(path.join(__dirname, 'assets', 'callHandlerProcess.js'), forkOptions);
-
-    return new Promise(((resolve, reject) => {
-        forkProcess.send({
-            type: 'CALL',
-            payload: {
-                absoluteIndexPath,
-                handlerName,
-                event,
-            },
-        });
-
-        let hadResponse = false;
-
-        forkProcess.on('message', (message) => {
-            hadResponse = true;
-
-            forkProcess.send({ type: 'EXIT' });
-
-            const { error, result } = message;
-
-            if (error) {
-                reject(error);
-            } else {
-                resolve(result);
-            }
-        });
-
-        forkProcess.on('exit', () => {
-            if (!hadResponse) {
-                reject(new Error('FORK_EXITED_UNEXPECTEDLY'));
-            }
-        });
-    }));
+    }]);
 }
 
 module.exports = {

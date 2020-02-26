@@ -1,13 +1,27 @@
 const path = require('path');
-const { describe, it } = require('mocha');
+const {
+    describe,
+    it,
+    before,
+    after,
+} = require('mocha');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const { invokeFunction } = require('./invokeFunction');
+const { handlerWorkerPool } = require('./handlerWorkerPool');
 
 chai.use(chaiAsPromised);
 const { expect } = chai;
 
 describe('invokeFunction', function () {
+    before(async function () {
+        await handlerWorkerPool.terminate();
+    });
+
+    after(async function () {
+        await handlerWorkerPool.terminate();
+    });
+
     it('invokes the async function\'s handler', async function () {
         const templatePath = path.resolve(__dirname, '../tests/assets/template.yml');
         const event = {
@@ -59,7 +73,7 @@ describe('invokeFunction', function () {
         expect(result).to.have.property('args');
 
         const { args } = result;
-        expect(args).to.be.an('array').with.length(3);
+        expect(args).to.be.an('array').with.length(2);
         expect(args[0]).to.deep.equal(event);
     });
 
@@ -122,7 +136,7 @@ describe('invokeFunction', function () {
             { templatePath },
         );
 
-        await expect(invokePromise).to.eventually.be.rejectedWith('FORK_EXITED_UNEXPECTEDLY');
+        await expect(invokePromise).to.eventually.be.rejectedWith('ERROR');
     });
 
     it('rejects when the function can\'t be found', async function () {
