@@ -1,7 +1,7 @@
 const { startServer } = require('../../lib/startServer');
 const { handleGlobalOptions } = require('../../handleGlobalOptions');
 
-const command = ['start'];
+const command = ['*', 'start'];
 const desc = 'Start a local lambda and API server';
 const builder = (yargs) => yargs
     .option('port', {
