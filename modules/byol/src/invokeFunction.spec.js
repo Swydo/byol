@@ -19,7 +19,7 @@ describe('invokeFunction', function () {
     });
 
     after(async function () {
-        await terminateWorkerPools()
+        await terminateWorkerPools();
     });
 
     it('invokes the async function\'s handler', async function () {

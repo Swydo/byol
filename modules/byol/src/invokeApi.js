@@ -153,7 +153,7 @@ async function invokeApi(httpMethod, httpUrl, httpHeaders = [], body, {
         templatePath,
         envPath,
         requestId,
-        keepAlive
+        keepAlive,
     });
 }
 
