@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.11.0 (2020-03-11)
+
+
+### Features
+
+* **byol-cli:** allow specifying template and env paths ([#50](https://github.com/Swydo/byol/issues/50)) ([c1bf8de](https://github.com/Swydo/byol/commit/c1bf8dec898b0d65eda9edb03652a7ce36755125))
+
+
+
+
+
 # 1.10.0 (2020-03-11)
 
 

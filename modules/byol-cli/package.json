@@ -1,6 +1,6 @@
 {
   "name": "@swydo/byol-cli",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "Bring Your Own Lambda CLI",
   "license": "MIT",
   "main": "src/index.js",
@@ -16,7 +16,7 @@
     "directory": "modules/byol-cli"
   },
   "dependencies": {
-    "@swydo/byol": "^1.10.0",
+    "@swydo/byol": "^1.11.0",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "supports-color": "^7.0.0",
