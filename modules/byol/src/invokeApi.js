@@ -104,12 +104,18 @@ function parseHeaders(rawHeaders) {
     return { headers, multiValueHeaders };
 }
 
-async function invokeApi(httpMethod, httpUrl, httpHeaders = [], body, {
+async function invokeApi({
+    method,
+    url,
+    rawHeaders,
+    body,
+    connection: { remoteIp },
+} = [], {
     templatePath,
     envPath,
     keepAlive = false,
 } = {}) {
-    const parsedUrl = new URL(httpUrl, 'http://localhost');
+    const parsedUrl = new URL(url, 'http://localhost');
 
     const template = getTemplate(templatePath);
 
@@ -120,7 +126,7 @@ async function invokeApi(httpMethod, httpUrl, httpHeaders = [], body, {
     const apiMapping = getApiMapping(template.Resources);
 
     const matchingMapping = apiMapping.find((mapping) => (
-        mapping.listener.httpMethod === httpMethod && mapping.listener.match(parsedUrl.pathname)
+        mapping.listener.httpMethod === method && mapping.listener.match(parsedUrl.pathname)
     ));
 
     if (!matchingMapping) {
@@ -129,18 +135,21 @@ async function invokeApi(httpMethod, httpUrl, httpHeaders = [], body, {
 
     const requestId = generateRequestId();
     const pathParameters = matchingMapping.listener.match(parsedUrl.pathname);
-    const { headers, multiValueHeaders } = parseHeaders(httpHeaders);
+    const { headers, multiValueHeaders } = parseHeaders(rawHeaders);
     const { queryStringParameters, multiValueQueryStringParameters } = parseQueryParams(parsedUrl);
     const requestContext = {
         resourcePath: matchingMapping.listener.resource,
-        httpMethod,
+        httpMethod: method,
+        identity: {
+            sourceIp: remoteIp,
+        },
         requestId,
     };
 
     const event = {
         resource: matchingMapping.listener.resource,
         httpPath: parsedUrl.pathname,
-        httpMethod,
+        httpMethod: method,
         headers,
         multiValueHeaders,
         pathParameters,
