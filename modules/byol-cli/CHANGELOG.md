@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.9.0 (2020-03-11)
+
+
+### Features
+
+* pass source IP into lambda events ([#48](https://github.com/Swydo/byol/issues/48)) ([00a9cd1](https://github.com/Swydo/byol/commit/00a9cd11df1ec15bfb9a3c04c72fbc77a61ca049))
+
+
+
+
+
 ## 1.8.1 (2020-03-08)
 
 **Note:** Version bump only for package @swydo/byol-cli
