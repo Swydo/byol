@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.10.0 (2020-03-11)
+
+
+### Features
+
+* **byol:** support function resources in nested stacks ([#49](https://github.com/Swydo/byol/issues/49)) ([1f96ea2](https://github.com/Swydo/byol/commit/1f96ea28c0fb982f12e7539c8d6ebcf6f4ce5980))
+
+
+
+
+
 # 1.9.0 (2020-03-11)
 
 
