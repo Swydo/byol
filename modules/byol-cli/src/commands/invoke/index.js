@@ -4,17 +4,31 @@ const { handleGlobalOptions } = require('../../handleGlobalOptions');
 const command = 'invoke';
 const desc = 'Invoke a lambda function';
 const builder = (yargs) => yargs
-    .option('functionName', {
-        alias: 'f',
+    .option('env-path', {
+        alias: ['env-vars', 'n'],
+        default: './env.json',
     })
     .option('event', {
         alias: 'e',
+    })
+    .option('functionName', {
+        alias: 'f',
+    })
+    .option('template-path', {
+        alias: ['template-file', 'template', 't'],
+        default: './template.yml',
     });
-const handler = async ({ functionName, event, ...globalOptions }) => {
+const handler = async ({
+    envPath,
+    event,
+    functionName,
+    templatePath,
+    ...globalOptions
+}) => {
     handleGlobalOptions(globalOptions);
 
     try {
-        const result = await invokeFunction(functionName, JSON.parse(event));
+        const result = await invokeFunction(functionName, JSON.parse(event), { templatePath, envPath });
 
         console.log(result); // eslint-disable-line no-console
     } catch (e) {

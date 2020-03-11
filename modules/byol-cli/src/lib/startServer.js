@@ -2,7 +2,7 @@ const express = require('express');
 const { invokeApi, invokeFunction } = require('@swydo/byol');
 const debug = require('debug')('byol:server');
 
-function attachLambdaServer(app, { keepAlive }) {
+function attachLambdaServer(app, { invokeOptions }) {
     app.post('/2015-03-31/functions/:functionName/invocations', (req, res) => {
         const { functionName } = req.params;
 
@@ -15,7 +15,7 @@ function attachLambdaServer(app, { keepAlive }) {
         req.on('end', () => {
             const event = eventString ? JSON.parse(eventString) : {};
 
-            invokeFunction(functionName, event, { keepAlive })
+            invokeFunction(functionName, event, invokeOptions)
                 .then((result) => {
                     res.send(result);
                 })
@@ -27,7 +27,7 @@ function attachLambdaServer(app, { keepAlive }) {
     });
 }
 
-function attachApiServer(app, { keepAlive }) {
+function attachApiServer(app, { invokeOptions }) {
     app.all('*', (req, res) => {
         let body = '';
 
@@ -36,7 +36,7 @@ function attachApiServer(app, { keepAlive }) {
         });
 
         req.on('end', () => {
-            invokeApi({ ...req, body }, { keepAlive })
+            invokeApi({ ...req, body }, invokeOptions)
                 .catch(() => {
                     // Intentionally left blank, ignore error and have then return a 502.
                 })
@@ -92,16 +92,16 @@ function startServer({
     lambda,
     api,
     port,
-    keepAlive,
+    invokeOptions,
 }) {
     const app = express();
 
     if (lambda) {
-        attachLambdaServer(app, { keepAlive });
+        attachLambdaServer(app, { invokeOptions });
     }
 
     if (api) {
-        attachApiServer(app, { keepAlive });
+        attachApiServer(app, { invokeOptions });
     }
 
     app.listen(port);
