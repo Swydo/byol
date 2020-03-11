@@ -23,8 +23,8 @@ Combine both `start-lambda` and `start-api`. Start an AWS-compatible Lambda serv
 API Gateway on the same port.
 
 ```shell script
-byol [-p PORT] [-s | --silent] [--keep-alive]
-byol start [-p PORT] [-s | --silent] [--keep-alive]
+byol [-p PORT] [-s | --silent] [--keep-alive] [--template-path] [--env-path]
+byol start [-p PORT] [-s | --silent] [--keep-alive] [--template-path] [--env-path]
 ```
 
 With this server running you can call your Lambdas using the [aws-sdk](https://github.com/aws/aws-sdk-js) and your
@@ -36,7 +36,7 @@ Start an AWS-compatible Lambda server capable of running the functions defined i
 replacement for `sam local start-lambda`.
 
 ```shell script
-byol start-lambda [-p PORT] [-s | --silent] [--keep-alive]
+byol start-lambda [-p PORT] [-s | --silent] [--keep-alive] [--template-path] [--env-path]
 ```
 
 With this server running you can call your Lambdas using the [aws-sdk](https://github.com/aws/aws-sdk-js).
@@ -47,7 +47,7 @@ Starts a server mimicing API Gateway in proxy mode. Similar to `sam local start-
 in your template file. Currently, only event sources on the function resource `AWS::Serverless::Function` are supported.
 
 ```shell script
-byol start-api [-p PORT] [-s | --silent] [--keep-alive]
+byol start-api [-p PORT] [-s | --silent] [--keep-alive] [--template-path] [--env-path]
 ```
 
 With the server running, call your API over HTTP as usual.
@@ -57,5 +57,5 @@ With the server running, call your API over HTTP as usual.
 Invoke a function as defined in your `template.yml`. This is a replacement for `sam local invoke`.
 
 ```shell script
-byol invoke -f FunctionName -e {} [-s | --silent]
+byol invoke -f FunctionName -e {} [-s | --silent] [--template-path] [--env-path]
 ```
