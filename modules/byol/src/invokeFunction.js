@@ -2,25 +2,54 @@ const fs = require('fs');
 const path = require('path');
 const rawDebug = require('debug');
 const { invokeHandler } = require('./invokeHandler');
-const { getTemplate } = require('./getTemplate');
+const { DEFAULT_TEMPLATE_PATH, getTemplate } = require('./getTemplate');
 const { generateRequestId } = require('./generateRequestId');
+
+const FUNCTION_RESOURCE_TYPE = 'AWS::Serverless::Function';
+const STACK_RESOURCE_TYPE = 'AWS::CloudFormation::Stack';
 
 function getDebug(requestId) {
     return rawDebug(`byol:invoke:${requestId}`);
 }
 
-function getFunctionResource(templatePath, functionName) {
+function getFunctionResources(templatePath = DEFAULT_TEMPLATE_PATH) {
     const template = getTemplate(templatePath);
 
     if (!template.Resources) {
         throw new Error('TEMPLATE_RESOURCES_MISSING');
     }
 
-    if (!template.Resources[functionName]) {
+    const directResources = Object
+        .keys(template.Resources)
+        .filter((resourceKey) => template.Resources[resourceKey].Type === FUNCTION_RESOURCE_TYPE)
+        .reduce((all, resourceKey) => ({
+            ...all,
+            [resourceKey]: template.Resources[resourceKey],
+        }), {});
+
+    const nestedResources = Object
+        .values(template.Resources)
+        .filter((resource) => resource.Type === STACK_RESOURCE_TYPE)
+        .map((resource) => path.resolve(templatePath, '..', resource.Properties.TemplateURL))
+        .reduce((all, nestedTemplatePath) => ({
+            ...all,
+            ...getFunctionResources(nestedTemplatePath),
+        }), {});
+
+    return {
+        ...directResources,
+        ...nestedResources,
+    };
+}
+
+function getFunctionResource(templatePath, functionName) {
+    const functionResources = getFunctionResources(templatePath);
+
+    if (!functionResources[functionName]) {
         throw new Error('FUNCTION_NOT_DEFINED');
     }
 
-    return template.Resources[functionName];
+    return functionResources[functionName];
 }
 
 function getEnvironment(envPath, functionName) {
@@ -85,5 +114,6 @@ async function invokeFunction(functionName, event, {
 }
 
 module.exports = {
+    getFunctionResources,
     invokeFunction,
 };

@@ -77,6 +77,27 @@ describe('invokeFunction', function () {
         expect(args[0]).to.deep.equal(event);
     });
 
+    it('invokes a nested function\'s handler', async function () {
+        const templatePath = path.resolve(__dirname, '../tests/assets/nested-template.yml');
+        const event = {
+            foo: 'foo',
+        };
+
+        const result = await invokeFunction(
+            'GoodFunction',
+            event,
+            { templatePath },
+        );
+
+        expect(result).to.be.an('object');
+        expect(result).to.have.property('env');
+        expect(result).to.have.property('args');
+
+        const { args } = result;
+        expect(args).to.be.an('array').with.length(2);
+        expect(args[0]).to.deep.equal(event);
+    });
+
     it('invokes the function\'s handler with environment variables from file', async function () {
         const templatePath = path.resolve(__dirname, '../tests/assets/template.yml');
         const envPath = path.resolve(__dirname, '../tests/assets/goodEnv.json');

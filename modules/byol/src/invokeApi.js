@@ -1,10 +1,8 @@
 const { URL } = require('url');
 const pathMatch = require('path-match');
-const { getTemplate } = require('./getTemplate');
-const { invokeFunction } = require('./invokeFunction');
+const { getFunctionResources, invokeFunction } = require('./invokeFunction');
 const { generateRequestId } = require('./generateRequestId');
 
-const FUNCTION_RESOURCE_TYPE = 'AWS::Serverless::Function';
 const API_EVENT_TYPES = ['Api', 'HttpApi'];
 
 const route = pathMatch({
@@ -35,14 +33,14 @@ function createRoute(awsPath) {
     return route(expressPath);
 }
 
-function getApiMapping(resources) {
-    const resourceKeys = Object.keys(resources);
-    const functionNames = resourceKeys.filter((key) => resources[key].Type === FUNCTION_RESOURCE_TYPE);
+function getApiMapping(templatePath) {
+    const functionResources = getFunctionResources(templatePath);
+    const functionNames = Object.keys(functionResources);
 
     const mapping = [];
 
     functionNames.forEach((functionName) => {
-        const functionResource = resources[functionName];
+        const functionResource = functionResources[functionName];
         const apiEvents = getApiEvents(functionResource);
 
         apiEvents
@@ -117,13 +115,7 @@ async function invokeApi({
 } = {}) {
     const parsedUrl = new URL(url, 'http://localhost');
 
-    const template = getTemplate(templatePath);
-
-    if (!template.Resources) {
-        throw new Error('TEMPLATE_RESOURCES_MISSING');
-    }
-
-    const apiMapping = getApiMapping(template.Resources);
+    const apiMapping = getApiMapping(templatePath);
 
     const matchingMapping = apiMapping.find((mapping) => (
         mapping.listener.httpMethod === method && mapping.listener.match(parsedUrl.pathname)
