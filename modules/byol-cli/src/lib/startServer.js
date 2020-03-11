@@ -36,7 +36,7 @@ function attachApiServer(app, { keepAlive }) {
         });
 
         req.on('end', () => {
-            invokeApi(req.method, req.url, req.rawHeaders, body, { keepAlive })
+            invokeApi({ ...req, body }, { keepAlive })
                 .catch(() => {
                     // Intentionally left blank, ignore error and have then return a 502.
                 })
