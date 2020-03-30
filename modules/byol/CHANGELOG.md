@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.11.8 (2020-03-30)
+
+
+### Bug Fixes
+
+* **byol:** prevent terminating parralel running working pools ([#57](https://github.com/Swydo/byol/issues/57)) ([517a860](https://github.com/Swydo/byol/commit/517a860cff36ff14826e6f71b14a93b4ec4cbce5))
+
+
+
+
+
 ## 1.11.7 (2020-03-29)
 
 **Note:** Version bump only for package @swydo/byol
