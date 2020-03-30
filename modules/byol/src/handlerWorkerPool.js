@@ -3,12 +3,16 @@ const workerpool = require('workerpool');
 
 const workerPoolMap = new Map();
 
-function getWorkerPoolKey(absoluteIndexPath, handlerName) {
+function getWorkerPoolKey(absoluteIndexPath, handlerName, requestId) {
+    if (requestId) {
+        return `${absoluteIndexPath}:${handlerName}:${requestId}`;
+    }
+
     return `${absoluteIndexPath}:${handlerName}`;
 }
 
-function terminateWorkerPool(absoluteIndexPath, handlerName) {
-    const poolKey = getWorkerPoolKey(absoluteIndexPath, handlerName);
+function terminateWorkerPool(absoluteIndexPath, handlerName, requestId) {
+    const poolKey = getWorkerPoolKey(absoluteIndexPath, handlerName, requestId);
 
     const { pool } = workerPoolMap.get(poolKey);
     const terminationPromise = pool.terminate();
@@ -22,15 +26,15 @@ function terminateWorkerPools() {
     const terminationPromises = [];
 
     workerPoolMap.forEach((pool) => {
-        const { absoluteIndexPath, handlerName } = pool;
-        terminationPromises.push(terminateWorkerPool(absoluteIndexPath, handlerName));
+        const { absoluteIndexPath, handlerName, requestId } = pool;
+        terminationPromises.push(terminateWorkerPool(absoluteIndexPath, handlerName, requestId));
     });
 
     return Promise.all(terminationPromises);
 }
 
-async function getWorkerPool(absoluteIndexPath, handlerName, environment = {}) {
-    const poolKey = getWorkerPoolKey(absoluteIndexPath, handlerName);
+async function getWorkerPool(absoluteIndexPath, handlerName, environment = {}, requestId) {
+    const poolKey = getWorkerPoolKey(absoluteIndexPath, handlerName, requestId);
 
     if (!workerPoolMap.has(poolKey)) {
         const pool = workerpool.pool(path.join(__dirname, 'assets', 'callHandlerProcess.js'));
@@ -40,6 +44,7 @@ async function getWorkerPool(absoluteIndexPath, handlerName, environment = {}) {
             absoluteIndexPath,
             handlerName,
             environment,
+            requestId,
         });
     }
 
