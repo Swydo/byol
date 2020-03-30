@@ -1,4 +1,5 @@
 const { getWorkerPool, terminateWorkerPool } = require('./handlerWorkerPool');
+const { generateRequestId } = require('./generateRequestId');
 
 async function invokeHandler({
     absoluteIndexPath,
@@ -7,7 +8,8 @@ async function invokeHandler({
     event,
     keepAlive = false,
 }) {
-    const workerPool = await getWorkerPool(absoluteIndexPath, handlerName, environment);
+    const requestId = !keepAlive ? generateRequestId() : undefined;
+    const workerPool = await getWorkerPool(absoluteIndexPath, handlerName, environment, requestId);
 
     try {
         return await workerPool.exec('callHandler', [{
@@ -21,7 +23,7 @@ async function invokeHandler({
         }]);
     } finally {
         if (!keepAlive) {
-            terminateWorkerPool(absoluteIndexPath, handlerName);
+            terminateWorkerPool(absoluteIndexPath, handlerName, requestId);
         }
     }
 }
