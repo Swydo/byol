@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@swydo/byol": "^1.11.9",
+    "cors": "2.8.5",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "supports-color": "^7.0.0",
