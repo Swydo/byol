@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.12.0 (2020-04-16)
+
+
+### Features
+
+* **byol-cli:** enable CORS on API Gateway route ([#59](https://github.com/Swydo/byol/issues/59)) ([f5bcb4e](https://github.com/Swydo/byol/commit/f5bcb4e7efc2d228f8ba5ae6ddfd89fedf65cd9a))
+
+
+
+
+
 ## 1.11.9 (2020-04-05)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
