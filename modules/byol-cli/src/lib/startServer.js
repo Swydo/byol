@@ -1,6 +1,6 @@
-const express = require('express');
 const { invokeApi, invokeFunction } = require('@swydo/byol');
 const debug = require('debug')('byol:server');
+const express = require('express');
 
 function attachLambdaServer(app, { invokeOptions }) {
     app.post('/2015-03-31/functions/:functionName/invocations', (req, res) => {
