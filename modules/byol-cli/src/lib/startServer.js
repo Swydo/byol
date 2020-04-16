@@ -1,4 +1,5 @@
 const { invokeApi, invokeFunction } = require('@swydo/byol');
+const cors = require('cors');
 const debug = require('debug')('byol:server');
 const express = require('express');
 
@@ -28,7 +29,7 @@ function attachLambdaServer(app, { invokeOptions }) {
 }
 
 function attachApiServer(app, { invokeOptions }) {
-    app.all('*', (req, res) => {
+    app.all('*', cors(), (req, res) => {
         let body = '';
 
         req.on('data', (chunk) => {
