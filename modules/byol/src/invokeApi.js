@@ -30,6 +30,10 @@ function createRoute(awsPath) {
         return `:${parameterName}`;
     });
 
+    if (awsPath === '/{proxy+}') {
+        return () => true;
+    }
+
     return route(expressPath);
 }
 
