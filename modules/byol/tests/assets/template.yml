@@ -19,6 +19,16 @@ Resources:
       FunctionName: good-callback-function
       MemorySize: 1536
       Timeout: 900
+  GoodAcyncFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: goodCallbackHandler.handler
+      Runtime: nodejs10.x
+      FunctionName: good-callback-function
+      MemorySize: 1536
+      Timeout: 900
+      EventInvokeConfig:
+        MaximumEventAgeInSeconds: 1800
   BadFunction:
     Type: AWS::Serverless::Function
     Properties:

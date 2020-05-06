@@ -117,6 +117,22 @@ describe('invokeFunction', function () {
         expect(env).to.have.property('FOO', 'FOO');
     });
 
+    it('asynchronously invokes the function\'s handler', async function () {
+        const templatePath = path.resolve(__dirname, '../tests/assets/template.yml');
+        const event = {
+            foo: 'foo',
+        };
+
+        const result = await invokeFunction(
+            'GoodAcyncFunction',
+            event,
+            { templatePath },
+        );
+
+        expect(result).to.be.an('object');
+        expect(result).to.have.property('statusCode', 202);
+    });
+
     it('rejects when an error is thrown by the handler', async function () {
         const templatePath = path.resolve(__dirname, '../tests/assets/template.yml');
         const event = {
