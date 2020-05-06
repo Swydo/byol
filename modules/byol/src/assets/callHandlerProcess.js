@@ -1,4 +1,5 @@
 const workerpool = require('workerpool');
+const { generateRequestId } = require('../generateRequestId');
 
 const LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT = 6000000;
 
@@ -12,13 +13,16 @@ async function callHandler({
 
     // eslint-disable-next-line import/no-dynamic-require, global-require
     const { [handlerName]: handler } = require(absoluteIndexPath);
+    const awsContext = {
+        awsRequestId: generateRequestId(),
+    };
 
     if (!handler) {
         throw new Error('HANDLER_NOT_FOUND');
     }
 
     const result = await new Promise(((resolve, reject) => {
-        const maybePromise = handler(event, {}, (err, res) => {
+        const maybePromise = handler(event, awsContext, (err, res) => {
             if (err) {
                 reject(err);
             } else {
@@ -33,7 +37,7 @@ async function callHandler({
         }
     }));
 
-    if (Buffer.byteLength(JSON.stringify(result)) >= LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT) {
+    if (result && Buffer.byteLength(JSON.stringify(result)) >= LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT) {
         throw new Error('PAYLOAD_TOO_LARGE');
     }
 

@@ -17,7 +17,8 @@ function attachLambdaServer(app, { invokeOptions }) {
             const event = eventString ? JSON.parse(eventString) : {};
 
             invokeFunction(functionName, event, invokeOptions)
-                .then((result) => {
+                .then(({ result, invocationType }) => {
+                    res.status(invocationType === 'Event' ? 202 : 200);
                     res.send(result);
                 })
                 .catch(() => {
@@ -41,7 +42,7 @@ function attachApiServer(app, { invokeOptions }) {
                 .catch(() => {
                     // Intentionally left blank, ignore error and have then return a 502.
                 })
-                .then((result) => {
+                .then(({ result }) => {
                     if (!result) {
                         res.status(502);
                         res.end();
@@ -69,7 +70,7 @@ function attachApiServer(app, { invokeOptions }) {
                         });
                     }
 
-                    res.status(result.statusCode);
+                    res.status(result.statusCode || result.StatusCode);
                     multiValueHeadersMap.forEach((valuesSet, key) => {
                         const values = Array.from(valuesSet);
 

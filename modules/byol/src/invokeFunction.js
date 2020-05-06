@@ -104,17 +104,19 @@ async function invokeFunction(functionName, event, {
         };
 
         let result;
+        let invocationType;
 
         if (eventInvokeConfig) {
             invokeHandler(options);
-            result = { statusCode: 202 };
+            invocationType = 'Event';
         } else {
             result = await invokeHandler(options);
+            invocationType = 'RequestResponse';
         }
 
         debug('End');
 
-        return result;
+        return { result, invocationType };
     } catch (e) {
         debug('Error');
 
