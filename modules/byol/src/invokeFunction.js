@@ -84,6 +84,7 @@ async function invokeFunction(functionName, event, {
         Properties: {
             Handler: handler,
             CodeUri: codeUri = '.',
+            EventInvokeConfig: eventInvokeConfig,
         },
     } = resource;
 
@@ -94,14 +95,22 @@ async function invokeFunction(functionName, event, {
 
     try {
         debug('Start');
-
-        const result = await invokeHandler({
+        const options = {
             absoluteIndexPath,
             handlerName,
             environment,
             event,
             keepAlive,
-        });
+        };
+
+        let result;
+
+        if (eventInvokeConfig) {
+            invokeHandler(options);
+            result = { statusCode: 202 };
+        } else {
+            result = await invokeHandler(options);
+        }
 
         debug('End');
 
