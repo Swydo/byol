@@ -130,7 +130,7 @@ async function invokeApi({
     }
 
     const requestId = generateRequestId();
-    const pathParameters = matchingMapping.listener.match(parsedUrl.pathname);
+    const pathParameters = matchingMapping.listener.match(parsedUrl.pathname) && { proxy: parsedUrl.pathname };
     const { headers, multiValueHeaders } = parseHeaders(rawHeaders);
     const { queryStringParameters, multiValueQueryStringParameters } = parseQueryParams(parsedUrl);
     const requestContext = {
