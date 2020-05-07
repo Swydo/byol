@@ -128,7 +128,7 @@ describe('invokeFunction', function () {
             foo: 'foo',
         };
 
-        const { result, invocationType } = await invokeFunction(
+        const { invocationType } = await invokeFunction(
             'GoodAcyncFunction',
             event,
             { templatePath },
