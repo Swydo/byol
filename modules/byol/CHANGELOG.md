@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.5 (2020-05-07)
+
+
+### Bug Fixes
+
+* mimic aws environment ([#64](https://github.com/Swydo/byol/issues/64)) ([ef967b7](https://github.com/Swydo/byol/commit/ef967b7d1654e0c898739a7d82ee5b23849950c5))
+
+
+
+
+
 ## 1.12.4 (2020-05-06)
 
 **Note:** Version bump only for package @swydo/byol
