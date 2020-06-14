@@ -23,6 +23,6 @@
     "eslint-config-airbnb-base": "14.1.0",
     "eslint-plugin-import": "2.20.2",
     "lerna": "^3.16.4",
-    "mocha": "^7.0.1"
+    "mocha": "^8.0.1"
   }
 }
