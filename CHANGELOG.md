@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.12.13 (2020-06-14)
+
+**Note:** Version bump only for package @swydo/byol-monorepo
+
+
+
+
+
 ## 1.12.12 (2020-06-14)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
