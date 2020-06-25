@@ -52,7 +52,7 @@ function getFunctionResource(templatePath, functionName) {
     return functionResources[functionName];
 }
 
-function getEnvironment(envPath, functionName) {
+function getFunctionEnvironment(envPath, functionName) {
     const envFileExists = fs.existsSync(envPath);
 
     if (!envFileExists) {
@@ -70,16 +70,26 @@ function getEnvironment(envPath, functionName) {
     }
 }
 
+function getAwsEnvironment(profile) {
+    return {
+        AWS_PROFILE: profile,
+    };
+}
+
 async function invokeFunction(functionName, event, {
     templatePath = path.join(process.cwd(), 'template.yml'),
     envPath = path.join(process.cwd(), 'env.json'),
     requestId,
     keepAlive = false,
+    profile = 'default',
 } = {}) {
     const debug = getDebug(requestId || generateRequestId());
 
     const resource = getFunctionResource(templatePath, functionName);
-    const environment = getEnvironment(envPath, functionName);
+    const environment = {
+        ...getAwsEnvironment(profile),
+        ...getFunctionEnvironment(envPath, functionName),
+    };
     const {
         Properties: {
             Handler: handler,

@@ -122,6 +122,24 @@ describe('invokeFunction', function () {
         expect(env).to.have.property('FOO', 'FOO');
     });
 
+    it('invokes the function\'s handler with environment variables from the AWS profile', async function () {
+        const templatePath = path.resolve(__dirname, '../tests/assets/template.yml');
+        const envPath = path.resolve(__dirname, '../tests/assets/goodEnv.json');
+        const profile = 'bar-profile';
+        const event = {};
+
+        const { result } = await invokeFunction(
+            'GoodAwsFunction',
+            event,
+            { templatePath, envPath, profile },
+        );
+
+        expect(result).to.have.property('iniCredentials');
+
+        const { iniCredentials } = result;
+        expect(iniCredentials).to.have.property('profile', profile);
+    });
+
     it('asynchronously invokes the function\'s handler', async function () {
         const templatePath = path.resolve(__dirname, '../tests/assets/template.yml');
         const event = {

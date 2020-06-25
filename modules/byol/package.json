@@ -16,5 +16,8 @@
 		"uuid": "^8.0.0",
 		"workerpool": "5.0.4",
 		"yaml-cfn": "^0.2.2"
+	},
+	"devDependencies": {
+		"aws-sdk": "^2.704.0"
 	}
 }
