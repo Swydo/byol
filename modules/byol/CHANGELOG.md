@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.14.0 (2020-06-25)
+
+
+### Features
+
+* support specifying AWS region ([#74](https://github.com/Swydo/byol/issues/74)) ([#75](https://github.com/Swydo/byol/issues/75)) ([91ae201](https://github.com/Swydo/byol/commit/91ae2011c7d5e20442a3cfc70e7720762147787f))
+
+
+
+
+
 # 1.13.0 (2020-06-25)
 
 
