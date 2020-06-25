@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.13.0 (2020-06-25)
+
+
+### Features
+
+* support specifying AWS credentials file profile ([#74](https://github.com/Swydo/byol/issues/74)) ([241bd31](https://github.com/Swydo/byol/commit/241bd316a239a1a32eef907e4844d5621cde4413))
+
+
+
+
+
 ## 1.12.14 (2020-06-21)
 
 **Note:** Version bump only for package @swydo/byol
