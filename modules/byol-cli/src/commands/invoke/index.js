@@ -17,6 +17,7 @@ const builder = (yargs) => yargs
     .option('profile', {
         default: 'default',
     })
+    .option('region')
     .option('template-path', {
         alias: ['template-file', 'template', 't'],
         default: './template.yml',
@@ -26,13 +27,19 @@ const handler = async ({
     event,
     functionName,
     profile,
+    region,
     templatePath,
     ...globalOptions
 }) => {
     handleGlobalOptions(globalOptions);
 
     try {
-        const result = await invokeFunction(functionName, JSON.parse(event), { templatePath, envPath, profile });
+        const result = await invokeFunction(functionName, JSON.parse(event), {
+            templatePath,
+            envPath,
+            profile,
+            region,
+        });
 
         console.log(result); // eslint-disable-line no-console
     } catch (e) {
