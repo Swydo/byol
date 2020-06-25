@@ -115,6 +115,7 @@ async function invokeApi({
 } = [], {
     templatePath,
     envPath,
+    region,
     keepAlive = false,
     profile = 'default',
 } = {}) {
@@ -158,6 +159,7 @@ async function invokeApi({
     return invokeFunction(matchingMapping.functionName, event, {
         templatePath,
         envPath,
+        region,
         requestId,
         keepAlive,
         profile,

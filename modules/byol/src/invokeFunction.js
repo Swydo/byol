@@ -70,15 +70,17 @@ function getFunctionEnvironment(envPath, functionName) {
     }
 }
 
-function getAwsEnvironment(profile) {
+function getAwsEnvironment({ profile, region }) {
     return {
         AWS_PROFILE: profile,
+        AWS_REGION: region,
     };
 }
 
 async function invokeFunction(functionName, event, {
     templatePath = path.join(process.cwd(), 'template.yml'),
     envPath = path.join(process.cwd(), 'env.json'),
+    region,
     requestId,
     keepAlive = false,
     profile = 'default',
@@ -87,7 +89,7 @@ async function invokeFunction(functionName, event, {
 
     const resource = getFunctionResource(templatePath, functionName);
     const environment = {
-        ...getAwsEnvironment(profile),
+        ...getAwsEnvironment({ profile, region }),
         ...getFunctionEnvironment(envPath, functionName),
     };
     const {
