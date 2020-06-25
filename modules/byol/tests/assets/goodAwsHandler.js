@@ -5,6 +5,7 @@ async function handler() {
 
     return {
         iniCredentials,
+        region: AWS.config.region,
     };
 }
 

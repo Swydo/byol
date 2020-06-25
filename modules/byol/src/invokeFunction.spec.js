@@ -140,6 +140,21 @@ describe('invokeFunction', function () {
         expect(iniCredentials).to.have.property('profile', profile);
     });
 
+    it('invokes the function\'s handler with environment variables for the specified region', async function () {
+        const templatePath = path.resolve(__dirname, '../tests/assets/template.yml');
+        const envPath = path.resolve(__dirname, '../tests/assets/goodEnv.json');
+        const region = 'foo-region-1';
+        const event = {};
+
+        const { result } = await invokeFunction(
+            'GoodAwsFunction',
+            event,
+            { templatePath, envPath, region },
+        );
+
+        expect(result).to.have.property('region', region);
+    });
+
     it('asynchronously invokes the function\'s handler', async function () {
         const templatePath = path.resolve(__dirname, '../tests/assets/template.yml');
         const event = {

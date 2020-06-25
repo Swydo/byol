@@ -17,6 +17,7 @@ const builder = (yargs) => yargs
     .option('profile', {
         default: 'default',
     })
+    .option('region')
     .option('template-path', {
         alias: ['template-file', 'template', 't'],
         default: './template.yml',
@@ -26,6 +27,7 @@ const handler = async ({
     keepAlive,
     port,
     profile,
+    region,
     templatePath,
     ...globalOptions
 }) => {
@@ -36,6 +38,7 @@ const handler = async ({
         invokeOptions: {
             keepAlive,
             profile,
+            region,
             envPath: path.resolve(process.cwd(), envPath),
             templatePath: path.resolve(process.cwd(), templatePath),
         },
