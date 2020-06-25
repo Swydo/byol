@@ -116,6 +116,7 @@ async function invokeApi({
     templatePath,
     envPath,
     keepAlive = false,
+    profile = 'default',
 } = {}) {
     const parsedUrl = new URL(url, 'http://localhost');
 
@@ -159,6 +160,7 @@ async function invokeApi({
         envPath,
         requestId,
         keepAlive,
+        profile,
     });
 }
 

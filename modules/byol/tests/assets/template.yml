@@ -11,6 +11,14 @@ Resources:
       FunctionName: good-function
       MemorySize: 1536
       Timeout: 900
+  GoodAwsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: goodAwsHandler.handler
+      Runtime: nodejs10.x
+      FunctionName: good-function
+      MemorySize: 1536
+      Timeout: 900
   GoodCallbackFunction:
     Type: AWS::Serverless::Function
     Properties:
