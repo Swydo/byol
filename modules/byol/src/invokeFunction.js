@@ -1,16 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-const rawDebug = require('debug');
 const { invokeHandler } = require('./invokeHandler');
 const { DEFAULT_TEMPLATE_PATH, getTemplate } = require('./getTemplate');
 const { generateRequestId } = require('./generateRequestId');
 
 const FUNCTION_RESOURCE_TYPE = 'AWS::Serverless::Function';
 const STACK_RESOURCE_TYPE = 'AWS::CloudFormation::Stack';
-
-function getDebug(requestId) {
-    return rawDebug(`byol:invoke:${requestId}`);
-}
 
 function getFunctionResources(templatePath = DEFAULT_TEMPLATE_PATH) {
     const template = getTemplate(templatePath);
@@ -85,8 +80,6 @@ async function invokeFunction(functionName, event, {
     keepAlive = false,
     profile = 'default',
 } = {}) {
-    const debug = getDebug(requestId || generateRequestId());
-
     const resource = getFunctionResource(templatePath, functionName);
     const environment = {
         ...getAwsEnvironment({ profile, region }),
@@ -105,35 +98,27 @@ async function invokeFunction(functionName, event, {
     const relativeIndexPath = `${relativePathWithoutExtension}.js`;
     const absoluteIndexPath = path.join(templatePath, '..', codeUri, relativeIndexPath);
 
-    try {
-        debug('Start');
-        const options = {
-            absoluteIndexPath,
-            handlerName,
-            environment,
-            event,
-            keepAlive,
-        };
+    const options = {
+        absoluteIndexPath,
+        handlerName,
+        environment,
+        event,
+        keepAlive,
+        requestId,
+    };
 
-        let result;
-        let invocationType;
+    let result;
+    let invocationType;
 
-        if (eventInvokeConfig) {
-            invokeHandler(options);
-            invocationType = 'Event';
-        } else {
-            result = await invokeHandler(options);
-            invocationType = 'RequestResponse';
-        }
-
-        debug('End');
-
-        return { result, invocationType };
-    } catch (e) {
-        debug('Error');
-
-        throw e;
+    if (eventInvokeConfig) {
+        invokeHandler(options);
+        invocationType = 'Event';
+    } else {
+        result = await invokeHandler(options);
+        invocationType = 'RequestResponse';
     }
+
+    return { result, invocationType };
 }
 
 module.exports = {
