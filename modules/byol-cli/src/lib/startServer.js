@@ -38,7 +38,13 @@ function attachApiServer(app, { invokeOptions }) {
         });
 
         req.on('end', () => {
-            invokeApi({ ...req, body }, invokeOptions)
+            invokeApi({
+                body,
+                method: req.method,
+                url: req.url,
+                rawHeaders: req.rawHeaders,
+                ip: req.ip
+            }, invokeOptions)
                 .catch(() => {
                     // Intentionally left blank, ignore error and have then return a 502.
                 })
