@@ -44,7 +44,7 @@ async function invokeHandler({
         throw e;
     } finally {
         if (!keepAlive) {
-            terminateWorkerPool(absoluteIndexPath, handlerName, requestId);
+            terminateWorkerPool(absoluteIndexPath, handlerName, poolRequestId);
         }
     }
 }
