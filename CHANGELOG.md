@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.14.16 (2020-09-18)
+
+
+### Bug Fixes
+
+* fix crash when req.connection is suddenly undefined ([#108](https://github.com/Swydo/byol/issues/108)) ([0099e8d](https://github.com/Swydo/byol/commit/0099e8db4e5b64167a7cb5683e5327189420c878))
+
+
+
+
+
 ## 1.14.15 (2020-09-18)
 
 
