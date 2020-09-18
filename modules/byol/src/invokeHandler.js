@@ -38,6 +38,9 @@ async function invokeHandler({
     } catch (e) {
         debug(e);
 
+        // Mark this error so that byol-cli can return an appropriate status code later.
+        e.handlerError = true;
+
         throw e;
     } finally {
         if (!keepAlive) {
