@@ -106,6 +106,7 @@ function startServer({
         attachApiServer(app, { invokeOptions });
     }
 
+    app.set('trust proxy', true);
     app.listen(port);
 
     debug('Listening on port', port);
