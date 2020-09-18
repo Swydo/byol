@@ -111,8 +111,8 @@ async function invokeApi({
     url,
     rawHeaders,
     body,
-    connection: { remoteIp },
-} = [], {
+    ip,
+}, {
     templatePath,
     envPath,
     region,
@@ -141,7 +141,7 @@ async function invokeApi({
         resourcePath: matchingMapping.listener.resource,
         httpMethod: method,
         identity: {
-            sourceIp: remoteIp,
+            sourceIp: ip,
         },
         requestId,
     };

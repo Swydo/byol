@@ -38,7 +38,13 @@ function attachApiServer(app, { invokeOptions }) {
         });
 
         req.on('end', () => {
-            invokeApi({ ...req, body }, invokeOptions)
+            invokeApi({
+                body,
+                method: req.method,
+                url: req.url,
+                rawHeaders: req.rawHeaders,
+                ip: req.ip,
+            }, invokeOptions)
                 .then((invokeResult) => {
                     const { result } = invokeResult;
                     const multiValueHeadersMap = new Map();
@@ -108,6 +114,7 @@ function startServer({
         attachApiServer(app, { invokeOptions });
     }
 
+    app.set('trust proxy', true);
     app.listen(port);
 
     debug('Listening on port', port);
