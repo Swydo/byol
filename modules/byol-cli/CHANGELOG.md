@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.14.15 (2020-09-18)
+
+
+### Bug Fixes
+
+* fix errors not being logged or returned properly ([#107](https://github.com/Swydo/byol/issues/107)) ([f41fd91](https://github.com/Swydo/byol/commit/f41fd91b33378cb9dfbebc008c47e647c59fcb62))
+
+
+
+
+
 ## 1.14.14 (2020-08-16)
 
 **Note:** Version bump only for package @swydo/byol-cli
