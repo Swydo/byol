@@ -112,7 +112,7 @@ async function invokeApi({
     rawHeaders,
     body,
     ip,
-} = [], {
+}, {
     templatePath,
     envPath,
     region,
