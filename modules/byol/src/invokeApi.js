@@ -128,7 +128,9 @@ async function invokeApi({
     ));
 
     if (!matchingMapping) {
-        return { statusCode: 404 };
+        return {
+            result: { statusCode: 404 },
+        };
     }
 
     const requestId = generateRequestId();

@@ -39,16 +39,8 @@ function attachApiServer(app, { invokeOptions }) {
 
         req.on('end', () => {
             invokeApi({ ...req, body }, invokeOptions)
-                .catch(() => {
-                    // Intentionally left blank, ignore error and have then return a 502.
-                })
-                .then(({ result }) => {
-                    if (!result) {
-                        res.status(502);
-                        res.end();
-                        return;
-                    }
-
+                .then((invokeResult) => {
+                    const { result } = invokeResult;
                     const multiValueHeadersMap = new Map();
 
                     if (result.headers) {
@@ -82,8 +74,18 @@ function attachApiServer(app, { invokeOptions }) {
                     });
                     res.send(result.body);
                 })
-                .catch(() => {
-                    res.status(500);
+                .catch((e) => {
+                    let statusCode;
+
+                    if (e.handlerError) {
+                        statusCode = 502;
+                    } else {
+                        statusCode = 500;
+                        // eslint-disable-next-line no-console
+                        console.error(e);
+                    }
+
+                    res.status(statusCode);
                     res.end();
                 });
         });
