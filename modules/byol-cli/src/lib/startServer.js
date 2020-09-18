@@ -85,7 +85,6 @@ function attachApiServer(app, { invokeOptions }) {
                         console.error(e);
                     }
 
-
                     res.status(statusCode);
                     res.end();
                 });
