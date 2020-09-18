@@ -35,6 +35,10 @@ async function invokeHandler({
         debug('End', result);
 
         return result;
+    } catch (e) {
+        debug(e);
+
+        throw e;
     } finally {
         if (!keepAlive) {
             terminateWorkerPool(absoluteIndexPath, handlerName, requestId);
