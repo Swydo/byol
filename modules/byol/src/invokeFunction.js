@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const { invokeHandler } = require('./invokeHandler');
 const { DEFAULT_TEMPLATE_PATH, getTemplate } = require('./getTemplate');
-const { generateRequestId } = require('./generateRequestId');
 
 const FUNCTION_RESOURCE_TYPE = 'AWS::Serverless::Function';
 const STACK_RESOURCE_TYPE = 'AWS::CloudFormation::Stack';
