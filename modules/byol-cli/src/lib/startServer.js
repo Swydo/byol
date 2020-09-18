@@ -43,7 +43,7 @@ function attachApiServer(app, { invokeOptions }) {
                 method: req.method,
                 url: req.url,
                 rawHeaders: req.rawHeaders,
-                ip: req.ip
+                ip: req.ip,
             }, invokeOptions)
                 .then((invokeResult) => {
                     const { result } = invokeResult;
