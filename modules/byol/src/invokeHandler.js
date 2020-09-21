@@ -32,7 +32,7 @@ async function invokeHandler({
             },
         }]);
 
-        debug('End', result);
+        debug('End');
 
         return result;
     } catch (e) {
