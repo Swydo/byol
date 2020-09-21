@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.14.18 (2020-09-21)
+
+
+### Bug Fixes
+
+* **byol:** fix outputting handler result ([#111](https://github.com/Swydo/byol/issues/111)) ([4bea5c4](https://github.com/Swydo/byol/commit/4bea5c4b9e5535f166bf0ff7155a6b50c45baf42))
+
+
+
+
+
 ## 1.14.17 (2020-09-21)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
