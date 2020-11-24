@@ -10,7 +10,9 @@
 		"directory": "modules/byol"
 	},
 	"dependencies": {
+		"aws-sdk": "^2.704.0",
 		"debug": "^4.1.1",
+		"object-path": "0.11.5",
 		"path-match": "^1.2.4",
 		"supports-color": "^7.0.0",
 		"uuid": "^8.0.0",
@@ -18,6 +20,5 @@
 		"yaml-cfn": "^0.2.2"
 	},
 	"devDependencies": {
-		"aws-sdk": "^2.704.0"
 	}
 }
