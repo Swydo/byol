@@ -192,6 +192,7 @@ async function startSqsListener({ environmentOptions: { sqsEndpointUrl, template
             handleMessage: async (message) => {
                 const event = {
                     Records: [{
+                        body: message.Body,
                         md5OfBody: message.MD5OfBody,
                         messageId: message.MessageId,
                         ReceiptHandle: message.ReceiptHandle,
