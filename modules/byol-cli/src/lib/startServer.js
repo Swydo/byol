@@ -50,9 +50,9 @@ function parseHeaders(rawHeaders) {
 function attachLambdaServer(app, { invokeOptions }) {
     const path = '/2015-03-31/functions/:functionName/invocations';
 
-    debug('Register post', path);
+    debug('AWS API at http post', path);
 
-    app.post('/2015-03-31/functions/:functionName/invocations', (req, res) => {
+    app.post(path, (req, res) => {
         const { functionName } = req.params;
 
         let eventString = '';
@@ -178,13 +178,54 @@ function attachApiServer(app, { invokeOptions }) {
     });
 }
 
+async function startSqsListener({ environmentOptions: { sqsEndpointUrl, templateOverrides }, invokeOptions }) {
+    const mapping = await getSqsMapping(invokeOptions.templatePath, { sqsEndpointUrl, templateOverrides });
+
+    mapping.forEach((currentMapping) => {
+        const { functionName, listener } = currentMapping;
+
+        debug(functionName, 'at sqs', listener.queueUrl);
+
+        const consumer = Consumer.create({
+            attributeNames: ['All'],
+            queueUrl: listener.queueUrl,
+            handleMessage: async (message) => {
+                const event = {
+                    Records: [{
+                        md5OfBody: message.MD5OfBody,
+                        messageId: message.MessageId,
+                        ReceiptHandle: message.ReceiptHandle,
+                        eventSource: 'aws:sqs',
+                        eventSourceARN: listener.queue,
+                        region: AWS.config.region,
+                    }],
+                };
+
+                return invokeFunction(currentMapping.functionName, event, invokeOptions);
+            },
+        });
+
+        consumer.on('error', (err) => {
+            debug(err);
+        });
+
+        consumer.on('processing_error', (err) => {
+            debug(err);
+        });
+
+        consumer.start();
     });
 }
 
-function startServer({
+async function startServer({
     lambda,
     api,
-    port,
+    sqs,
+    environmentOptions: {
+        templateOverrides,
+        port = 3000,
+        sqsEndpointUrl,
+    } = {},
     invokeOptions,
 }) {
     const app = express();
@@ -195,6 +236,16 @@ function startServer({
 
     if (api) {
         attachApiServer(app, { invokeOptions });
+    }
+
+    if (sqs) {
+        await startSqsListener({
+            invokeOptions,
+            environmentOptions: {
+                templateOverrides,
+                sqsEndpointUrl,
+            },
+        });
     }
 
     app.set('trust proxy', true);
