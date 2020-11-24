@@ -22,18 +22,16 @@ function getApiEvents(resource) {
 }
 
 function getExpressRoute(awsPath) {
-    return awsPath.replace(/({[a-zA-Z0-9]*})/g, (match) => {
-        const parameterName = match.substring(1, match.length - 1);
+    return awsPath
+        .replace(/({[a-zA-Z0-9]*})/g, (match) => {
+            const parameterName = match.substring(1, match.length - 1);
 
-        return `:${parameterName}`;
-    });
+            return `:${parameterName}`;
+        })
+        .replace('{proxy+}', '*');
 }
 
 function createRoute(awsPath) {
-    if (awsPath === '/{proxy+}') {
-        return () => true;
-    }
-
     const expressRoute = getExpressRoute(awsPath);
 
     return route(expressRoute);
