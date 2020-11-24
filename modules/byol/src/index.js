@@ -1,9 +1,11 @@
-const { invokeApi } = require('./invokeApi');
+const { getApiMapping } = require('./getApiMapping');
+const { generateRequestId } = require('./generateRequestId');
 const { invokeFunction } = require('./invokeFunction');
 const { invokeHandler } = require('./invokeHandler');
 
 module.exports = {
-    invokeApi,
+    generateRequestId,
+    getApiMapping,
     invokeFunction,
     invokeHandler,
 };

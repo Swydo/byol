@@ -1,9 +1,57 @@
-const { invokeApi, invokeFunction } = require('@swydo/byol');
+const AWS = require('aws-sdk');
+const { generateRequestId, invokeFunction } = require('@swydo/byol');
 const cors = require('cors');
 const debug = require('debug')('byol:server');
 const express = require('express');
+const { getApiMapping, getSqsMapping } = require('@swydo/byol');
+const { Consumer } = require('sqs-consumer');
+
+function parseQueryParams(parsedUrl) {
+    const queryStringParameters = {};
+    const multiValueQueryStringParameters = {};
+
+    parsedUrl.searchParams.forEach((value, key) => {
+        queryStringParameters[key] = value;
+        multiValueQueryStringParameters[key] = [
+            ...multiValueQueryStringParameters[key] || [],
+            value,
+        ];
+    });
+
+    return { queryStringParameters, multiValueQueryStringParameters };
+}
+
+function parseHeaders(rawHeaders) {
+    const headers = {};
+    const multiValueHeaders = {};
+
+    rawHeaders
+        .reduce((sets, currentValue, index) => {
+            if (index % 2) {
+                const setIndex = Math.floor(index / 2);
+                sets[setIndex].push(currentValue);
+            } else {
+                sets.push([currentValue]);
+            }
+
+            return sets;
+        }, [])
+        .forEach(([key, value]) => {
+            headers[key] = value;
+            multiValueHeaders[key] = [
+                ...multiValueHeaders[key] || [],
+                value,
+            ];
+        });
+
+    return { headers, multiValueHeaders };
+}
 
 function attachLambdaServer(app, { invokeOptions }) {
+    const path = '/2015-03-31/functions/:functionName/invocations';
+
+    debug('Register post', path);
+
     app.post('/2015-03-31/functions/:functionName/invocations', (req, res) => {
         const { functionName } = req.params;
 
@@ -30,7 +78,9 @@ function attachLambdaServer(app, { invokeOptions }) {
 }
 
 function attachApiServer(app, { invokeOptions }) {
-    app.all('*', cors(), (req, res) => {
+    const mapping = getApiMapping(invokeOptions.templatePath);
+
+    function routeHandler(matchingMapping, req, res) {
         let body = '';
 
         req.on('data', (chunk) => {
@@ -38,13 +88,34 @@ function attachApiServer(app, { invokeOptions }) {
         });
 
         req.on('end', () => {
-            invokeApi({
+            const parsedUrl = new URL(req.url, 'http://localhost');
+            const requestId = generateRequestId();
+            const pathParameters = matchingMapping.listener.match(parsedUrl.pathname) && { proxy: parsedUrl.pathname };
+            const { headers, multiValueHeaders } = parseHeaders(req.rawHeaders);
+            const { queryStringParameters, multiValueQueryStringParameters } = parseQueryParams(parsedUrl);
+            const requestContext = {
+                resourcePath: matchingMapping.listener.resource,
+                httpMethod: req.method,
+                identity: {
+                    sourceIp: req.ip,
+                },
+                requestId,
+            };
+
+            const event = {
+                resource: matchingMapping.listener.resource,
+                httpPath: parsedUrl.pathname,
+                httpMethod: req.method,
+                headers,
+                multiValueHeaders,
+                pathParameters,
+                queryStringParameters,
+                multiValueQueryStringParameters,
+                requestContext,
                 body,
-                method: req.method,
-                url: req.url,
-                rawHeaders: req.rawHeaders,
-                ip: req.ip,
-            }, invokeOptions)
+            };
+
+            invokeFunction(matchingMapping.functionName, event, invokeOptions)
                 .then((invokeResult) => {
                     const { result } = invokeResult;
                     const multiValueHeadersMap = new Map();
@@ -95,6 +166,18 @@ function attachApiServer(app, { invokeOptions }) {
                     res.end();
                 });
         });
+    }
+
+    mapping.forEach((currentMapping) => {
+        const { functionName, listener } = currentMapping;
+        const method = listener.httpMethod.toLowerCase();
+
+        debug(functionName, 'at http', method, listener.route);
+
+        app[method](listener.route, cors(), (req, res) => routeHandler(currentMapping, req, res));
+    });
+}
+
     });
 }
 
