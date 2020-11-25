@@ -17,12 +17,10 @@ function getSqsEvents(resource) {
     return sqsEventKeys.map((key) => events[key]);
 }
 
-async function resolveQueueUrl(template, value, { sqsEndpointUrl, templateOverrides }) {
-    const resolvedValue = resolveValue(template, templateOverrides, value);
-
+async function resolveQueueUrl(queueArn, { sqsEndpointUrl }) {
     const sqs = new AWS.SQS({ endpoint: sqsEndpointUrl });
 
-    const { QueueUrl } = await sqs.getQueueUrl({ QueueName: resolvedValue }).promise();
+    const { QueueUrl } = await sqs.getQueueUrl({ QueueName: queueArn }).promise();
 
     return QueueUrl;
 }
@@ -39,14 +37,15 @@ async function getSqsMapping(templatePath, { sqsEndpointUrl, templateOverrides }
         const sqsEvents = getSqsEvents(functionResource);
 
         sqsEvents
-            .map((event) => ({
-                queueUrlPromise: resolveQueueUrl(
-                    template,
-                    event.Properties.Queue,
-                    { sqsEndpointUrl, templateOverrides },
-                ),
-                batchSize: event.Properties.BatchSize,
-            }))
+            .map((event) => {
+                const queueArn = resolveValue(template, templateOverrides, event.Properties.Queue);
+
+                return ({
+                    queueArn,
+                    queueUrlPromise: resolveQueueUrl(queueArn, { sqsEndpointUrl }),
+                    batchSize: event.Properties.BatchSize,
+                });
+            })
             .forEach((listener) => (
                 mapping.push({
                     functionName,
