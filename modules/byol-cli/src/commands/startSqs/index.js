@@ -3,8 +3,8 @@ const { parseAttributeOption } = require('../../lib/parseAttributeOption');
 const { startServer } = require('../../lib/startServer');
 const { handleGlobalOptions } = require('../../handleGlobalOptions');
 
-const command = ['start-api'];
-const desc = 'Start a local api server';
+const command = ['start-sqs'];
+const desc = 'Start a local sqs listener';
 const builder = (yargs) => yargs
     .option('attribute', {
         alias: ['att'],
@@ -61,7 +61,7 @@ const handler = async ({
             envPath: path.resolve(process.cwd(), envPath),
             templatePath: path.resolve(process.cwd(), templatePath),
         },
-        api: true,
+        sqs: true,
     });
 };
 
