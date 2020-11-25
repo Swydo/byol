@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.14.20 (2020-11-25)
+
+**Note:** Version bump only for package @swydo/byol
+
+
+
+
+
 ## 1.14.19 (2020-09-22)
 
 **Note:** Version bump only for package @swydo/byol
