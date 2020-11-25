@@ -195,7 +195,7 @@ async function startSqsListener({ environmentOptions: { sqsEndpointUrl, template
                         body: message.Body,
                         md5OfBody: message.MD5OfBody,
                         messageId: message.MessageId,
-                        ReceiptHandle: message.ReceiptHandle,
+                        receiptHandle: message.ReceiptHandle,
                         eventSource: 'aws:sqs',
                         eventSourceARN: listener.queueArn,
                         region: AWS.config.region,
