@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.15.0 (2020-11-25)
+
+
+### Features
+
+* add naive sqs event support ([#137](https://github.com/Swydo/byol/issues/137)) ([18922e6](https://github.com/Swydo/byol/commit/18922e63f5dedce38735aea7f0066cc0347ba0bb))
+
+
+
+
+
 ## 1.14.21 (2020-11-25)
 
 **Note:** Version bump only for package @swydo/byol-monorepo

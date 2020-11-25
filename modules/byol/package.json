@@ -1,6 +1,6 @@
 {
 	"name": "@swydo/byol",
-	"version": "1.14.21",
+	"version": "1.15.0",
 	"description": "Bring Your Own Lambda",
 	"license": "MIT",
 	"main": "src/index.js",
@@ -18,7 +18,5 @@
 		"uuid": "^8.0.0",
 		"workerpool": "6.0.3",
 		"yaml-cfn": "^0.2.2"
-	},
-	"devDependencies": {
 	}
 }
