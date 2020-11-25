@@ -1,5 +1,5 @@
 const path = require('path');
-const { parseAttributeOption } = require('../../lib/parseAttributeOverrides');
+const { parseAttributeOption } = require('../../lib/parseAttributeOption');
 const { startServer } = require('../../lib/startServer');
 const { handleGlobalOptions } = require('../../handleGlobalOptions');
 
