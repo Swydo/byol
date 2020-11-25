@@ -14,7 +14,7 @@
 		"path-match": "^1.2.4",
 		"supports-color": "^7.0.0",
 		"uuid": "^8.0.0",
-		"workerpool": "6.0.0",
+		"workerpool": "6.0.3",
 		"yaml-cfn": "^0.2.2"
 	},
 	"devDependencies": {
