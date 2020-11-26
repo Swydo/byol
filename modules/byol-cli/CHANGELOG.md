@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.15.1 (2020-11-26)
+
+
+### Bug Fixes
+
+* **byol-cli:** fix crash when no attributes are given ([#138](https://github.com/Swydo/byol/issues/138)) ([55cedbd](https://github.com/Swydo/byol/commit/55cedbd5bdabf2f970d3c92cad1ebf9de31904cd))
+
+
+
+
+
 # 1.15.0 (2020-11-25)
 
 
