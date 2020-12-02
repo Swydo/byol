@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.15.4 (2020-12-02)
+
+
+### Bug Fixes
+
+* **byol-cli:** fix cors not working ([#142](https://github.com/Swydo/byol/issues/142)) ([53e002b](https://github.com/Swydo/byol/commit/53e002b63e797a077faa7362f3fc0f2c28911123))
+
+
+
+
+
 ## 1.15.3 (2020-12-02)
 
 
