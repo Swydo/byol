@@ -22,19 +22,33 @@ function getApiEvents(resource) {
 }
 
 function getExpressRoute(awsPath) {
-    return awsPath
-        .replace(/({[a-zA-Z0-9]*})/g, (match) => {
-            const parameterName = match.substring(1, match.length - 1);
+    return awsPath.replace(/({[a-zA-Z0-9]*\+?})/g, (match) => {
+        // Strip curly brackets.
+        let parameterName = match.substring(1, match.length - 1);
 
-            return `:${parameterName}`;
-        })
-        .replace('{proxy+}', '*');
+        if (parameterName.endsWith('+')) {
+            parameterName = `${parameterName.substring(0, parameterName.length - 1)}*`;
+        }
+
+        return `:${parameterName}`;
+    });
 }
 
 function createRoute(awsPath) {
     const expressRoute = getExpressRoute(awsPath);
+    const routeMatch = route(expressRoute);
 
-    return route(expressRoute);
+    return (...args) => {
+        const params = routeMatch(...args);
+
+        // Wildcards result in array of segments. Join them to recreate the path.
+        return Object
+            .entries(params)
+            .reduce((map, [key, value]) => ({
+                ...map,
+                [key]: Array.isArray(value) ? value.join('/') : value,
+            }), {});
+    };
 }
 
 function getApiMapping(templatePath) {
