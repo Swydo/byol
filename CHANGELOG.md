@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.15.3 (2020-12-02)
+
+
+### Bug Fixes
+
+* fix handling of API Gateway path parameters ([#141](https://github.com/Swydo/byol/issues/141)) ([c4c69ea](https://github.com/Swydo/byol/commit/c4c69eab28a777ee209af038beea27b05c7873bc))
+
+
+
+
+
 ## 1.15.2 (2020-11-29)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
