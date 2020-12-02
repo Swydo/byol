@@ -88,7 +88,7 @@ function attachApiServer(app, { invokeOptions }) {
         req.on('end', () => {
             const parsedUrl = new URL(req.url, 'http://localhost');
             const requestId = generateRequestId();
-            const pathParameters = matchingMapping.listener.match(parsedUrl.pathname) && { proxy: parsedUrl.pathname };
+            const pathParameters = matchingMapping.listener.match(parsedUrl.pathname);
             const { headers, multiValueHeaders } = parseHeaders(req.rawHeaders);
             const { queryStringParameters, multiValueQueryStringParameters } = parseQueryParams(parsedUrl);
             const requestContext = {
