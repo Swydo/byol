@@ -172,7 +172,7 @@ function attachApiServer(app, { invokeOptions }) {
 
         debug(functionName, 'at http', method, listener.route);
 
-        app[method](listener.route, cors(), (req, res) => routeHandler(currentMapping, req, res));
+        app[method](listener.route, (req, res) => routeHandler(currentMapping, req, res));
     });
 }
 
@@ -185,6 +185,8 @@ async function startHttpServer({
     invokeOptions,
 }) {
     const app = express();
+
+    app.use(cors());
 
     if (lambda) {
         attachLambdaServer(app, { invokeOptions });
