@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.15.18 (2021-01-17)
+
+**Note:** Version bump only for package @swydo/byol-cli
+
+
+
+
+
 ## 1.15.17 (2021-01-17)
 
 **Note:** Version bump only for package @swydo/byol-cli
