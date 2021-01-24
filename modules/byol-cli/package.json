@@ -22,7 +22,7 @@
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "sqs-consumer": "5.5.0",
-    "supports-color": "^7.0.0",
+    "supports-color": "^8.1.1",
     "yargs": "^16.0.3"
   }
 }
