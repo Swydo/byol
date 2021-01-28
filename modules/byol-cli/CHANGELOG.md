@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.16.0 (2021-01-28)
+
+
+### Features
+
+* **byol:** wrap handler function with XRay namespace and root segment ([#162](https://github.com/Swydo/byol/issues/162)) ([22ebf1b](https://github.com/Swydo/byol/commit/22ebf1bcafd33e39b87953a84d057fd0e9ebe5f4))
+
+
+
+
+
 ## 1.15.20 (2021-01-24)
 
 **Note:** Version bump only for package @swydo/byol-cli
