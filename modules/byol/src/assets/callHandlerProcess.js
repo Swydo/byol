@@ -28,27 +28,39 @@ async function callHandler({
     return ns.runAndReturn(async () => {
         AWSXRay.setSegment(segment);
 
-        const result = await new Promise(((resolve, reject) => {
-            const maybePromise = handler(event, awsContext, (err, res) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(res);
+        try {
+            const result = await new Promise(((resolve, reject) => {
+                const maybePromise = handler(event, awsContext, (err, res) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(res);
+                    }
+                });
+
+                if (
+                    maybePromise
+                    && typeof maybePromise.then === 'function'
+                    && typeof maybePromise.catch === 'function'
+                ) {
+                    maybePromise
+                        .then((res) => resolve(res))
+                        .catch((err) => reject(err));
                 }
-            });
+            }));
 
-            if (maybePromise && typeof maybePromise.then === 'function' && typeof maybePromise.catch === 'function') {
-                maybePromise
-                    .then((res) => resolve(res))
-                    .catch((err) => reject(err));
+            if (result && Buffer.byteLength(JSON.stringify(result)) >= LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT) {
+                throw new Error('PAYLOAD_TOO_LARGE');
             }
-        }));
 
-        if (result && Buffer.byteLength(JSON.stringify(result)) >= LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT) {
-            throw new Error('PAYLOAD_TOO_LARGE');
+            segment.close();
+
+            return result;
+        } catch (e) {
+            segment.close(e);
+
+            throw e;
         }
-
-        return result;
     });
 }
 
