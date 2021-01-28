@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.16.1 (2021-01-28)
+
+
+### Bug Fixes
+
+* **byol:** fix not closing XRay segment ([#163](https://github.com/Swydo/byol/issues/163)) ([7af5748](https://github.com/Swydo/byol/commit/7af57484642d5744bccbd4a67cfd058e9cd90684))
+
+
+
+
+
 # 1.16.0 (2021-01-28)
 
 
