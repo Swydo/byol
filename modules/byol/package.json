@@ -18,5 +18,11 @@
 		"uuid": "^8.0.0",
 		"workerpool": "6.0.4",
 		"yaml-cfn": "^0.2.2"
+	},
+	"devDependencies": {
+		"aws-xray-sdk-core": "3.2.0"
+	},
+	"peerDependencies": {
+		"aws-xray-sdk-core": "^3.0.0"
 	}
 }

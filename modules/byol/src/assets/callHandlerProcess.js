@@ -1,3 +1,4 @@
+const AWSXRay = require('aws-xray-sdk-core');
 const workerpool = require('workerpool');
 const { generateRequestId } = require('../generateRequestId');
 
@@ -21,27 +22,34 @@ async function callHandler({
         throw new Error('HANDLER_NOT_FOUND');
     }
 
-    const result = await new Promise(((resolve, reject) => {
-        const maybePromise = handler(event, awsContext, (err, res) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(res);
+    const segment = new AWSXRay.Segment(`${absoluteIndexPath}#${handlerName}`);
+    const ns = AWSXRay.getNamespace();
+
+    return ns.runAndReturn(async () => {
+        AWSXRay.setSegment(segment);
+
+        const result = await new Promise(((resolve, reject) => {
+            const maybePromise = handler(event, awsContext, (err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res);
+                }
+            });
+
+            if (maybePromise && typeof maybePromise.then === 'function' && typeof maybePromise.catch === 'function') {
+                maybePromise
+                    .then((res) => resolve(res))
+                    .catch((err) => reject(err));
             }
-        });
+        }));
 
-        if (maybePromise && typeof maybePromise.then === 'function' && typeof maybePromise.catch === 'function') {
-            maybePromise
-                .then((res) => resolve(res))
-                .catch((err) => reject(err));
+        if (result && Buffer.byteLength(JSON.stringify(result)) >= LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT) {
+            throw new Error('PAYLOAD_TOO_LARGE');
         }
-    }));
 
-    if (result && Buffer.byteLength(JSON.stringify(result)) >= LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT) {
-        throw new Error('PAYLOAD_TOO_LARGE');
-    }
-
-    return result;
+        return result;
+    });
 }
 
 workerpool.worker({
