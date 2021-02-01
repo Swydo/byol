@@ -40,7 +40,7 @@ async function execute(handler, event, awsContext) {
 
 async function executeWithXRay(segmentName, handler, event, awsContext) {
     const AWSXRay = getXRay();
-    const segment = new AWSXRay.Segment();
+    const segment = new AWSXRay.Segment(segmentName);
     const ns = AWSXRay.getNamespace();
 
     return ns.runAndReturn(async () => {
