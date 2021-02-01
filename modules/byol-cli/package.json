@@ -1,6 +1,6 @@
 {
   "name": "@swydo/byol-cli",
-  "version": "1.16.3",
+  "version": "1.16.4",
   "description": "Bring Your Own Lambda CLI",
   "license": "MIT",
   "main": "src/index.js",
@@ -16,7 +16,7 @@
     "directory": "modules/byol-cli"
   },
   "dependencies": {
-    "@swydo/byol": "^1.16.3",
+    "@swydo/byol": "^1.16.4",
     "aws-sdk": "^2.704.0",
     "cors": "2.8.5",
     "debug": "^4.1.1",
