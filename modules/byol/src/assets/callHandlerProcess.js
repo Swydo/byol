@@ -1,8 +1,64 @@
-const AWSXRay = require('aws-xray-sdk-core');
 const workerpool = require('workerpool');
 const { generateRequestId } = require('../generateRequestId');
 
 const LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT = 6000000;
+
+function getXRay() {
+    try {
+        // eslint-disable-next-line global-require
+        return require('aws-xray-sdk-core');
+    } catch (e) {
+        return null;
+    }
+}
+
+function hasXRay() {
+    return Boolean(getXRay());
+}
+
+async function execute(handler, event, awsContext) {
+    return new Promise(((resolve, reject) => {
+        const maybePromise = handler(event, awsContext, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(res);
+            }
+        });
+
+        if (
+            maybePromise
+            && typeof maybePromise.then === 'function'
+            && typeof maybePromise.catch === 'function'
+        ) {
+            maybePromise
+                .then((res) => resolve(res))
+                .catch((err) => reject(err));
+        }
+    }));
+}
+
+async function executeWithXRay(segmentName, handler, event, awsContext) {
+    const AWSXRay = getXRay();
+    const segment = new AWSXRay.Segment(segmentName);
+    const ns = AWSXRay.getNamespace();
+
+    return ns.runAndReturn(async () => {
+        AWSXRay.setSegment(segment);
+
+        try {
+            const result = await execute(handler, event, awsContext);
+
+            segment.close();
+
+            return result;
+        } catch (e) {
+            segment.close(e);
+
+            throw e;
+        }
+    });
+}
 
 async function callHandler({
     absoluteIndexPath,
@@ -22,46 +78,19 @@ async function callHandler({
         throw new Error('HANDLER_NOT_FOUND');
     }
 
-    const segment = new AWSXRay.Segment(`${absoluteIndexPath}#${handlerName}`);
-    const ns = AWSXRay.getNamespace();
+    let result;
 
-    return ns.runAndReturn(async () => {
-        AWSXRay.setSegment(segment);
+    if (hasXRay()) {
+        result = executeWithXRay(`${absoluteIndexPath}#${handlerName}`, handler, event, awsContext);
+    } else {
+        result = execute(handler, event, awsContext);
+    }
 
-        try {
-            const result = await new Promise(((resolve, reject) => {
-                const maybePromise = handler(event, awsContext, (err, res) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(res);
-                    }
-                });
+    if (result && Buffer.byteLength(JSON.stringify(result)) >= LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT) {
+        throw new Error('PAYLOAD_TOO_LARGE');
+    }
 
-                if (
-                    maybePromise
-                    && typeof maybePromise.then === 'function'
-                    && typeof maybePromise.catch === 'function'
-                ) {
-                    maybePromise
-                        .then((res) => resolve(res))
-                        .catch((err) => reject(err));
-                }
-            }));
-
-            if (result && Buffer.byteLength(JSON.stringify(result)) >= LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT) {
-                throw new Error('PAYLOAD_TOO_LARGE');
-            }
-
-            segment.close();
-
-            return result;
-        } catch (e) {
-            segment.close(e);
-
-            throw e;
-        }
-    });
+    return result;
 }
 
 workerpool.worker({
