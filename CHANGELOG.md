@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.16.3 (2021-02-01)
+
+
+### Bug Fixes
+
+* **byol:** check if XRay is available before using it ([#166](https://github.com/Swydo/byol/issues/166)) ([412cb7f](https://github.com/Swydo/byol/commit/412cb7f1a166b876eafc572aa14fe9568d461da9))
+
+
+
+
+
 ## 1.16.2 (2021-01-31)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
