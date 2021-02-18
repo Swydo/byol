@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.16.11 (2021-02-18)
+
+
+### Bug Fixes
+
+* **byol-cli:** use promise-retry to fetch the SQS mapping ([#174](https://github.com/Swydo/byol/issues/174)) ([667febc](https://github.com/Swydo/byol/commit/667febca2d4222104bf9270bfb78665a3bf9bfcb))
+
+
+
+
+
 ## 1.16.10 (2021-02-15)
 
 **Note:** Version bump only for package @swydo/byol
