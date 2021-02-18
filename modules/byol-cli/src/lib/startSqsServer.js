@@ -2,6 +2,7 @@ const AWS = require('aws-sdk');
 const { invokeFunction } = require('@swydo/byol');
 const debug = require('debug')('byol:server:sqs');
 const { getSqsMapping } = require('@swydo/byol');
+const promiseRetry = require('promise-retry');
 const { Consumer } = require('sqs-consumer');
 
 async function startSqsServer({
@@ -11,7 +12,20 @@ async function startSqsServer({
     } = {},
     invokeOptions,
 }) {
-    const mapping = await getSqsMapping(invokeOptions.templatePath, { sqsEndpointUrl, templateOverrides });
+    const mapping = await promiseRetry(async (retry) => {
+        try {
+            return await getSqsMapping(invokeOptions.templatePath, { sqsEndpointUrl, templateOverrides });
+        } catch (e) {
+            debug('Error getting SQS mapping:', e.message);
+
+            retry(e);
+        }
+
+        return null;
+    }, {
+        maxTimeout: 4000,
+        retries: 10,
+    });
 
     mapping.forEach((currentMapping) => {
         const { functionName, listener } = currentMapping;
