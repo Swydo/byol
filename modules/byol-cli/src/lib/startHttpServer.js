@@ -102,7 +102,7 @@ function attachApiServer(app, { invokeOptions }) {
 
             const event = {
                 resource: matchingMapping.listener.resource,
-                httpPath: parsedUrl.pathname,
+                path: parsedUrl.pathname,
                 httpMethod: req.method,
                 headers,
                 multiValueHeaders,
