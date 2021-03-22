@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.16.24 (2021-03-22)
+
+
+### Bug Fixes
+
+* **byol-cli:** fix header keys not being lowercase ([#189](https://github.com/Swydo/byol/issues/189)) ([07ad08c](https://github.com/Swydo/byol/commit/07ad08c564fff69639fc13316389596f186c80f7))
+
+
+
+
+
 ## 1.16.23 (2021-03-21)
 
 **Note:** Version bump only for package @swydo/byol
