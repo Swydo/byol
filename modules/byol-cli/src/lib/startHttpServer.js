@@ -35,9 +35,11 @@ function parseHeaders(rawHeaders) {
             return sets;
         }, [])
         .forEach(([key, value]) => {
-            headers[key] = value;
-            multiValueHeaders[key] = [
-                ...multiValueHeaders[key] || [],
+            const lowercaseKey = key.toLowerCase();
+
+            headers[lowercaseKey] = value;
+            multiValueHeaders[lowercaseKey] = [
+                ...multiValueHeaders[lowercaseKey] || [],
                 value,
             ];
         });
