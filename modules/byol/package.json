@@ -1,6 +1,6 @@
 {
 	"name": "@swydo/byol",
-	"version": "1.16.53",
+	"version": "1.16.54",
 	"description": "Bring Your Own Lambda",
 	"license": "MIT",
 	"main": "src/index.js",
