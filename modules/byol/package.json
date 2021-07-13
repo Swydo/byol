@@ -12,12 +12,12 @@
 	"dependencies": {
 		"aws-sdk": "^2.704.0",
 		"debug": "^4.1.1",
-		"object-path": "0.11.5",
+		"object-path": "^0.11.5",
 		"path-match": "^1.2.4",
 		"supports-color": "^8.1.1",
 		"uuid": "^8.0.0",
-		"workerpool": "6.1.5",
-		"yaml-cfn": "^0.3.0"
+		"workerpool": "^6.1.5",
+		"yaml-cfn": "^0.3.1"
 	},
 	"devDependencies": {
 		"aws-xray-sdk-core": "3.3.3"
