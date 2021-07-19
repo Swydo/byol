@@ -67,6 +67,7 @@ function getApiMapping(templatePath) {
                 resource: event.Properties.Path,
                 route: getExpressRoute(event.Properties.Path),
                 match: createRoute(event.Properties.Path),
+                type: event.Type,
             }))
             .forEach((listener) => (
                 mapping.push({
