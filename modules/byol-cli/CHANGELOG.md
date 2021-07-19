@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.16.65 (2021-07-19)
+
+
+### Bug Fixes
+
+* pass along API GW event version ([#241](https://github.com/Swydo/byol/issues/241)) ([37a082d](https://github.com/Swydo/byol/commit/37a082d9c65437cb80b005b96171e3907349bf2c))
+
+
+
+
+
 ## 1.16.64 (2021-07-13)
 
 **Note:** Version bump only for package @swydo/byol-cli
