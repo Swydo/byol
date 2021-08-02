@@ -64,6 +64,7 @@ const handler = async ({
         api: true,
         lambda: true,
         sqs: true,
+        webSocket: true,
     });
 };
 

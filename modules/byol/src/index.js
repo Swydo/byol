@@ -3,6 +3,7 @@ const { getSqsMapping } = require('./getSqsMapping');
 const { generateRequestId } = require('./generateRequestId');
 const { invokeFunction } = require('./invokeFunction');
 const { invokeHandler } = require('./invokeHandler');
+const { getWebSocketMapping } = require('./getWebSocketMapping');
 
 module.exports = {
     generateRequestId,
@@ -10,4 +11,5 @@ module.exports = {
     getSqsMapping,
     invokeFunction,
     invokeHandler,
+    getWebSocketMapping,
 };
