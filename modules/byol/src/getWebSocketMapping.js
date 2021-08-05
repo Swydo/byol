@@ -1,4 +1,3 @@
-const { getFunctionResources } = require('./resources/getFunctionResources');
 const { getTemplate } = require('./getTemplate');
 
 function toFilteredMap(obj, filter) {
@@ -43,14 +42,20 @@ function getYamlVariables(target) {
 
 const WEBSOCKET_PROTOCOL_TYPE = 'WEBSOCKET';
 const API_GATEWAY_RESOURCE = 'AWS::ApiGatewayV2::Api'
+const API_GATEWAY_ROUTE = 'AWS::ApiGatewayV2::Route'
+const API_GATEWAY_INTEGRATION = 'AWS::ApiGatewayV2::Integration';
+const API_GATEWAY_ROUTE_RESPONSE = 'AWS::ApiGatewayV2::RouteResponse';
+const API_GATEWAY_INTEGRATION_RESPONSE = 'AWS::ApiGatewayV2::IntegrationResponse';
+const API_GATEWAY_STAGE = 'AWS::ApiGatewayV2::Stage';
+
 
 function getWebSocketApis(template) {
-    const apis = getResources(template, API_GATEWAY_RESOURCE);
+    const apis = getResourceOfType(template, API_GATEWAY_RESOURCE);
     const webSocketApis = toFilteredMap(apis, api => api.Properties.ProtocolType === WEBSOCKET_PROTOCOL_TYPE);
     return webSocketApis;
 }
 
-function getResources(template, resourceType) {
+function getResourceOfType(template, resourceType) {
     return Object
         .keys(template.Resources)
         .filter((resourceKey) => template.Resources[resourceKey].Type === resourceType)
@@ -61,22 +66,24 @@ function getResources(template, resourceType) {
 }
 
 function getRoutesForApi(template, apiName) {
-
-    return toFilteredMap(getResources(template, 'AWS::ApiGatewayV2::Route'), (route) => route.Properties.ApiId.Ref === apiName);
+    return toFilteredMap(getResourceOfType(template, API_GATEWAY_ROUTE), (route) => route.Properties.ApiId.Ref === apiName);
 }
 
 function getIntegrationsForApi(template, apiName) {
-    return toFilteredMap(getResources(template, 'AWS::ApiGatewayV2::Integration'), (route) => route.Properties.ApiId.Ref === apiName);
+    return toFilteredMap(getResourceOfType(template, API_GATEWAY_INTEGRATION), (route) => route.Properties.ApiId.Ref === apiName);
 }
 
 function getRouteResponsesForApi(template, apiName) {
-    return toFilteredMap(getResources(template, 'AWS::ApiGatewayV2::RouteResponse'), (route) => route.Properties.ApiId.Ref === apiName);
+    return toFilteredMap(getResourceOfType(template, API_GATEWAY_ROUTE_RESPONSE), (route) => route.Properties.ApiId.Ref === apiName);
 }
 
 function getIntegrationResponsesForApi(template, apiName) {
-    return toFilteredMap(getResources(template, 'AWS::ApiGatewayV2::IntegrationResponse'), (route) => route.Properties.ApiId.Ref === apiName);
+    return toFilteredMap(getResourceOfType(template, API_GATEWAY_INTEGRATION_RESPONSE), (route) => route.Properties.ApiId.Ref === apiName);
 }
 
+function getStagesForApi(template, apiName) {
+    return toFilteredMap(getResourceOfType(template, API_GATEWAY_STAGE), (route) => route.Properties.ApiId.Ref === apiName);
+}
 
 function getIntegrationForRoute(route, integrations) {
     let variables = getYamlVariables(route.Properties.Target);
@@ -110,53 +117,51 @@ function getRouteResponse(routeName, apiRouteResponses) {
     }
 }
 
-function getApiGatewayRoutes(apiName, template) {
+function getApiGatewayRoutes(template, apiName) {
     const apiRoutes = getRoutesForApi(template, apiName);
     const apiRouteResponses = getRouteResponsesForApi(template, apiName);
     const apiIntegrations = getIntegrationsForApi(template, apiName);
     const apiIntegrationResponses = getIntegrationResponsesForApi(template, apiName);
-    const lambdaFunctions = new Map(Object.entries(getResources(template, 'AWS::Serverless::Function')));
+    const lambdaFunctions = new Map(Object.entries(getResourceOfType(template, 'AWS::Serverless::Function')));
 
     const routes = new Map();
-
     for(const [routeName, route] of apiRoutes.entries()) {
-        const routeResponse = getRouteResponse(routeName, apiRouteResponses)
-
+        const routeResponse = getRouteResponse(routeName, apiRouteResponses);
         const integration = getIntegrationForRoute(route, apiIntegrations);
-        const integrationResponse = getIntegrationResponseForRoute(integration, apiIntegrationResponses, apiIntegrations)
-
-        const lambdaName = getLambdaNameFromIntegration(integration, lambdaFunctions)
-
-        const x = {
+        const integrationResponse = getIntegrationResponseForRoute(integration, apiIntegrationResponses, apiIntegrations);
+        const lambdaName = getLambdaNameFromIntegration(integration, lambdaFunctions);
+        const lambda = lambdaFunctions.get(lambdaName);
+        const routeInfo = {
             route,
             routeResponse,
             integration,
             integrationResponse,
             lambdaName,
-            lambda: lambdaFunctions.get(lambdaName),
+            lambda,
         }
-        routes.set(route.Properties.RouteKey, x);
+        routes.set(route.Properties.RouteKey, routeInfo);
     }
 
     return routes;
-
 }
 
-function getRouteSelector(templatePath) {
-    const api = getResources(templatePath, 'AWS::ApiGatewayV2::Api');
-    return Object.keys(api).map(key => api[key].Properties.RouteSelectionExpression)[0];
+function getApiStage(template, apiName) {
+    const stages = Array.from(getStagesForApi(template, apiName).entries());
+    if(stages) {
+        const [key, stage] = stages[0];
+        return stage
+    }
 }
-
 
 function getWebSocketMapping(templatePath) {
     const template = getTemplate(templatePath);
-
     const gatewayApis = getWebSocketApis(template);
     const apis = new Map();
     Array.from(gatewayApis.entries()).forEach(([key, api]) => {
         apis.set(key, {
             api,
-            routes: getApiGatewayRoutes(key, template),
+            routes: getApiGatewayRoutes(template, key),
+            stage: getApiStage(template, key)
         });
     })
 
