@@ -1,7 +1,6 @@
 const { generateRequestId, invokeFunction } = require('@swydo/byol');
-const cors = require('cors');
 const debug = require('debug')('byol:server:http');
-const express = require('express');
+const { createHttpServer } = require('./createHttpServer');
 const { getApiMapping } = require('@swydo/byol');
 
 function parseQueryParams(parsedUrl) {
@@ -187,9 +186,7 @@ async function startHttpServer({
     } = {},
     invokeOptions,
 }) {
-    const app = express();
-
-    app.use(cors());
+    const { app, listen } = createHttpServer(port)
 
     if (lambda) {
         attachLambdaServer(app, { invokeOptions });
@@ -198,11 +195,6 @@ async function startHttpServer({
     if (api) {
         attachApiServer(app, { invokeOptions });
     }
-
-    app.set('trust proxy', true);
-    app.listen(port);
-
-    debug('Listening on port', port);
 }
 
 module.exports = {

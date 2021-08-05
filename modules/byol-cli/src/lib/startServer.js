@@ -1,3 +1,4 @@
+const { createHttpServer } = require('./createHttpServer');
 const { startWebSocketServer } = require('./startWebSocketServer');
 const { startSqsServer } = require('./startSqsServer');
 const { startHttpServer } = require('./startHttpServer');
