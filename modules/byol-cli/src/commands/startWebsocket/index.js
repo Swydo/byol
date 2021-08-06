@@ -2,8 +2,8 @@ const path = require('path');
 const { startServer } = require('../../lib/startServer');
 const { handleGlobalOptions } = require('../../handleGlobalOptions');
 
-const command = ['start-api'];
-const desc = 'Start a local api server';
+const command = ['start-websocket'];
+const desc = 'Start a local websocket server';
 const builder = (yargs) => yargs
     .option('env-path', {
         alias: ['env-vars', 'n'],
