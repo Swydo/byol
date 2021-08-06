@@ -75,6 +75,11 @@ function logUncaughtError(routeConfig, connectionContext, error) {
     debug(`Invoke ${route} by: ${connectionContext.connectionId} failed with error`, error);
 }
 
+function logCaughtError(routeConfig, connectionContext, result) {
+    const route = routeConfig.route.Properties.RouteKey;
+    debug(`Invoke ${route} by: ${connectionContext.connectionId} failed with errorCode: ${result.statusCode}`, result);
+}
+
 function onConnect({
     route,
     apiInfo,
@@ -111,6 +116,7 @@ function onConnect({
             .then((result) => {
                 const statusCode = result.result.statusCode || 500;
                 if (statusCode < 200 || statusCode >= 400) {
+                    logCaughtError(ws, connectionContext, result.result);
                     terminateConnection(ws, connectionContext, websocketConnections);
                 }
             })
