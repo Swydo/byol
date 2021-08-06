@@ -8,8 +8,7 @@
     "byol": "src/index.js"
   },
   "scripts": {
-    "start": "node src/index.js",
-    "weebSockets": "npm start -- -t /Users/sergebekenkamp/Development/polder/services/websockets/cloudformation/src/async_graphql.yaml --env-path /Users/sergebekenkamp/Development/polder/services/websockets/cloudformation/env.json"
+    "start": "node src/index.js"
   },
   "repository": {
     "type": "git",
