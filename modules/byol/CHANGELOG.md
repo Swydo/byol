@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.17.0 (2021-08-06)
+
+
+### Features
+
+* **byol:** add websocket support ([#247](https://github.com/Swydo/byol/issues/247)) ([bbda14e](https://github.com/Swydo/byol/commit/bbda14e98bb519c8a6a7cc9295f6cfaf9d0bdc5f))
+
+
+
+
+
 ## 1.16.67 (2021-07-30)
 
 **Note:** Version bump only for package @swydo/byol
