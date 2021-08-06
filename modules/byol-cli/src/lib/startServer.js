@@ -1,4 +1,3 @@
-const { createHttpServer } = require('./createHttpServer');
 const { startWebSocketServer } = require('./startWebSocketServer');
 const { startSqsServer } = require('./startSqsServer');
 const { startHttpServer } = require('./startHttpServer');
@@ -26,14 +25,14 @@ async function startServer({
         });
     }
 
-    if(webSocket) {
+    if (webSocket) {
         await startWebSocketServer({
             webSocket,
             environmentOptions: {
                 port,
             },
-            invokeOptions
-        })
+            invokeOptions,
+        });
     }
 
     if (sqs) {

@@ -1,7 +1,7 @@
 const { generateRequestId, invokeFunction } = require('@swydo/byol');
 const debug = require('debug')('byol:server:http');
-const { createHttpServer } = require('./createHttpServer');
 const { getApiMapping } = require('@swydo/byol');
+const { createHttpServer } = require('./createHttpServer');
 
 function parseQueryParams(parsedUrl) {
     const queryStringParameters = {};
@@ -186,7 +186,7 @@ async function startHttpServer({
     } = {},
     invokeOptions,
 }) {
-    const { app, listen } = createHttpServer(port)
+    const { app } = createHttpServer(port);
 
     if (lambda) {
         attachLambdaServer(app, { invokeOptions });
