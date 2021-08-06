@@ -186,7 +186,7 @@ async function startHttpServer({
     } = {},
     invokeOptions,
 }) {
-    const { app } = createHttpServer(port);
+    const { app } = createHttpServer(debug, port);
 
     if (lambda) {
         attachLambdaServer(app, { invokeOptions });

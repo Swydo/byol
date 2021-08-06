@@ -1,10 +1,9 @@
-const debug = require('debug')('byol:server:http');
 const express = require('express');
 const cors = require('cors');
 
 let server = {};
 
-function createHttpServer(port) {
+function createHttpServer(debug, port) {
     if (!server.app && !server.listen) {
         const app = express();
         app.use(cors());

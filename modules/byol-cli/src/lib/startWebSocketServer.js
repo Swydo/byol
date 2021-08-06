@@ -20,7 +20,7 @@ function startWebSocketServer({
     } = {},
     invokeOptions,
 }) {
-    const { server } = createHttpServer(port);
+    const { server } = createHttpServer(debug, port);
 
     const apiMap = getWebSocketMapping(invokeOptions.templatePath);
     printConfiguration(apiMap);
