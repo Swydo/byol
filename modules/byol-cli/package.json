@@ -19,10 +19,12 @@
     "@swydo/byol": "^1.16.67",
     "aws-sdk": "^2.704.0",
     "cors": "^2.8.5",
+    "dateformat": "4.5.1",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "promise-retry": "^2.0.1",
     "sqs-consumer": "^5.5.0",
-    "yargs": "^17.0.1"
+    "yargs": "^17.0.1",
+    "ws": "8.0.0"
   }
 }

@@ -1,16 +1,10 @@
 const path = require('path');
-const { parseAttributeOption } = require('../../lib/parseAttributeOption');
 const { startServer } = require('../../lib/startServer');
 const { handleGlobalOptions } = require('../../handleGlobalOptions');
 
-const command = ['*', 'start'];
-const desc = 'Start a local lambda and API server';
+const command = ['start-websocket'];
+const desc = 'Start a local websocket server';
 const builder = (yargs) => yargs
-    .option('attribute', {
-        alias: ['att'],
-        type: 'string',
-        description: 'Attribute override such as MyResource.Arn=foo',
-    })
     .option('env-path', {
         alias: ['env-vars', 'n'],
         default: './env.json',
@@ -24,23 +18,16 @@ const builder = (yargs) => yargs
         default: 'default',
     })
     .option('region')
-    .option('sqs-endpoint-url', {
-        type: 'string',
-        description: 'SQS endpoint',
-        default: 'http://localhost:9324',
-    })
     .option('template-path', {
         alias: ['template-file', 'template', 't'],
         default: './template.yml',
     });
 const handler = async ({
-    attribute,
     envPath,
     keepAlive,
     port,
     profile,
     region,
-    sqsEndpointUrl,
     templatePath,
     ...globalOptions
 }) => {
@@ -49,10 +36,6 @@ const handler = async ({
     startServer({
         environmentOptions: {
             port,
-            sqsEndpointUrl,
-            templateOverrides: {
-                attributes: parseAttributeOption(attribute),
-            },
         },
         invokeOptions: {
             keepAlive,
@@ -61,9 +44,6 @@ const handler = async ({
             envPath: path.resolve(process.cwd(), envPath),
             templatePath: path.resolve(process.cwd(), templatePath),
         },
-        api: true,
-        lambda: true,
-        sqs: true,
         webSocket: true,
     });
 };

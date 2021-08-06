@@ -4,7 +4,7 @@ const { yamlParse } = require('yaml-cfn');
 
 const DEFAULT_TEMPLATE_PATH = path.join(process.cwd(), 'template.yml');
 
-function getTemplate(templatePath = DEFAULT_TEMPLATE_PATH()) {
+function getTemplate(templatePath = DEFAULT_TEMPLATE_PATH) {
     const templateFileExists = fs.existsSync(templatePath);
 
     if (!templateFileExists) {

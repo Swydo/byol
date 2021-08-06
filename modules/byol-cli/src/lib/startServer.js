@@ -1,3 +1,4 @@
+const { startWebSocketServer } = require('./startWebSocketServer');
 const { startSqsServer } = require('./startSqsServer');
 const { startHttpServer } = require('./startHttpServer');
 
@@ -5,6 +6,7 @@ async function startServer({
     lambda,
     api,
     sqs,
+    webSocket,
     environmentOptions: {
         templateOverrides,
         port,
@@ -16,6 +18,16 @@ async function startServer({
         await startHttpServer({
             lambda,
             api,
+            environmentOptions: {
+                port,
+            },
+            invokeOptions,
+        });
+    }
+
+    if (webSocket) {
+        await startWebSocketServer({
+            webSocket,
             environmentOptions: {
                 port,
             },
