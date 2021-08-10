@@ -1,10 +1,13 @@
 const debug = require('debug');
 
-function handleGlobalOptions({ silent }) {
+function handleGlobalOptions({ silent, verbose }) {
+    debug.enable('byol:*');
+    if (verbose) {
+        debug.enable('verbose:*, byol:*');
+    }
+
     if (silent) {
         debug.disable();
-    } else {
-        debug.enable('byol:*');
     }
 }
 

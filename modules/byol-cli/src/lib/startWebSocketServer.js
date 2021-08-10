@@ -1,4 +1,4 @@
-const debug = require('debug')('byol:server:ws');
+const debug = require('debug')('byol:ws');
 const WebSocket = require('ws');
 const { getWebSocketMapping } = require('@swydo/byol');
 const { registerWebsocketEventListeners } = require('./registerWebsocketListeners');
