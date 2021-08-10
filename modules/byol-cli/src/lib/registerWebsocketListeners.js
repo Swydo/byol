@@ -149,7 +149,6 @@ function onMessage({
         const context = connectionContext;
         context.lastActiveAt = new Date().getTime();
 
-
         const event = {
             requestContext: getRequestContext(route, connectionContext, apiInfo, EVENT_TYPE.MESSAGE),
             body: message,

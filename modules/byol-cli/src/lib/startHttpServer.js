@@ -52,7 +52,6 @@ function parseHeaders(rawHeaders) {
 function attachLambdaServer(app, { invokeOptions }) {
     const path = '/2015-03-31/functions/:functionName/invocations';
 
-
     logHttpRouteRegistration(lambdaDebug, 'POST', path);
     app.post(path, (req, res) => {
         const { functionName } = req.params;
@@ -168,7 +167,6 @@ function attachApiServer(app, { invokeOptions }) {
                     res.status(statusCode);
                     res.end();
                     logError(apiDebug, e, req.url);
-
                 });
         });
     }
