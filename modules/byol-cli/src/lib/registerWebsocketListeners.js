@@ -1,7 +1,8 @@
 const { invokeFunction } = require('@swydo/byol');
 const { generateRequestId } = require('@swydo/byol');
 const dateformat = require('dateformat');
-const debug = require('debug')('byol:server:ws');
+const debug = require('debug')('byol:ws');
+const verbose = require('debug')('verbose:byol:ws');
 
 const EVENT_TYPE = {
     CONNECT: 'CONNECT',
@@ -57,7 +58,7 @@ function getLambdaEvent(headers, routeConfig, connectionContext, apiInfo, eventT
 }
 
 function terminateConnection(ws, connectionContext, websocketConnections) {
-    debug(`Terminated connection ${connectionContext.connectionId}`);
+    verbose(`Terminated connection ${connectionContext.connectionId}`);
     ws.terminate();
 
     if (websocketConnections.has(connectionContext.connectionId)) {
@@ -65,14 +66,18 @@ function terminateConnection(ws, connectionContext, websocketConnections) {
     }
 }
 
-function logInvoke(routeConfig, connectionContext) {
+function logInvoke(routeConfig, connectionContext, message) {
     const route = routeConfig.route.Properties.RouteKey;
-    debug(`Invoke ${route} by: ${connectionContext.connectionId}`);
+    if (message) {
+        verbose(`Invoke ${route} by: ${connectionContext.connectionId} with message: %o`, message.toString());
+    } else {
+        verbose(`Invoke ${route} by: ${connectionContext.connectionId}`);
+    }
 }
 
 function logUncaughtError(routeConfig, connectionContext, error) {
     const route = routeConfig.route.Properties.RouteKey;
-    debug(`Invoke ${route} by: ${connectionContext.connectionId} failed with error`, error);
+    debug(`Invoke ${route} by: ${connectionContext.connectionId} failed with:`, error);
 }
 
 function logCaughtError(routeConfig, connectionContext, result) {
@@ -98,7 +103,7 @@ function onConnect({
         ws,
         context: connectionContext,
     });
-
+    verbose('New connection with id:', connectionContext.connectionId);
     if (route) {
         const headers = {
             Host: request.headers.host,
@@ -118,6 +123,8 @@ function onConnect({
                 if (statusCode < 200 || statusCode >= 400) {
                     logCaughtError(ws, connectionContext, result.result);
                     terminateConnection(ws, connectionContext, websocketConnections);
+                } else {
+                    verbose(`onConnect for ${connectionContext.connectionId} with result: %o`, result);
                 }
             })
             .catch((err) => {
@@ -148,13 +155,16 @@ function onMessage({
             isBase64Encoded: false,
         };
 
-        logInvoke(route, connectionContext);
+        logInvoke(route, connectionContext, message);
         invokeFunction(route.lambdaName, event, invokeOptions)
             .then((result) => {
                 const statusCode = result.result.statusCode || 500;
                 if (statusCode < 200 || statusCode >= 400) {
+                    logCaughtError(ws, connectionContext, result.result);
                     terminateConnection(ws, connectionContext, websocketConnections);
                 } else {
+                    const routeKey = route.route.Properties.RouteKey;
+                    verbose(`route: ${routeKey} for ${connectionContext.connectionId} with result: %o`, result);
                     ws.send(JSON.stringify(result.result.body));
                 }
             })

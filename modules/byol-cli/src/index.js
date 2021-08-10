@@ -15,6 +15,11 @@ yargs
         type: 'boolean',
         default: false,
     })
+    .option('verbose', {
+        alias: 'v',
+        type: 'boolean',
+        default: false,
+    })
     .command(startCommand)
     .command(startApiCommand)
     .command(startLambdaCommand)

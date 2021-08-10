@@ -1,14 +1,14 @@
 const { generateRequestId } = require('@swydo/byol');
-const debug = require('debug')('byol:server:ws');
+const debug = require('debug')('byol:ws');
 const { createHttpServer } = require('./createHttpServer');
+const { logHttpRouteRegistration } = require('./logging');
 
 function escapeRoute(route) {
     return route.split('$').join('\\$').split('@').join('\\@');
 }
 
 function logRegisteredHTTPRoute(verb, route) {
-    const unescapeRoute = route.split('/\\').join('/');
-    debug(`Registered HTTP route: ${verb} ${unescapeRoute}`);
+    logHttpRouteRegistration(debug, verb, route);
 }
 
 function registerWebSocketAPI(websocketConnections, apiInfo, { port = 3000 }) {

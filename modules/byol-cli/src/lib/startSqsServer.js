@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 const { invokeFunction } = require('@swydo/byol');
-const debug = require('debug')('byol:server:sqs');
+const debug = require('debug')('byol:sqs');
 const { getSqsMapping } = require('@swydo/byol');
 const promiseRetry = require('promise-retry');
 const { Consumer } = require('sqs-consumer');

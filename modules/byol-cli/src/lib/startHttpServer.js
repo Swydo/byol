@@ -1,7 +1,10 @@
 const { generateRequestId, invokeFunction } = require('@swydo/byol');
-const debug = require('debug')('byol:server:http');
+const lambdaDebug = require('debug')('byol:lambda');
+const apiDebug = require('debug')('byol:api');
+const httpDebug = require('debug')('byol:http');
 const { getApiMapping } = require('@swydo/byol');
 const { createHttpServer } = require('./createHttpServer');
+const { logHttpRouteRegistration, logError } = require('./logging');
 
 function parseQueryParams(parsedUrl) {
     const queryStringParameters = {};
@@ -49,8 +52,7 @@ function parseHeaders(rawHeaders) {
 function attachLambdaServer(app, { invokeOptions }) {
     const path = '/2015-03-31/functions/:functionName/invocations';
 
-    debug('AWS API at http post', path);
-
+    logHttpRouteRegistration(lambdaDebug, 'POST', path);
     app.post(path, (req, res) => {
         const { functionName } = req.params;
 
@@ -68,7 +70,8 @@ function attachLambdaServer(app, { invokeOptions }) {
                     res.status(invocationType === 'Event' ? 202 : 200);
                     res.send(result);
                 })
-                .catch(() => {
+                .catch((error) => {
+                    logError(lambdaDebug, error, req.url);
                     res.status(500);
                     res.end();
                 });
@@ -159,11 +162,11 @@ function attachApiServer(app, { invokeOptions }) {
                     } else {
                         statusCode = 500;
                         // eslint-disable-next-line no-console
-                        console.error(e);
                     }
 
                     res.status(statusCode);
                     res.end();
+                    logError(apiDebug, e, req.url);
                 });
         });
     }
@@ -172,8 +175,7 @@ function attachApiServer(app, { invokeOptions }) {
         const { functionName, listener } = currentMapping;
         const method = listener.httpMethod.toLowerCase();
 
-        debug(functionName, 'at http', method, listener.route);
-
+        logHttpRouteRegistration(apiDebug, method, listener.route, functionName);
         app[method](listener.route, (req, res) => routeHandler(currentMapping, req, res));
     });
 }
@@ -186,7 +188,7 @@ async function startHttpServer({
     } = {},
     invokeOptions,
 }) {
-    const { app } = createHttpServer(debug, port);
+    const { app } = createHttpServer(httpDebug, port);
 
     if (lambda) {
         attachLambdaServer(app, { invokeOptions });
