@@ -3,6 +3,7 @@ const { generateRequestId } = require('@swydo/byol');
 const dateformat = require('dateformat');
 const debug = require('debug')('byol:ws');
 const verbose = require('debug')('verbose:byol:ws');
+const { URL } = require('url');
 
 const EVENT_TYPE = {
     CONNECT: 'CONNECT',
@@ -47,12 +48,35 @@ function headersToMultiValueHeaders(headers) {
         }, {});
 }
 
-function getLambdaEvent(headers, routeConfig, connectionContext, apiInfo, eventType) {
+function getQueryStringParameters(request) {
+    if (!request) return {};
+
+    const parsedURL = new URL(`https://localhost${request.url}`);
+
+    const queryStringParameters = Array.from(parsedURL.searchParams.entries())
+        .reduce((obj, [key, value]) => ({
+            ...obj,
+            [key]: value,
+        }), {});
+    const multiValueQueryStringParameters = Array.from(parsedURL.searchParams.keys())
+        .reduce((obj, key) => ({
+            ...obj,
+            [key]: parsedURL.searchParams.getAll(key),
+        }), {});
+
+    return {
+        queryStringParameters,
+        multiValueQueryStringParameters,
+    };
+}
+
+function getLambdaEvent(headers, routeConfig, connectionContext, apiInfo, eventType, request) {
     const event = {
         headers,
         multiValueHeaders: headersToMultiValueHeaders(headers),
         requestContext: getRequestContext(routeConfig, connectionContext, apiInfo, eventType),
         isBase64Encoded: false,
+        ...getQueryStringParameters(request),
     };
     return event;
 }
@@ -60,6 +84,14 @@ function getLambdaEvent(headers, routeConfig, connectionContext, apiInfo, eventT
 function terminateConnection(ws, connectionContext, websocketConnections) {
     verbose(`Terminated connection ${connectionContext.connectionId}`);
     ws.terminate();
+
+    if (websocketConnections.has(connectionContext.connectionId)) {
+        websocketConnections.delete(connectionContext.connectionId);
+    }
+}
+
+function closeConnection(ws, connectionContext, websocketConnections, reason = '') {
+    ws.close(1000, reason);
 
     if (websocketConnections.has(connectionContext.connectionId)) {
         websocketConnections.delete(connectionContext.connectionId);
@@ -115,14 +147,20 @@ function onConnect({
             'X-Forwarded-Port': '443',
             'X-Forwarded-Proto': 'https',
         };
-        const event = getLambdaEvent(headers, route, connectionContext, apiInfo, EVENT_TYPE.CONNECT);
+
+        const event = getLambdaEvent(headers, route, connectionContext, apiInfo, EVENT_TYPE.CONNECT, request);
+
         logInvoke(route, connectionContext);
         invokeFunction(route.lambdaName, event, invokeOptions)
             .then((result) => {
                 const statusCode = result.result.statusCode || 500;
                 if (statusCode < 200 || statusCode >= 400) {
-                    logCaughtError(ws, connectionContext, result.result);
-                    terminateConnection(ws, connectionContext, websocketConnections);
+                    if (statusCode === 403) {
+                        closeConnection(ws, connectionContext, websocketConnections, '403: not authenticated');
+                    } else {
+                        logCaughtError(route, connectionContext, result.result);
+                        terminateConnection(ws, connectionContext, websocketConnections);
+                    }
                 } else {
                     verbose(`onConnect for ${connectionContext.connectionId} with result: %o`, result);
                 }
