@@ -3,6 +3,9 @@
   "version": "1.17.3",
   "description": "Bring Your Own Lambda CLI",
   "license": "MIT",
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+  },
   "main": "src/index.js",
   "bin": {
     "byol": "src/index.js"
