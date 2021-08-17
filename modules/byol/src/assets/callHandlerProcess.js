@@ -68,8 +68,7 @@ async function callHandler({
 }) {
     process.env = environment;
 
-    // eslint-disable-next-line import/no-dynamic-require, global-require
-    const { [handlerName]: handler } = require(absoluteIndexPath);
+    const { [handlerName]: handler } = await import(absoluteIndexPath);
     const awsContext = {
         awsRequestId: generateRequestId(),
     };
