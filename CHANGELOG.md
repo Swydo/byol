@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0 (2021-08-17)
+
+
+### chore
+
+* use dynamic import to load handler ([#255](https://github.com/Swydo/byol/issues/255)) ([0612327](https://github.com/Swydo/byol/commit/0612327b15491038cc21e828f1ac696e586d44c8))
+
+
+### BREAKING CHANGES
+
+* Dynamic import support is required (node "^12.20.0 || ^14.13.1 || >=16.0.0")
+
+
+
+
+
 ## 1.17.3 (2021-08-10)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
