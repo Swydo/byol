@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.2 (2021-08-19)
+
+
+### Bug Fixes
+
+* **byol-cli:** crash when receiving message ([#260](https://github.com/Swydo/byol/issues/260)) ([77861b0](https://github.com/Swydo/byol/commit/77861b038925589100c50abdc066e4fe5bfc8cee))
+
+
+
+
+
 ## 2.0.1 (2021-08-18)
 
 **Note:** Version bump only for package @swydo/byol-cli
