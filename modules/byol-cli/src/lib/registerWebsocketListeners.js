@@ -189,7 +189,7 @@ function onMessage({
 
         const event = {
             requestContext: getRequestContext(route, connectionContext, apiInfo, EVENT_TYPE.MESSAGE),
-            body: message,
+            body: message.toString(),
             isBase64Encoded: false,
         };
 
@@ -198,7 +198,7 @@ function onMessage({
             .then((result) => {
                 const statusCode = result.result.statusCode || 500;
                 if (statusCode < 200 || statusCode >= 400) {
-                    logCaughtError(ws, connectionContext, result.result);
+                    logCaughtError(route, connectionContext, result.result);
                     terminateConnection(ws, connectionContext, websocketConnections);
                 } else {
                     const routeKey = route.route.Properties.RouteKey;
