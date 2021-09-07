@@ -97,6 +97,13 @@ function attachApiServer(app, { invokeOptions }) {
             const { queryStringParameters, multiValueQueryStringParameters } = parseQueryParams(parsedUrl);
             const requestContext = {
                 resourcePath: matchingMapping.listener.resource,
+                http: {
+                    method: req.method,
+                    path: parsedUrl.pathname,
+                    protocol: parsedUrl.protocol,
+                    sourceIp: req.ip,
+                    userAgent: req.headers['user-agent'],
+                },
                 httpMethod: req.method,
                 identity: {
                     sourceIp: req.ip,
@@ -107,6 +114,7 @@ function attachApiServer(app, { invokeOptions }) {
             const event = {
                 resource: matchingMapping.listener.resource,
                 path: parsedUrl.pathname,
+                rawPath: parsedUrl.pathname,
                 httpMethod: req.method,
                 version: matchingMapping.listener.type === 'HttpApi' ? '2.0' : undefined,
                 headers,
