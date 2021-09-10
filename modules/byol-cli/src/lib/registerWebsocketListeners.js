@@ -203,7 +203,7 @@ function onMessage({
                 } else {
                     const routeKey = route.route.Properties.RouteKey;
                     verbose(`route: ${routeKey} for ${connectionContext.connectionId} with result: %o`, result);
-                    ws.send(JSON.stringify(result.result.body));
+                    ws.send(result.result.body);
                 }
             })
             .catch((err) => {
