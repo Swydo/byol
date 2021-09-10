@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.9 (2021-09-10)
+
+
+### Bug Fixes
+
+* **byol-cli:** do not stringify body of lambda result ([#275](https://github.com/Swydo/byol/issues/275)) ([38ebcef](https://github.com/Swydo/byol/commit/38ebcefca31e100ada02425771b9dda9600a320f))
+
+
+
+
+
 ## 2.0.8 (2021-09-07)
 
 **Note:** Version bump only for package @swydo/byol
