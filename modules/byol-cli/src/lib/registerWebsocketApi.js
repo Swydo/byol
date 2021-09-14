@@ -16,6 +16,8 @@ function registerWebSocketAPI(websocketConnections, apiInfo, { port = 3000 }) {
     const setHeaders = (res) => {
         res.set('x-amzn-RequestId', generateRequestId());
         res.set('x-amz-apigw-id', apiInfo.apiId);
+        res.set('X-Amzn-Trace-Id', 'Root=1-6107c109-306f421006007da9658753b3');
+        res.set('Content-type', 'application/json');
     };
     const wsNotFound = (res) => {
         setHeaders(res);
