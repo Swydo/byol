@@ -20,7 +20,7 @@ function registerWebSocketAPI(websocketConnections, apiInfo, { port = 3000 }) {
     const wsNotFound = (res) => {
         setHeaders(res);
         res.set('x-amzn-ErrorType', 'GoneException');
-        res.sendStatus(410);
+        res.status(410).end();
     };
     const getRoute = escapeRoute(`/${apiInfo.stage}/@connections/:id`);
     logRegisteredHTTPRoute('GET', getRoute);
@@ -29,13 +29,16 @@ function registerWebSocketAPI(websocketConnections, apiInfo, { port = 3000 }) {
         if (websocketConnections.has(id)) {
             const { context } = websocketConnections.get(id);
             setHeaders(res);
-            res.send({
-                ConnectedAt: new Date(context.connectedAt).toISOString(),
-                Identity: {
-                    SourceIp: context.ip,
-                },
-                LastActiveAt: new Date(context.lastActiveAt).toISOString(),
-            });
+            res
+                .status(200)
+                .send({
+                    ConnectedAt: new Date(context.connectedAt).toISOString(),
+                    Identity: {
+                        SourceIp: context.ip,
+                    },
+                    LastActiveAt: new Date(context.lastActiveAt).toISOString(),
+                })
+                .end();
         } else {
             wsNotFound(res);
         }
@@ -55,7 +58,7 @@ function registerWebSocketAPI(websocketConnections, apiInfo, { port = 3000 }) {
                 const { ws } = websocketConnections.get(id);
                 ws.send(body);
                 setHeaders(res);
-                res.sendStatus(200);
+                res.status(200).end();
             } else {
                 wsNotFound(res);
             }
@@ -70,7 +73,7 @@ function registerWebSocketAPI(websocketConnections, apiInfo, { port = 3000 }) {
             const { ws } = websocketConnections.get(id);
             ws.close();
             setHeaders(res);
-            res.sendStatus(204);
+            res.status(204).end();
         } else {
             wsNotFound(res);
         }
