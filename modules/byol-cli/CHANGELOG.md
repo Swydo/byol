@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.10 (2021-09-15)
+
+
+### Bug Fixes
+
+* **byol-cli:** Mismatch between amazon and local api ([#278](https://github.com/Swydo/byol/issues/278)) ([1e40d93](https://github.com/Swydo/byol/commit/1e40d93178203389f9bcfa742b923023f64d0944))
+
+
+
+
+
 ## 2.0.9 (2021-09-10)
 
 
