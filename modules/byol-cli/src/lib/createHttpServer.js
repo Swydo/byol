@@ -6,6 +6,8 @@ let server = {};
 function createHttpServer(debug, port) {
     if (!server.app && !server.listen) {
         const app = express();
+        app.set('x-powered-by', false);
+        app.set('etag', false);
         app.use(cors());
         app.set('trust proxy', true);
         const listen = app.listen(port);
