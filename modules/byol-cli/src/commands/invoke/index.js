@@ -1,4 +1,5 @@
 const { invokeFunction } = require('@swydo/byol');
+const path = require('path');
 const { handleGlobalOptions } = require('../../handleGlobalOptions');
 
 const command = 'invoke';
@@ -35,8 +36,8 @@ const handler = async ({
 
     try {
         const result = await invokeFunction(functionName, JSON.parse(event), {
-            templatePath,
-            envPath,
+            envPath: path.resolve(process.cwd(), envPath),
+            templatePath: path.resolve(process.cwd(), templatePath),
             profile,
             region,
         });
