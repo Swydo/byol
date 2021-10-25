@@ -55,6 +55,7 @@ function attachLambdaServer(app, { invokeOptions }) {
     logHttpRouteRegistration(lambdaDebug, 'POST', path);
     app.post(path, (req, res) => {
         const { functionName } = req.params;
+        const invocationType = req.headers['x-amz-invocation-type'];
 
         let eventString = '';
 
@@ -65,9 +66,12 @@ function attachLambdaServer(app, { invokeOptions }) {
         req.on('end', () => {
             const event = eventString ? JSON.parse(eventString) : {};
 
-            invokeFunction(functionName, event, invokeOptions)
-                .then(({ result, invocationType }) => {
-                    res.status(invocationType === 'Event' ? 202 : 200);
+            invokeFunction(functionName, event, {
+                ...invokeOptions,
+                invocationType,
+            })
+                .then(({ result, invType }) => {
+                    res.status(invType === 'Event' ? 202 : 200);
                     res.send(result);
                 })
                 .catch((error) => {
@@ -125,7 +129,7 @@ function attachApiServer(app, { invokeOptions }) {
                 requestContext,
                 body,
             };
-
+            console.log(event);
             invokeFunction(matchingMapping.functionName, event, invokeOptions)
                 .then((invokeResult) => {
                     const { result } = invokeResult;
