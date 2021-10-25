@@ -45,7 +45,7 @@ async function invokeFunction(functionName, event, {
     requestId,
     keepAlive = false,
     profile = 'default',
-    invocationType,
+    invocationType = 'RequestResponse',
 } = {}) {
     const resource = getFunctionResource(templatePath, functionName);
     const environment = {
@@ -56,7 +56,6 @@ async function invokeFunction(functionName, event, {
         Properties: {
             Handler: handler,
             CodeUri: codeUri = '.',
-            EventInvokeConfig: eventInvokeConfig,
         },
     } = resource;
 
@@ -75,16 +74,13 @@ async function invokeFunction(functionName, event, {
     };
 
     let result;
-    let invType;
-    if (eventInvokeConfig || invocationType === 'Event') {
+    if (invocationType === 'Event') {
         invokeHandler(options);
-        invType = 'Event';
     } else {
         result = await invokeHandler(options);
-        invType = 'RequestResponse';
     }
 
-    return { result, invocationType: invType };
+    return { result };
 }
 
 module.exports = {

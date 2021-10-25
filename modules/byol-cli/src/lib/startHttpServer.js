@@ -70,8 +70,8 @@ function attachLambdaServer(app, { invokeOptions }) {
                 ...invokeOptions,
                 invocationType,
             })
-                .then(({ result, invType }) => {
-                    res.status(invType === 'Event' ? 202 : 200);
+                .then(({ result }) => {
+                    res.status(invocationType === 'Event' ? 202 : 200);
                     res.send(result);
                 })
                 .catch((error) => {

@@ -28,7 +28,7 @@ describe('invokeFunction', function () {
             foo: 'foo',
         };
 
-        const { result, invocationType } = await invokeFunction(
+        const { result } = await invokeFunction(
             'GoodFunction',
             event,
             { templatePath },
@@ -37,7 +37,6 @@ describe('invokeFunction', function () {
         expect(result).to.be.an('object');
         expect(result).to.have.property('env');
         expect(result).to.have.property('args');
-        expect(invocationType).to.equal('RequestResponse');
     });
 
     it('invokes the non-async function\'s handler', async function () {
