@@ -45,7 +45,7 @@ async function invokeFunction(functionName, event, {
     requestId,
     keepAlive = false,
     profile = 'default',
-    invocationType = '',
+    invocationType,
 } = {}) {
     const resource = getFunctionResource(templatePath, functionName);
     const environment = {
