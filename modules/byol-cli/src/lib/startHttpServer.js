@@ -129,7 +129,6 @@ function attachApiServer(app, { invokeOptions }) {
                 requestContext,
                 body,
             };
-            console.log(event);
             invokeFunction(matchingMapping.functionName, event, invokeOptions)
                 .then((invokeResult) => {
                     const { result } = invokeResult;
