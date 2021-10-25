@@ -50,7 +50,10 @@ async function startSqsServer({
                     }],
                 };
 
-                return invokeFunction(currentMapping.functionName, event, invokeOptions);
+                return invokeFunction(currentMapping.functionName, event, {
+                    ...invokeOptions,
+                    invocationType: 'Event',
+                });
             },
         });
 

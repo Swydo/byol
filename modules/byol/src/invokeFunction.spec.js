@@ -28,7 +28,7 @@ describe('invokeFunction', function () {
             foo: 'foo',
         };
 
-        const { result, invocationType } = await invokeFunction(
+        const { result } = await invokeFunction(
             'GoodFunction',
             event,
             { templatePath },
@@ -37,7 +37,6 @@ describe('invokeFunction', function () {
         expect(result).to.be.an('object');
         expect(result).to.have.property('env');
         expect(result).to.have.property('args');
-        expect(invocationType).to.equal('RequestResponse');
     });
 
     it('invokes the non-async function\'s handler', async function () {
@@ -46,7 +45,7 @@ describe('invokeFunction', function () {
             foo: 'foo',
         };
 
-        const { result, invocationType } = await invokeFunction(
+        const { result } = await invokeFunction(
             'GoodCallbackFunction',
             event,
             { templatePath },
@@ -55,7 +54,6 @@ describe('invokeFunction', function () {
         expect(result).to.be.an('object');
         expect(result).to.have.property('env');
         expect(result).to.have.property('args');
-        expect(invocationType).to.equal('RequestResponse');
     });
 
     it('invokes the function\'s handler with the given event', async function () {
@@ -64,7 +62,7 @@ describe('invokeFunction', function () {
             foo: 'foo',
         };
 
-        const { result, invocationType } = await invokeFunction(
+        const { result } = await invokeFunction(
             'GoodFunction',
             event,
             { templatePath },
@@ -73,7 +71,6 @@ describe('invokeFunction', function () {
         expect(result).to.be.an('object');
         expect(result).to.have.property('env');
         expect(result).to.have.property('args');
-        expect(invocationType).to.equal('RequestResponse');
 
         const { args } = result;
         expect(args).to.be.an('array').with.length(2);
@@ -86,7 +83,7 @@ describe('invokeFunction', function () {
             foo: 'foo',
         };
 
-        const { result, invocationType } = await invokeFunction(
+        const { result } = await invokeFunction(
             'GoodFunction',
             event,
             { templatePath },
@@ -95,7 +92,6 @@ describe('invokeFunction', function () {
         expect(result).to.be.an('object');
         expect(result).to.have.property('env');
         expect(result).to.have.property('args');
-        expect(invocationType).to.equal('RequestResponse');
 
         const { args } = result;
         expect(args).to.be.an('array').with.length(2);
@@ -107,7 +103,7 @@ describe('invokeFunction', function () {
         const envPath = path.resolve(__dirname, '../tests/assets/goodEnv.json');
         const event = {};
 
-        const { result, invocationType } = await invokeFunction(
+        const { result } = await invokeFunction(
             'GoodFunction',
             event,
             { templatePath, envPath },
@@ -116,7 +112,6 @@ describe('invokeFunction', function () {
         expect(result).to.be.an('object');
         expect(result).to.have.property('env');
         expect(result).to.have.property('args');
-        expect(invocationType).to.equal('RequestResponse');
 
         const { env } = result;
         expect(env).to.have.property('FOO', 'FOO');
@@ -161,13 +156,13 @@ describe('invokeFunction', function () {
             foo: 'foo',
         };
 
-        const { invocationType } = await invokeFunction(
+        const { result } = await invokeFunction(
             'GoodAcyncFunction',
             event,
-            { templatePath },
+            { templatePath, invocationType: 'Event' },
         );
 
-        expect(invocationType).to.equal('Event');
+        expect(result).to.be.equal(undefined);
     });
 
     it('rejects when an error is thrown by the handler', async function () {
