@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.14 (2022-04-04)
+
+
+### Bug Fixes
+
+* **byol:** add timeout delay to print all the logs ([#356](https://github.com/Swydo/byol/issues/356)) ([937393b](https://github.com/Swydo/byol/commit/937393bed0bd8c88e4776619d27f954e7077cc71))
+
+
+
+
+
 ## 2.0.13 (2021-10-25)
 
 **Note:** Version bump only for package @swydo/byol-cli
