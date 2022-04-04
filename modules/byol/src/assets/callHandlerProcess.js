@@ -17,7 +17,7 @@ function hasXRay() {
 }
 
 async function execute(handler, event, awsContext) {
-    return new Promise(((resolve, reject) => {
+    const handlerResult = await new Promise(((resolve, reject) => {
         const maybePromise = handler(event, awsContext, (err, res) => {
             if (err) {
                 reject(err);
@@ -36,6 +36,12 @@ async function execute(handler, event, awsContext) {
                 .catch((err) => reject(err));
         }
     }));
+
+    // Timeout delay is required in order to print console logs
+    // that are omitted otherwise
+    await new Promise((resolve) => setTimeout(resolve, 10));
+
+    return handlerResult;
 }
 
 async function executeWithXRay(segmentName, handler, event, awsContext) {
