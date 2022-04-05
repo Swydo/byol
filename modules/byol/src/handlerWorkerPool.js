@@ -3,16 +3,16 @@ const workerpool = require('workerpool');
 
 const workerPoolMap = new Map();
 
-function getWorkerPoolKey(absoluteIndexPath, handlerName, requestId) {
+function getWorkerPoolKey(workingDirectory, indexPath, handlerName, requestId) {
     if (requestId) {
-        return `${absoluteIndexPath}:${handlerName}:${requestId}`;
+        return `${workingDirectory}:${indexPath}:${handlerName}:${requestId}`;
     }
 
-    return `${absoluteIndexPath}:${handlerName}`;
+    return `${workingDirectory}:${indexPath}:${handlerName}`;
 }
 
-function terminateWorkerPool(absoluteIndexPath, handlerName, requestId) {
-    const poolKey = getWorkerPoolKey(absoluteIndexPath, handlerName, requestId);
+function terminateWorkerPool(workingDirectory, indexPath, handlerName, requestId) {
+    const poolKey = getWorkerPoolKey(workingDirectory, indexPath, handlerName, requestId);
 
     const { pool } = workerPoolMap.get(poolKey);
     const terminationPromise = pool.terminate();
@@ -33,15 +33,20 @@ function terminateWorkerPools() {
     return Promise.all(terminationPromises);
 }
 
-async function getWorkerPool(absoluteIndexPath, handlerName, environment = {}, requestId) {
-    const poolKey = getWorkerPoolKey(absoluteIndexPath, handlerName, requestId);
+async function getWorkerPool(workingDirectory, indexPath, handlerName, environment = {}, requestId) {
+    const poolKey = getWorkerPoolKey(workingDirectory, indexPath, handlerName, requestId);
 
     if (!workerPoolMap.has(poolKey)) {
-        const pool = workerpool.pool(path.join(__dirname, 'assets', 'callHandlerProcess.js'));
+        const pool = workerpool.pool(path.join(__dirname, 'assets', 'callHandlerProcess.js'), {
+            workerType: 'process',
+            forkOpts: {
+                cwd: workingDirectory,
+            },
+        });
 
         workerPoolMap.set(poolKey, {
             pool,
-            absoluteIndexPath,
+            indexPath,
             handlerName,
             environment,
             requestId,
@@ -53,7 +58,7 @@ async function getWorkerPool(absoluteIndexPath, handlerName, environment = {}, r
     if (JSON.stringify(poolEnvironment) !== JSON.stringify(environment)) {
         terminateWorkerPool(poolKey);
 
-        return getWorkerPool(absoluteIndexPath, handlerName, environment);
+        return getWorkerPool(workingDirectory, indexPath, handlerName, environment);
     }
 
     return pool;
