@@ -1,5 +1,6 @@
 const workerpool = require('workerpool');
 const { generateRequestId } = require('../generateRequestId');
+const path = require('path');
 
 const LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT = 6000000;
 
@@ -67,12 +68,14 @@ async function executeWithXRay(segmentName, handler, event, awsContext) {
 }
 
 async function callHandler({
-    absoluteIndexPath,
+    indexPath,
     handlerName,
     event,
     environment,
 }) {
     process.env = environment;
+
+    const absoluteIndexPath = path.join(process.cwd(), indexPath);
 
     const { [handlerName]: handler } = await import(absoluteIndexPath);
     const awsContext = {
