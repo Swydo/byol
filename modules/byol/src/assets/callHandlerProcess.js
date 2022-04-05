@@ -1,6 +1,6 @@
+const path = require('path');
 const workerpool = require('workerpool');
 const { generateRequestId } = require('../generateRequestId');
-const path = require('path');
 
 const LAMBDA_PAYLOAD_BYTE_SIZE_LIMIT = 6000000;
 
