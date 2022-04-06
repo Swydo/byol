@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.15 (2022-04-06)
+
+
+### Bug Fixes
+
+* **byol:** fix cwd not being set to CodeUri from CloudFormation file ([#363](https://github.com/Swydo/byol/issues/363)) ([8c6ce63](https://github.com/Swydo/byol/commit/8c6ce631e5c47ecfcbd3b1c5548cc8f2fcb51805))
+
+
+
+
+
 ## 2.0.14 (2022-04-04)
 
 
