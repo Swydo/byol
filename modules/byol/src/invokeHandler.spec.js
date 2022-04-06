@@ -23,11 +23,10 @@ describe('invokeHandler', function () {
     });
 
     it('invokes an async handler', async function () {
-        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/goodHandler.js');
-
         const result = await invokeHandler({
-            absoluteIndexPath,
             handlerName: 'handler',
+            indexPath: 'goodHandler.js',
+            workingDirectory: path.resolve(__dirname, '../tests/assets'),
         });
 
         expect(result).to.be.an('object');
@@ -36,11 +35,10 @@ describe('invokeHandler', function () {
     });
 
     it('invokes a non-async handler', async function () {
-        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/goodCallbackHandler.js');
-
         const result = await invokeHandler({
-            absoluteIndexPath,
             handlerName: 'handler',
+            indexPath: 'goodCallbackHandler.js',
+            workingDirectory: path.resolve(__dirname, '../tests/assets'),
         });
 
         expect(result).to.be.an('object');
@@ -49,14 +47,14 @@ describe('invokeHandler', function () {
     });
 
     it('invokes the handler with the given event', async function () {
-        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/goodHandler.js');
         const event = {
             foo: 'foo',
         };
 
         const result = await invokeHandler({
-            absoluteIndexPath,
             handlerName: 'handler',
+            indexPath: 'goodHandler.js',
+            workingDirectory: path.resolve(__dirname, '../tests/assets'),
             event,
         });
 
@@ -70,14 +68,14 @@ describe('invokeHandler', function () {
     });
 
     it('invokes the handler with the given environment variables', async function () {
-        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/goodHandler.js');
         const environment = {
             FOO: 'FOO',
         };
 
         const result = await invokeHandler({
-            absoluteIndexPath,
             handlerName: 'handler',
+            indexPath: 'goodHandler.js',
+            workingDirectory: path.resolve(__dirname, '../tests/assets'),
             environment,
         });
 
@@ -90,12 +88,12 @@ describe('invokeHandler', function () {
     });
 
     it('rejects when an error is thrown by an async handler', async function () {
-        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/badHandler.js');
         const errorMessage = 'FOO';
 
         const invokePromise = invokeHandler({
-            absoluteIndexPath,
             handlerName: 'handler',
+            indexPath: 'badHandler.js',
+            workingDirectory: path.resolve(__dirname, '../tests/assets'),
             event: { message: errorMessage },
         });
 
@@ -103,12 +101,12 @@ describe('invokeHandler', function () {
     });
 
     it('rejects when an error is returned by an non-async handler', async function () {
-        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/badCallbackHandler.js');
         const errorMessage = 'FOO';
 
         const invokePromise = invokeHandler({
-            absoluteIndexPath,
             handlerName: 'handler',
+            indexPath: 'badCallbackHandler.js',
+            workingDirectory: path.resolve(__dirname, '../tests/assets'),
             event: { message: errorMessage },
         });
 
@@ -116,12 +114,12 @@ describe('invokeHandler', function () {
     });
 
     it('rejects when the process dies unexpectedly', async function () {
-        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/brokenHandler.js');
         const errorMessage = 'FOO';
 
         const invokePromise = invokeHandler({
-            absoluteIndexPath,
             handlerName: 'handler',
+            indexPath: 'brokenHandler.js',
+            workingDirectory: path.resolve(__dirname, '../tests/assets'),
             event: { message: errorMessage },
         });
 
@@ -129,12 +127,12 @@ describe('invokeHandler', function () {
     });
 
     it('rejects when the handler function can\'t be found', async function () {
-        const absoluteIndexPath = path.resolve(__dirname, '../tests/assets/goodHandler.js');
         const errorMessage = 'FOO';
 
         const invokePromise = invokeHandler({
-            absoluteIndexPath,
+            indexPath: 'goodHandler.js',
             handlerName: 'foo',
+            workingDirectory: path.resolve(__dirname, '../tests/assets'),
             event: { message: errorMessage },
         });
 

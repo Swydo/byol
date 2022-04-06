@@ -61,16 +61,17 @@ async function invokeFunction(functionName, event, {
 
     const [relativePathWithoutExtension, handlerName] = handler.split('.');
 
-    const relativeIndexPath = `${relativePathWithoutExtension}.js`;
-    const absoluteIndexPath = path.join(templatePath, '..', codeUri, relativeIndexPath);
+    const workingDirectory = path.join(templatePath, '..', codeUri);
+    const indexPath = `${relativePathWithoutExtension}.js`;
 
     const options = {
-        absoluteIndexPath,
+        indexPath,
         handlerName,
         environment,
         event,
         keepAlive,
         requestId,
+        workingDirectory,
     };
 
     let result;

@@ -1,3 +1,4 @@
+const path = require('path');
 const workerpool = require('workerpool');
 const { generateRequestId } = require('../generateRequestId');
 
@@ -67,12 +68,14 @@ async function executeWithXRay(segmentName, handler, event, awsContext) {
 }
 
 async function callHandler({
-    absoluteIndexPath,
+    indexPath,
     handlerName,
     event,
     environment,
 }) {
     process.env = environment;
+
+    const absoluteIndexPath = path.join(process.cwd(), indexPath);
 
     const { [handlerName]: handler } = await import(absoluteIndexPath);
     const awsContext = {
