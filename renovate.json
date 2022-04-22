@@ -13,6 +13,10 @@
       "matchUpdateTypes": ["major"],
       "automerge": false,
       "groupName": "dependencies"
+    },
+    {
+      "matchPackageNames": ["dateformat"],
+      "allowedVersions": "<5"
     }
   ]
 }
