@@ -3,12 +3,12 @@ const workerpool = require('workerpool');
 
 const workerPoolMap = new Map();
 
-function getWorkerPoolKey(workingDirectory, indexPath, handlerName, requestId) {
+function getWorkerPoolKey(indexPath, handlerName, requestId, poolOptions) {
     if (requestId) {
-        return `${workingDirectory}:${indexPath}:${handlerName}:${requestId}`;
+        return `${indexPath}:${handlerName}:${requestId}:${JSON.stringify(poolOptions)}`;
     }
 
-    return `${workingDirectory}:${indexPath}:${handlerName}`;
+    return `${indexPath}:${handlerName}:${JSON.stringify(poolOptions)}`;
 }
 
 function terminateWorkerPool(workingDirectory, indexPath, handlerName, requestId) {
@@ -33,15 +33,13 @@ function terminateWorkerPools() {
     return Promise.all(terminationPromises);
 }
 
-async function getWorkerPool(workingDirectory, indexPath, handlerName, environment = {}, requestId) {
-    const poolKey = getWorkerPoolKey(workingDirectory, indexPath, handlerName, requestId);
+async function getWorkerPool(indexPath, handlerName, environment = {}, requestId, poolOptions = {}) {
+    const poolKey = getWorkerPoolKey(indexPath, handlerName, requestId, poolOptions);
 
     if (!workerPoolMap.has(poolKey)) {
         const pool = workerpool.pool(path.join(__dirname, 'assets', 'callHandlerProcess.js'), {
             workerType: 'process',
-            forkOpts: {
-                cwd: workingDirectory,
-            },
+            ...poolOptions,
         });
 
         workerPoolMap.set(poolKey, {
@@ -58,7 +56,7 @@ async function getWorkerPool(workingDirectory, indexPath, handlerName, environme
     if (JSON.stringify(poolEnvironment) !== JSON.stringify(environment)) {
         terminateWorkerPool(poolKey);
 
-        return getWorkerPool(workingDirectory, indexPath, handlerName, environment);
+        return getWorkerPool(indexPath, handlerName, environment, requestId, poolOptions);
     }
 
     return pool;

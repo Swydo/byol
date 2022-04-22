@@ -41,6 +41,7 @@ function getAwsEnvironment({ profile, region }) {
 async function invokeFunction(functionName, event, {
     templatePath = path.join(process.cwd(), 'template.yml'),
     envPath = path.join(process.cwd(), 'env.json'),
+    debugPortStart,
     region,
     requestId,
     keepAlive = false,
@@ -66,6 +67,7 @@ async function invokeFunction(functionName, event, {
 
     const options = {
         indexPath,
+        debugPortStart,
         handlerName,
         environment,
         event,

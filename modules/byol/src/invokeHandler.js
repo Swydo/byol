@@ -7,6 +7,7 @@ function getDebug(requestId) {
 }
 
 async function invokeHandler({
+    debugPortStart,
     indexPath,
     handlerName,
     environment,
@@ -19,7 +20,12 @@ async function invokeHandler({
     const debug = getDebug(id);
 
     const poolRequestId = keepAlive ? undefined : id;
-    const workerPool = await getWorkerPool(workingDirectory, indexPath, handlerName, environment, poolRequestId);
+    const workerPool = await getWorkerPool(indexPath, handlerName, environment, poolRequestId, {
+        debugPortStart,
+        forkOpts: {
+            cwd: workingDirectory,
+        },
+    });
 
     try {
         debug('Start');
