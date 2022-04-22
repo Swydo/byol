@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.1.0 (2022-04-22)
+
+
+### Features
+
+* support `--inspect` to enable attaching a debugger to child processes ([#376](https://github.com/Swydo/byol/issues/376)) ([097d139](https://github.com/Swydo/byol/commit/097d139f1690b64a3a994cd2c4fa44be7a61e49d))
+
+
+
+
+
 ## 2.0.36 (2022-04-22)
 
 **Note:** Version bump only for package @swydo/byol
