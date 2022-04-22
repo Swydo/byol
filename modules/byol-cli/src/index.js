@@ -10,6 +10,10 @@ const invokeCommand = require('./commands/invoke');
 
 // eslint-disable-next-line no-unused-expressions
 yargs
+    .option('inspect', {
+        type: 'boolean',
+        default: false,
+    })
     .option('silent', {
         alias: 's',
         type: 'boolean',

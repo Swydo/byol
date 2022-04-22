@@ -58,6 +58,7 @@ const handler = async ({
             keepAlive,
             profile,
             region,
+            debugPortStart: port + 1,
             envPath: path.resolve(process.cwd(), envPath),
             templatePath: path.resolve(process.cwd(), templatePath),
         },
