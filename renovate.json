@@ -2,5 +2,17 @@
   "extends": [
     "config:base"
   ],
-  "dependencyDashboard": false
+  "dependencyDashboard": false,
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": false,
+      "groupName": "dependencies (non-major)"
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "groupName": "dependencies"
+    }
+  ]
 }
