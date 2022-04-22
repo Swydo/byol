@@ -15,6 +15,9 @@ const builder = (yargs) => yargs
     .option('functionName', {
         alias: 'f',
     })
+    .option('inspect-port', {
+        default: 43210, // Default in workerpool.
+    })
     .option('profile', {
         default: 'default',
     })
@@ -26,6 +29,7 @@ const builder = (yargs) => yargs
 const handler = async ({
     envPath,
     event,
+    inspectPort,
     functionName,
     profile,
     region,
@@ -38,6 +42,7 @@ const handler = async ({
         const result = await invokeFunction(functionName, JSON.parse(event), {
             envPath: path.resolve(process.cwd(), envPath),
             templatePath: path.resolve(process.cwd(), templatePath),
+            debugStartPort: inspectPort,
             profile,
             region,
         });
