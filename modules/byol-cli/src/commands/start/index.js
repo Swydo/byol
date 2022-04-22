@@ -36,7 +36,6 @@ const builder = (yargs) => yargs
 const handler = async ({
     attribute,
     envPath,
-    inspect,
     keepAlive,
     port,
     profile,
