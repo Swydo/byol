@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "dependencyDashboard": false,
+  "packageRules": [
+    {
+      "automerge": true,
+      "extends": [
+        "schedule:earlyMondays"
+      ],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "automerge": false,
+      "extends": [
+        "schedule:earlyMondays"
+      ],
+      "matchUpdateTypes": ["major"]
+    },
+    {
+      "matchPackageNames": ["dateformat"],
+      "allowedVersions": "<5"
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "automerge": true
+  }
+}
