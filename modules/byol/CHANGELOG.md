@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.33 (2022-04-22)
+
+
+### Bug Fixes
+
+* **deps:** revert dateformat to 4.y.z ([#373](https://github.com/Swydo/byol/issues/373)) ([6ea71d2](https://github.com/Swydo/byol/commit/6ea71d271bf861fe268cb7e370b26d3d8a3dbd73))
+
+
+
+
+
 ## 2.0.32 (2022-04-06)
 
 **Note:** Version bump only for package @swydo/byol
