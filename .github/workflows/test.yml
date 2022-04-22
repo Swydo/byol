@@ -23,3 +23,6 @@ jobs:
       - name: Unit
         run: |
             npm run unit -s
+      - name: Run cli
+        run: |
+          npm run cli help
