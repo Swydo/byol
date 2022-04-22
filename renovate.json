@@ -6,15 +6,19 @@
   "packageRules": [
     {
       "automerge": true,
+      "extends": [
+        "schedule:earlyMondays"
+      ],
       "groupName": "dependencies (non-major)",
-      "matchUpdateTypes": ["minor", "patch"],
-      "schedule": ["schedule:earlyMondays"]
+      "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "automerge": false,
+      "extends": [
+        "schedule:earlyMondays"
+      ]
       "groupName": "dependencies",
-      "matchUpdateTypes": ["major"],
-      "schedule": ["schedule:earlyMondays"]
+      "matchUpdateTypes": ["major"]
     },
     {
       "matchPackageNames": ["dateformat"],
