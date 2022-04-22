@@ -24,5 +24,9 @@
       "matchPackageNames": ["dateformat"],
       "allowedVersions": "<5"
     }
-  ]
+  ],
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "automerge": true
+  }
 }
