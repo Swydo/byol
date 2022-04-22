@@ -7,6 +7,7 @@ function getDebug(requestId) {
 }
 
 async function invokeHandler({
+    debugPortStart,
     indexPath,
     handlerName,
     environment,
@@ -19,7 +20,13 @@ async function invokeHandler({
     const debug = getDebug(id);
 
     const poolRequestId = keepAlive ? undefined : id;
-    const workerPool = await getWorkerPool(workingDirectory, indexPath, handlerName, environment, poolRequestId);
+    const poolOptions = {
+        debugPortStart,
+        forkOpts: {
+            cwd: workingDirectory,
+        },
+    };
+    const workerPool = await getWorkerPool(indexPath, handlerName, environment, poolRequestId, poolOptions);
 
     try {
         debug('Start');
@@ -45,7 +52,7 @@ async function invokeHandler({
         throw e;
     } finally {
         if (!keepAlive) {
-            await terminateWorkerPool(workingDirectory, indexPath, handlerName, poolRequestId);
+            await terminateWorkerPool(indexPath, handlerName, poolRequestId, poolOptions);
         }
     }
 }
