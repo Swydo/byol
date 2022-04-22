@@ -11,8 +11,8 @@ function getWorkerPoolKey(indexPath, handlerName, requestId, poolOptions) {
     return `${indexPath}:${handlerName}:${JSON.stringify(poolOptions)}`;
 }
 
-function terminateWorkerPool(workingDirectory, indexPath, handlerName, requestId) {
-    const poolKey = getWorkerPoolKey(workingDirectory, indexPath, handlerName, requestId);
+function terminateWorkerPool(indexPath, handlerName, requestId, poolOptions) {
+    const poolKey = getWorkerPoolKey(indexPath, handlerName, requestId, poolOptions);
 
     const { pool } = workerPoolMap.get(poolKey);
     const terminationPromise = pool.terminate();
@@ -26,8 +26,8 @@ function terminateWorkerPools() {
     const terminationPromises = [];
 
     workerPoolMap.forEach((pool) => {
-        const { absoluteIndexPath, handlerName, requestId } = pool;
-        terminationPromises.push(terminateWorkerPool(absoluteIndexPath, handlerName, requestId));
+        const { absoluteIndexPath, handlerName, requestId, poolOptions } = pool;
+        terminationPromises.push(terminateWorkerPool(absoluteIndexPath, handlerName, requestId, poolOptions));
     });
 
     return Promise.all(terminationPromises);
@@ -48,6 +48,7 @@ async function getWorkerPool(indexPath, handlerName, environment = {}, requestId
             handlerName,
             environment,
             requestId,
+            poolOptions,
         });
     }
 
