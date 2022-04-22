@@ -9,7 +9,6 @@
       "extends": [
         "schedule:earlyMondays"
       ],
-      "groupName": "dependencies (non-major)",
       "matchUpdateTypes": ["minor", "patch"]
     },
     {
@@ -17,7 +16,6 @@
       "extends": [
         "schedule:earlyMondays"
       ],
-      "groupName": "dependencies",
       "matchUpdateTypes": ["major"]
     },
     {
