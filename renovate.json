@@ -6,7 +6,7 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch"],
-      "automerge": false,
+      "automerge": true,
       "groupName": "dependencies (non-major)"
     },
     {
