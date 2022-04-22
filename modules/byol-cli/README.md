@@ -23,8 +23,8 @@ Combine both `start-lambda` and `start-api`. Start an AWS-compatible Lambda serv
 API Gateway on the same port.
 
 ```shell script
-byol [-p PORT] [-s | --silent] [--keep-alive] [--template-path] [--env-path] [--profile] [--region]
-byol start [-p PORT] [-s | --silent] [--keep-alive] [--template-path] [--env-path] [--profile] [--region]
+byol [-p PORT] [-s | --silent] [--keep-alive] [--template-path] [--env-path] [--profile] [--region] [--inspect]
+byol start [-p PORT] [-s | --silent] [--keep-alive] [--template-path] [--env-path] [--profile] [--region] [--inspect]
 ```
 
 With this server running you can call your Lambdas using the [aws-sdk](https://github.com/aws/aws-sdk-js) and your
@@ -36,7 +36,7 @@ Start an AWS-compatible Lambda server capable of running the functions defined i
 replacement for `sam local start-lambda`.
 
 ```shell script
-byol start-lambda [-p PORT] [-s | --silent] [--keep-alive] [--template-path] [--env-path] [--profile] [--region]
+byol start-lambda [-p PORT] [-s | --silent] [--keep-alive] [--template-path] [--env-path] [--profile] [--region] [--inspect]
 ```
 
 With this server running you can call your Lambdas using the [aws-sdk](https://github.com/aws/aws-sdk-js).
@@ -47,7 +47,7 @@ Starts a server mimicing API Gateway in proxy mode. Similar to `sam local start-
 in your template file. Currently, only event sources on the function resource `AWS::Serverless::Function` are supported.
 
 ```shell script
-byol start-api [-p PORT] [-s | --silent] [--keep-alive] [--template-path] [--env-path] [--profile] [--region]
+byol start-api [-p PORT] [-s | --silent] [--keep-alive] [--template-path] [--env-path] [--profile] [--region] [--inspect]
 ```
 
 With the server running, call your API over HTTP as usual.
@@ -57,5 +57,16 @@ With the server running, call your API over HTTP as usual.
 Invoke a function as defined in your `template.yml`. This is a replacement for `sam local invoke`.
 
 ```shell script
-byol invoke -f FunctionName -e {} [-s | --silent] [--template-path] [--env-path] [--profile] [--region]
+byol invoke -f FunctionName -e {} [-s | --silent] [--template-path] [--env-path] [--profile] [--region] [--inspect] [--inspect-port]
 ```
+
+## Debugging
+
+Debugging is supported by specifying `--inspect` Each concurrent function invocation runs in its own node process, so
+multiple debuggers can co-exist. 
+
+When running a server, connect your debugger at the application port + worker number. For instance, if your
+function runs at port 3000, connect your debugger to the first concurrent invocation at 3001, the second at 3002.
+
+When invoking your function using `invoke`, connect at the default port (43210) or specify your own 
+with `--inspect-port`.
