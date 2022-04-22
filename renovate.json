@@ -16,7 +16,7 @@
       "automerge": false,
       "extends": [
         "schedule:earlyMondays"
-      ]
+      ],
       "groupName": "dependencies",
       "matchUpdateTypes": ["major"]
     },
