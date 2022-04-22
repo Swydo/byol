@@ -4,6 +4,7 @@
   "description": "Bring Your Own Lambda",
   "license": "MIT",
   "scripts": {
+    "cli": "node modules/byol-cli/src/index.js",
     "lint": "npm run eslint",
     "unit": "npm run mocha",
     "test": "npm run eslint && npm run mocha",
