@@ -5,19 +5,20 @@
   "dependencyDashboard": false,
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch"],
       "automerge": true,
-      "groupName": "dependencies (non-major)"
+      "groupName": "dependencies (non-major)",
+      "matchUpdateTypes": ["minor", "patch"],
+      "schedule": ["schedule:earlyMondays"]
     },
     {
-      "matchUpdateTypes": ["major"],
       "automerge": false,
-      "groupName": "dependencies"
+      "groupName": "dependencies",
+      "matchUpdateTypes": ["major"],
+      "schedule": ["schedule:earlyMondays"]
     },
     {
       "matchPackageNames": ["dateformat"],
       "allowedVersions": "<5"
     }
-  ],
-  "schedule": ["after 12am and before 6am on the first day of the week"]
+  ]
 }
