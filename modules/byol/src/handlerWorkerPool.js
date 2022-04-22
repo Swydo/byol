@@ -26,7 +26,12 @@ function terminateWorkerPools() {
     const terminationPromises = [];
 
     workerPoolMap.forEach((pool) => {
-        const { absoluteIndexPath, handlerName, requestId, poolOptions } = pool;
+        const {
+            absoluteIndexPath,
+            handlerName,
+            requestId,
+            poolOptions,
+        } = pool;
         terminationPromises.push(terminateWorkerPool(absoluteIndexPath, handlerName, requestId, poolOptions));
     });
 
