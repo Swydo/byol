@@ -18,5 +18,6 @@
       "matchPackageNames": ["dateformat"],
       "allowedVersions": "<5"
     }
-  ]
+  ],
+  "schedule": ["after 12am and before 6am on the first day of the week"]
 }
