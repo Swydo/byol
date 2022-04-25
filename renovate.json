@@ -6,16 +6,10 @@
   "packageRules": [
     {
       "automerge": true,
-      "extends": [
-        "schedule:earlyMondays"
-      ],
       "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "automerge": false,
-      "extends": [
-        "schedule:earlyMondays"
-      ],
       "matchUpdateTypes": ["major"]
     },
     {
