@@ -40,7 +40,9 @@ async function execute(handler, event, awsContext) {
 
     // Timeout delay is required in order to print console logs
     // that are omitted otherwise
-    await new Promise((resolve) => setTimeout(resolve, 10));
+    await new Promise((resolve) => {
+        setTimeout(resolve, 10);
+    });
 
     return handlerResult;
 }

@@ -1,6 +1,6 @@
 const objectPath = require('object-path');
 
-function resolveAttribute(template, templateOverrides = {}, resolvableValue) {
+function resolveAttribute(template, templateOverrides, resolvableValue) {
     const dotKey = resolvableValue.join('.');
 
     return objectPath.get(template.Resources, dotKey)

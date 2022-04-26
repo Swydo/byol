@@ -1,9 +1,9 @@
 const path = require('path');
-const { DEFAULT_TEMPLATE_PATH, getTemplate } = require('../getTemplate');
+const { getTemplate } = require('../getTemplate');
 
 const STACK_RESOURCE_TYPE = 'AWS::CloudFormation::Stack';
 
-function getResources(templatePath = DEFAULT_TEMPLATE_PATH, resourceType) {
+function getResources(templatePath, resourceType) {
     const template = getTemplate(templatePath);
 
     if (!template.Resources) {
