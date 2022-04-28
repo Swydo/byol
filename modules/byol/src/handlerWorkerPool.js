@@ -38,7 +38,7 @@ function terminateWorkerPools() {
     return Promise.all(terminationPromises);
 }
 
-async function getWorkerPool(indexPath, handlerName, environment = {}, requestId, poolOptions = {}) {
+async function getWorkerPool(indexPath, handlerName, environment, requestId, poolOptions = {}) {
     const poolKey = getWorkerPoolKey(indexPath, handlerName, requestId, poolOptions);
 
     if (!workerPoolMap.has(poolKey)) {

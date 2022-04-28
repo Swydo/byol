@@ -25,7 +25,7 @@ async function resolveQueueUrl(queueArn, { sqsEndpointUrl }) {
     return QueueUrl;
 }
 
-async function getSqsMapping(templatePath, { sqsEndpointUrl, templateOverrides }) {
+async function getSqsMapping(templatePath, { sqsEndpointUrl, templateOverrides = {} }) {
     const template = getTemplate(templatePath);
     const functionResources = getFunctionResources(templatePath);
     const functionNames = Object.keys(functionResources);

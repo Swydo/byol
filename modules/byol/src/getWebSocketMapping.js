@@ -19,7 +19,7 @@ function getYamlVariables(target) {
 
         switch (key) {
         case 'Fn::Sub': {
-            const regx = new RegExp(/\$\{([\D]+?)\}/g);
+            const regx = /\$\{([\D]+?)\}/g;
             const references = Array.from(target[key].matchAll(regx));
             return references.map((item) => item[1]);
         }
