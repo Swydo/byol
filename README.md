@@ -2,7 +2,7 @@
 
 [![GitHubActions](https://img.shields.io/github/workflow/status/Swydo/byol/release.svg?label=github%20actions&style=flat-square)](https://github.com/Swydo/byol/actions) [![conventionalCommits](https://img.shields.io/badge/conventional%20commits-1.0.0-yellow.svg?style=flat-square)](https://conventionalcommits.org) [![GitHub](https://img.shields.io/github/license/Swydo/byol.svg?style=flat-square)](https://github.com/Swydo/byol/blob/master/LICENSE)
 
-<img src="https://user-images.githubusercontent.com/2283434/52522860-25eee400-2c8b-11e9-8602-f8de0d158600.png">
+<img width="830" alt="Github Header" src="https://user-images.githubusercontent.com/2283434/183906965-4d07a08e-81a7-4960-980d-768dcc188562.png">
 
 ---
 
