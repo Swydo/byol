@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.44 (2022-09-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ws to v8.9.0 ([#427](https://github.com/Swydo/byol/issues/427)) ([d6766bd](https://github.com/Swydo/byol/commit/d6766bd00c517cad9cd0e7d779e23e522717315f))
+
+
+
+
+
 ## 2.1.43 (2022-09-20)
 
 **Note:** Version bump only for package @swydo/byol-cli
