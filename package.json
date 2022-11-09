@@ -5,7 +5,7 @@
   "license": "MIT",
   "engines": {
     "node": ">=14",
-    "npm": "^6.0.0"
+    "npm": "^9.0.0"
   },
   "scripts": {
     "cli": "node modules/byol-cli/src/index.js",
