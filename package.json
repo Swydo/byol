@@ -13,8 +13,7 @@
     "unit": "npm run mocha",
     "test": "npm run eslint && npm run mocha",
     "eslint": "eslint ./modules",
-    "mocha": "mocha modules/**/src/**/*.spec.js",
-    "version": "lerna clean --yes && lerna bootstrap --ignore-scripts -- --package-lock-only --no-audit --no-ci && git add modules/*/package-lock.json"
+    "mocha": "mocha modules/**/src/**/*.spec.js"
   },
   "repository": {
     "type": "git"
