@@ -16,7 +16,6 @@ jobs:
       - name: Build
         run: |
             npm ci
-            npx lerna bootstrap
       - name: Lint
         run: |
             npm run lint -s
