@@ -28,5 +28,8 @@
     "eslint-plugin-import": "2.27.5",
     "lerna": "6.5.0",
     "mocha": "10.2.0"
-  }
+  },
+  "workspaces": [
+    "modules/*"
+  ]
 }
