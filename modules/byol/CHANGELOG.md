@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.52 (2023-03-16)
+
+
+### Bug Fixes
+
+* byol release ([#473](https://github.com/Swydo/byol/issues/473)) ([fa5206e](https://github.com/Swydo/byol/commit/fa5206e8d698eae2aaaff8686c3dff34835b5e44))
+
+
+
+
+
 ## [2.1.51](https://github.com/Swydo/byol/compare/2.1.50...2.1.51) (2023-03-16)
 
 **Note:** Version bump only for package @swydo/byol
