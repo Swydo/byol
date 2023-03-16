@@ -83,16 +83,18 @@ function getLambdaEvent(headers, routeConfig, connectionContext, apiInfo, eventT
 
 function terminateConnection(ws, connectionContext, websocketConnections) {
     verbose(`Terminated connection ${connectionContext.connectionId}`);
-    ws.terminate();
+    clearTimeout(connectionContext.disconnectTimeout);
 
+    ws.terminate();
     if (websocketConnections.has(connectionContext.connectionId)) {
         websocketConnections.delete(connectionContext.connectionId);
     }
 }
 
 function closeConnection(ws, connectionContext, websocketConnections, reason = '') {
-    ws.close(1000, reason);
+    clearTimeout(connectionContext.disconnectTimeout);
 
+    ws.close(1000, reason);
     if (websocketConnections.has(connectionContext.connectionId)) {
         websocketConnections.delete(connectionContext.connectionId);
     }
@@ -130,6 +132,9 @@ function onConnect({
         connectedAt: new Date().getTime(),
         lastActiveAt: new Date().getTime(),
         ip: request.socket.remoteAddress,
+        disconnectTimeout: setTimeout(() => {
+            closeConnection(ws, connectionContext, websocketConnections);
+        }, 10 * 60 * 1000),
     };
     websocketConnections.set(connectionContext.connectionId, {
         ws,
@@ -186,6 +191,10 @@ function onMessage({
     ws.on('message', (message) => {
         const context = connectionContext;
         context.lastActiveAt = new Date().getTime();
+        clearTimeout(context.disconnectTimeout);
+        context.disconnectTimeout = setTimeout(() => {
+            closeConnection(ws, connectionContext, websocketConnections);
+        }, 30000);
 
         const event = {
             requestContext: getRequestContext(route, connectionContext, apiInfo, EVENT_TYPE.MESSAGE),
