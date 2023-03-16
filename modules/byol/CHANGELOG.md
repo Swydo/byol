@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.51](https://github.com/Swydo/byol/compare/2.1.50...2.1.51) (2023-03-16)
+
+**Note:** Version bump only for package @swydo/byol
+
+
+
+
+
 ## 2.1.50 (2023-02-14)
 
 **Note:** Version bump only for package @swydo/byol
