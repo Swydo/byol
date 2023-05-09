@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.61 (2023-05-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency sqs-consumer to v7 ([#468](https://github.com/Swydo/byol/issues/468)) ([5c949cc](https://github.com/Swydo/byol/commit/5c949cc827d190c19837326fc72508b483d23f14))
+
+
+
+
+
 ## 2.1.60 (2023-05-06)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
