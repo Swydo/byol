@@ -194,7 +194,7 @@ function onMessage({
         clearTimeout(context.disconnectTimeout);
         context.disconnectTimeout = setTimeout(() => {
             closeConnection(ws, connectionContext, websocketConnections);
-        }, 30000);
+        }, 10 * 60 * 1000);
 
         const event = {
             requestContext: getRequestContext(route, connectionContext, apiInfo, EVENT_TYPE.MESSAGE),
