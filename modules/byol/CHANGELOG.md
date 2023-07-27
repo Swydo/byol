@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.100 (2023-07-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency uuid to v9 ([#489](https://github.com/Swydo/byol/issues/489)) ([71bc311](https://github.com/Swydo/byol/commit/71bc31103803f0114c73fbb3a304e50d4f49a696))
+
+
+
+
+
 ## 2.1.99 (2023-07-27)
 
 
