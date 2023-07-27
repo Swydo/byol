@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.101 (2023-07-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency yargs to v17 ([#490](https://github.com/Swydo/byol/issues/490)) ([a9dfc3b](https://github.com/Swydo/byol/commit/a9dfc3ba58414fccc4c288b7a97d98dade816faf))
+
+
+
+
+
 ## 2.1.100 (2023-07-27)
 
 
