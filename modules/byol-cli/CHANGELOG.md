@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.99 (2023-07-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency dateformat to v4 ([#488](https://github.com/Swydo/byol/issues/488)) ([fa594b1](https://github.com/Swydo/byol/commit/fa594b1cb19419af0a12d3b84da5988b8ea2868f))
+
+
+
+
+
 ## 2.1.98 (2023-07-27)
 
 **Note:** Version bump only for package @swydo/byol-cli
