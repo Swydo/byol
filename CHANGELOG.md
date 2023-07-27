@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.102 (2023-07-27)
+
+
+### Bug Fixes
+
+* **byol-cli:** close websocket connection 10 minutes after incoming message ([#522](https://github.com/Swydo/byol/issues/522)) ([4ac6500](https://github.com/Swydo/byol/commit/4ac6500fc0f482bbca317ee77e9a6c4befc29841))
+
+
+
+
+
 ## 2.1.101 (2023-07-27)
 
 
