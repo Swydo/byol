@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.112 (2023-08-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency aws-sdk to v2.1432.0 ([#533](https://github.com/Swydo/byol/issues/533)) ([b09edb3](https://github.com/Swydo/byol/commit/b09edb33c542dde7b0bd761250b5e99af4a7ceb5))
+
+
+
+
+
 ## 2.1.111 (2023-08-08)
 
 
