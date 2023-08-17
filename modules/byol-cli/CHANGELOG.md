@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.1.121 (2023-08-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency workerpool to v6.4.1 ([#542](https://github.com/Swydo/byol/issues/542)) ([e956ac3](https://github.com/Swydo/byol/commit/e956ac3c8fa32e6af934f7fc53acf9ac426fb00b))
+
+
+
+
+
 ## 2.1.120 (2023-08-16)
 
 
