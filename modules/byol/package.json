@@ -1,6 +1,6 @@
 {
 	"name": "@swydo/byol",
-	"version": "2.1.125",
+	"version": "2.1.126",
 	"description": "Bring Your Own Lambda",
 	"license": "MIT",
 	"engines": {
