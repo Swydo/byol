@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.2.0 (2023-08-30)
+
+
+### Features
+
+* add getRemainingTimeInMillis ([#556](https://github.com/Swydo/byol/issues/556)) ([57d4e77](https://github.com/Swydo/byol/commit/57d4e77ab906d5f4bd1a82204b6ef9f276eb4756))
+
+
+
+
+
 ## 2.1.135 (2023-08-29)
 
 
