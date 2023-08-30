@@ -82,6 +82,10 @@ async function callHandler({
     const { [handlerName]: handler } = await import(absoluteIndexPath);
     const awsContext = {
         awsRequestId: generateRequestId(),
+        getRemainingTimeInMillis() {
+            // return one year in milliseconds as a constant
+            return 365 * 24 * 60 * 60 * 1000;
+        },
     };
 
     if (!handler) {
