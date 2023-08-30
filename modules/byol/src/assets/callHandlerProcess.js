@@ -85,7 +85,7 @@ async function callHandler({
         getRemainingTimeInMillis() {
             // return one year in milliseconds as a constant
             return 365 * 24 * 60 * 60 * 1000;
-        }
+        },
     };
 
     if (!handler) {
