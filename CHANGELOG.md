@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.2.3 (2023-08-31)
+
+
+### Bug Fixes
+
+* return signed max instead of unsigned ([#559](https://github.com/Swydo/byol/issues/559)) ([8761efb](https://github.com/Swydo/byol/commit/8761efb1f76e111d2da56291cd0619da416c9045))
+
+
+
+
+
 ## 2.2.2 (2023-08-31)
 
 
