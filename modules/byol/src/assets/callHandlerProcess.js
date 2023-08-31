@@ -85,7 +85,7 @@ async function callHandler({
         getRemainingTimeInMillis() {
             // Max signed 32-bit int is upper value of setTimeout. Using that as magic value since normally byols
             // don't have a timeout
-            return 2 ** 32 - 2;
+            return 2 ** 31 - 2;
         },
     };
 
