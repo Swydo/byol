@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.2.2 (2023-08-31)
+
+
+### Bug Fixes
+
+* change arbitrary byol time remaining ([#558](https://github.com/Swydo/byol/issues/558)) ([7a083c9](https://github.com/Swydo/byol/commit/7a083c93937019b44919a440ba1c60d5e369845e))
+
+
+
+
+
 ## 2.2.1 (2023-08-30)
 
 
