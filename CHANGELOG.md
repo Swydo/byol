@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 3.0.0 (2023-09-27)
+
+
+### Bug Fixes
+
+* remove setting "default" profile by default ([#589](https://github.com/Swydo/byol/issues/589)) ([c497be3](https://github.com/Swydo/byol/commit/c497be3070fab331f8b4e60330802d038a0af68a))
+
+
+### BREAKING CHANGES
+
+* The default for "profile" has been removed. Specify `--profile default` to restore previous functionality, or set `AWS_PROFILE` in your env.json.
+
+
+
+
+
 ## 2.2.31 (2023-09-27)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
