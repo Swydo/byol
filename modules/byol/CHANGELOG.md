@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.2.31 (2023-09-27)
+
+**Note:** Version bump only for package @swydo/byol
+
+
+
+
+
 ## 2.2.30 (2023-09-27)
 
 
