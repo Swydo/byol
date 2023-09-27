@@ -20,9 +20,7 @@ const builder = (yargs) => yargs
         alias: 'p',
         default: 3000,
     })
-    .option('profile', {
-        default: 'default',
-    })
+    .option('profile')
     .option('region')
     .option('sqs-endpoint-url', {
         type: 'string',

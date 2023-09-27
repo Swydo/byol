@@ -18,9 +18,7 @@ const builder = (yargs) => yargs
     .option('inspect-port', {
         default: 43210, // Default in workerpool.
     })
-    .option('profile', {
-        default: 'default',
-    })
+    .option('profile')
     .option('region')
     .option('template-path', {
         alias: ['template-file', 'template', 't'],
