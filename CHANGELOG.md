@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.12 (2023-10-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency workerpool to v6.5.1 ([#601](https://github.com/Swydo/byol/issues/601)) ([b5a9666](https://github.com/Swydo/byol/commit/b5a9666c3ae4c7a348d4884bd6d9373e4e26dbec))
+
+
+
+
+
 ## 3.0.11 (2023-10-11)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
