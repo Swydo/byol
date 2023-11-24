@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.52 (2023-11-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency sqs-consumer to v7.5.0 ([#646](https://github.com/Swydo/byol/issues/646)) ([5e5b12d](https://github.com/Swydo/byol/commit/5e5b12d6e3ef800b20f8f5184d3497e19b93b17c))
+
+
+
+
+
 ## 3.0.51 (2023-11-23)
 
 
