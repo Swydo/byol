@@ -119,6 +119,7 @@ function attachApiServer(app, { invokeOptions }) {
                 resource: matchingMapping.listener.resource,
                 path: parsedUrl.pathname,
                 rawPath: parsedUrl.pathname,
+                rawQueryString: parsedUrl.search,
                 httpMethod: req.method,
                 version: matchingMapping.listener.type === 'HttpApi' ? '2.0' : undefined,
                 headers,
