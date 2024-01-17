@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.101 (2024-01-17)
+
+
+### Bug Fixes
+
+* **byol-cli:** add missing `rawQueryString` to event ([#695](https://github.com/Swydo/byol/issues/695)) ([5251de4](https://github.com/Swydo/byol/commit/5251de40a7039cd7d2c3103316691604b39363a4))
+
+
+
+
+
 ## 3.0.100 (2024-01-17)
 
 **Note:** Version bump only for package @swydo/byol-cli
