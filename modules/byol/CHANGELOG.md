@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.103 (2024-01-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency workerpool to v9.1.0 ([#697](https://github.com/Swydo/byol/issues/697)) ([aa02fee](https://github.com/Swydo/byol/commit/aa02feeb198bfc1c89aebf0b167c0f5065816324))
+
+
+
+
+
 ## 3.0.102 (2024-01-18)
 
 
