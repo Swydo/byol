@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.134 (2024-02-24)
+
+**Note:** Version bump only for package @swydo/byol-cli
+
+
+
+
+
 ## 3.0.133 (2024-02-23)
 
 
