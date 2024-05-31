@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.212 (2024-05-31)
+
+
+### Bug Fixes
+
+* **deps:** update dependency debug to v4.3.5 ([#810](https://github.com/Swydo/byol/issues/810)) ([e00577c](https://github.com/Swydo/byol/commit/e00577cb2d4d041fe7398554de4b573cbde54ef9))
+
+
+
+
+
 ## 3.0.211 (2024-05-31)
 
 
