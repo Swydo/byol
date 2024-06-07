@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.220 (2024-06-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency aws-sdk to v2.1636.0 ([#818](https://github.com/Swydo/byol/issues/818)) ([4246ccf](https://github.com/Swydo/byol/commit/4246ccf458edc759d9f9b1bd6a7d5f8bb1325833))
+
+
+
+
+
 ## 3.0.219 (2024-06-06)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
