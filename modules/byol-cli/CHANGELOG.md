@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.253 (2024-07-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency uuid to v10 ([#820](https://github.com/Swydo/byol/issues/820)) ([260df41](https://github.com/Swydo/byol/commit/260df41f7d6f6ee948cfddef0d0c43ec54b6d00e))
+
+
+
+
+
 ## 3.0.252 (2024-07-10)
 
 
