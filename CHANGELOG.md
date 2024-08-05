@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.267 (2024-08-05)
+
+**Note:** Version bump only for package @swydo/byol-monorepo
+
+
+
+
+
 ## 3.0.266 (2024-08-02)
 
 
