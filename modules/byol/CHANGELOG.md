@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.301 (2024-10-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency express to v4.21.1 ([#903](https://github.com/Swydo/byol/issues/903)) ([1631499](https://github.com/Swydo/byol/commit/16314990865e28cd96b59822a3ee898614ec8cfa))
+
+
+
+
+
 ## 3.0.300 (2024-10-03)
 
 **Note:** Version bump only for package @swydo/byol
