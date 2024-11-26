@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.0.308 (2024-11-26)
+
+
+### Bug Fixes
+
+* **byol:** update worker pool config to reflect concurrent lambda usage ([e1e6253](https://github.com/Swydo/byol/commit/e1e62535e682ea0e0af7ad7b4659a1699b71d480))
+
+
+
+
+
 ## 3.0.307 (2024-11-12)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
