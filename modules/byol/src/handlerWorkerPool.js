@@ -44,6 +44,8 @@ async function getWorkerPool(indexPath, handlerName, environment, requestId, poo
     if (!workerPoolMap.has(poolKey)) {
         const pool = workerpool.pool(path.join(__dirname, 'assets', 'callHandlerProcess.js'), {
             workerType: 'process',
+            maxWorkers: 250,
+            maxQueueSize: 1,
             ...poolOptions,
         });
 
