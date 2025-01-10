@@ -10,6 +10,7 @@ async function invokeHandler({
     debugPortStart,
     indexPath,
     handlerName,
+    timeOut,
     environment,
     event,
     keepAlive = false,
@@ -33,6 +34,7 @@ async function invokeHandler({
         const result = await workerPool.exec('callHandler', [{
             indexPath,
             handlerName,
+            timeOut,
             event,
             environment: {
                 ...process.env,

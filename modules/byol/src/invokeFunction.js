@@ -64,6 +64,7 @@ async function invokeFunction(functionName, event, {
         Properties: {
             Handler: handler,
             CodeUri: codeUri = '.',
+            Timeout: timeOut,
         },
     } = resource;
 
@@ -76,6 +77,7 @@ async function invokeFunction(functionName, event, {
         indexPath,
         debugPortStart,
         handlerName,
+        timeOut,
         environment,
         event,
         keepAlive,
