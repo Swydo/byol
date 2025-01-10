@@ -81,12 +81,12 @@ async function callHandler({
     const absoluteIndexPath = path.join(process.cwd(), indexPath);
 
     const { [handlerName]: handler } = await import(absoluteIndexPath);
-    const executionTimeOut = new Date() + timeOut;
+    const executionTimeOut = new Date().getTime() + (timeOut * 1000);
 
     const awsContext = {
         awsRequestId: generateRequestId(),
         getRemainingTimeInMillis() {
-            return executionTimeOut - new Date();
+            return executionTimeOut - new Date().getTime();
         },
     };
 
