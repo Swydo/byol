@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 3.1.0 (2025-01-10)
+
+
+### Features
+
+* **byol:** base getRemainingTimeInMillis of timeout specified in template ([#918](https://github.com/Swydo/byol/issues/918)) ([43c8113](https://github.com/Swydo/byol/commit/43c81136c882976986246bddd4ac52825fa277c5))
+
+
+
+
+
 ## 3.0.310 (2024-12-06)
 
 
