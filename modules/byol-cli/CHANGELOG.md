@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.1.1 (2025-01-10)
+
+
+### Bug Fixes
+
+* **byol:** convert timeout to ms ([02e6a7a](https://github.com/Swydo/byol/commit/02e6a7a89a823deb911bff9defe996549f6aea6b))
+
+
+
+
+
 # 3.1.0 (2025-01-10)
 
 
