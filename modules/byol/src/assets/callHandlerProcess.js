@@ -72,6 +72,7 @@ async function executeWithXRay(segmentName, handler, event, awsContext) {
 async function callHandler({
     indexPath,
     handlerName,
+    timeOut,
     event,
     environment,
 }) {
@@ -80,12 +81,12 @@ async function callHandler({
     const absoluteIndexPath = path.join(process.cwd(), indexPath);
 
     const { [handlerName]: handler } = await import(absoluteIndexPath);
+    const executionTimeOut = new Date() + timeOut;
+
     const awsContext = {
         awsRequestId: generateRequestId(),
         getRemainingTimeInMillis() {
-            // Max signed 32-bit int is upper value of setTimeout. Using that as magic value since normally byols
-            // don't have a timeout
-            return 2 ** 31 - 2;
+            return executionTimeOut - new Date();
         },
     };
 
