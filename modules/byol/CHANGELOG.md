@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.1.6 (2025-02-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency uuid to v11.1.0 ([#923](https://github.com/Swydo/byol/issues/923)) ([4920a00](https://github.com/Swydo/byol/commit/4920a00ab84c16d188cc900439e5bbdc88bd012a))
+
+
+
+
+
 ## 3.1.5 (2025-02-19)
 
 **Note:** Version bump only for package @swydo/byol
