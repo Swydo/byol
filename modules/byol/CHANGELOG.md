@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.1.7 (2025-02-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ws to v8.18.1 ([#924](https://github.com/Swydo/byol/issues/924)) ([564e68e](https://github.com/Swydo/byol/commit/564e68e01544120c35f0e7276afc4b60c4b33630))
+
+
+
+
+
 ## 3.1.6 (2025-02-19)
 
 
