@@ -4,7 +4,7 @@
   "description": "Bring Your Own Lambda",
   "license": "MIT",
   "engines": {
-    "node": "^20.0.0",
+    "node": "^22.0.0",
     "npm": "^11.0.0"
   },
   "scripts": {
