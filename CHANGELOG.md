@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.1.11 (2025-05-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency ws to v8.18.2 ([#930](https://github.com/Swydo/byol/issues/930)) ([3505069](https://github.com/Swydo/byol/commit/3505069b4270aaa955433e279a8a5de319135f0f))
+
+
+
+
+
 ## 3.1.10 (2025-05-01)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
