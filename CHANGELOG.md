@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 3.1.16 (2025-05-29)
+
+
+### Bug Fixes
+
+* **deps:** update dependency workerpool to v9.3.0 ([#937](https://github.com/Swydo/byol/issues/937)) ([e18242f](https://github.com/Swydo/byol/commit/e18242f057fdb79bc01cc5779505be341bf87028))
+
+
+
+
+
 ## 3.1.15 (2025-05-24)
 
 **Note:** Version bump only for package @swydo/byol-monorepo
