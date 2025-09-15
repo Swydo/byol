@@ -24,7 +24,7 @@
     "cors": "^2.8.5",
     "dateformat": "4.6.3",
     "debug": "^4.1.1",
-    "express": "^4.17.1",
+    "express": "^5.0.0",
     "promise-retry": "^2.0.1",
     "sqs-consumer": "^7.0.0",
     "ws": "8.18.3",
