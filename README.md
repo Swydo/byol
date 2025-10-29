@@ -10,7 +10,7 @@ BYOL (Bring Your Own Lambda) consists of a set of tools to help you run your Nod
 environment. It aims to be a minimal replacement for [aws-sam-cli](https://github.com/awslabs/aws-sam-cli) without
 requiring Docker or Python.
 
-Although it doesn't as great of a job at mimicking the AWS environment, it will run your code with minimal from effort from
+Although it doesn't do as great of a job at mimicking the AWS environment, it will run your code with minimal effort from
 your side as long as the code isn't too picky about where or how it runs.
 
 ## When to uses BYOL
