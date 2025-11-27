@@ -25,7 +25,7 @@
     "eslint": "8.57.1",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.32.0",
-    "lerna": "8.2.4",
+    "lerna": "9.0.3",
     "mocha": "11.7.5"
   },
   "workspaces": [
